@@ -264,8 +264,8 @@ x=[x for x in range(100)]
 color = np.where(df_result['QA_spk2'].iloc[13100:13200] == 1, 'red', 'skyblue')
 y1 = df_result['AObs'].iloc[13100:13200]
 y2 = df_result['mzs_test'].iloc[13100:13200]
-ax1.vlines(x, ymin=0, ymax=y, color='skyblue', lw=2, alpha=0.8)
-ax1.scatter(x, y, color=color,s=9)
+ax1.vlines(x, ymin=0, ymax=y1, color='skyblue', lw=2, alpha=0.8)
+ax1.scatter(x, y1, color=color,s=9)
 
 ax2.vlines(x, ymin=0, ymax=y2, color='skyblue', lw=2, alpha=0.8)
 ax2.scatter(x, y2, color=color,s=9)
