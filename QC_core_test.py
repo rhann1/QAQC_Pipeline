@@ -160,39 +160,22 @@ frame = tds.getSimulatedDataSeries()
 # convert successive datetime objects to timedeltas on a unit seconds basis
 #data = data.sort_values(['id','date'], ascending=False)
 frame['date1'] = pd.to_timedelta(frame['StartDateTime']).astype('timedelta64[m]').astype(int)
-
 #prepare frame for group operation
 frame['date2'] = t_delta(frame['StartDateTime'])
-
-############################################################### end simulated data generation code
-# --------------------------------------------------------------------------------------------------------------------------------------------------
-# convert to JSON payload for JSON test
-# this payload object would be retrieved from data API
-# these operations will be moved to the 'Data Handler' module
-# -------------------------------------------------------------------------------------------------------------------------------------------------
-frame_json = json.loads(frame.to_json(orient = 'records', date_format = 'iso'))
-# conversioin of the JSON payload to a dataframe
-frame = json_normalize(frame_json)
-# convert 'date' column to pandas 'datetime' object from JSON 'iso' format
-frame['StartDateTime'] = pd.to_datetime(frame['StartDateTime'])
-# --------------------------------------------------------------------------------------------------------------------------------------------------
-# end JSON payload simulator
-# --------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 # determine subhourly observations within the aggregation target time unit (standard: 1 hour for subhourly data)
 # hourcount will give a count of records present for a given target hour to be used for computing the completeness requirement
+# this resampling operation will support hourly aggregation of sub-hourly data
 hourCount = frame.groupby('StreamId').resample('D', on='StartDateTime').count()
 
-
+########################################################################################################################################################
 # QC function drivers. Each driver applies the specified function operating over a moving window.  The window sizes and function parameters are sourced 
 # from the QA config dataframe.  A 'groupby' is performed on the measurement data by 'StreamId' and the operations are performed on each group.
 gp = frame.groupby('StreamId')
 df_list = []
 for group in gp:
     frame = pd.DataFrame(group[1])
-    #df = list(group[1].rolling(2).mean())
-    #df = list(frame.rolling(2)['X'].apply(func, args=(np.array(frame['Y'])[0],)))
     df  = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
     df2 = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(spike, args=(mu, 5,)))
     df3 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike2, args=(1.5,)))
@@ -203,10 +186,11 @@ for group in gp:
     df8 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(mzs_test, args=(3.5,)))
     df9 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(udlcheck, args=(udl,)))
     df10 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(ldlcheck, args=(ldl,)))
-
+    
+    # set staging frame for group
     df1 = np.array(group)[1]
-    print(df1)
-    print(" ")
+
+    # set value for each QC flag
     df1['QA_valid']    = df
     df1['QA_spk1']     = df2
     df1['QA_spk2']     = df3
@@ -223,6 +207,11 @@ for group in gp:
 # this will be replace by 'putData()' method exported by the Data Handler in production
 df_result = pd.concat(df_list)
 print(df_result)
+# end function drivers
+####################################################################################################################################################
+
+# dh.putData() # this call will transfer QC flag dataframes back to the data handler
+
 result_json = df_result.to_json(orient='records', date_format='iso')
 
 # visualization segment for testing (will be removed for production)
