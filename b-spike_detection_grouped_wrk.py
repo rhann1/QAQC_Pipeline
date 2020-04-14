@@ -22,10 +22,11 @@ def spike(x, mu, delta):
     
 # mean absoute deviation based spike detection.    
 def spike1(x, mu, delta):
+    x = x[::-1]
     df=x
     x_bar=np.abs(x).mean()
-    print(x, np.abs(x).mean(), x[0], np.abs(np.abs(df[0]) - x_bar)/x_bar)
-    if np.abs(np.abs(df[0]) - x_bar)/x_bar >= delta: # if MAD is > assigned threshold then set flag.
+    if np.abs(df[0])> delta*x_bar : # if MAD is > assigned threshold then set flag.
+        print(x, x_bar)
         return 1
     else:
         return 0
@@ -38,7 +39,7 @@ def spike2(x, mzs_t):
     mad = np.median(np.abs(np.subtract(x, -med_x))) # compute the median absolute deviation
     mzs = 0.675*(x[0] - med_x)/mad # compute the modified z-score (mzs)
     if mzs > 3.5:
-        print(x, med_x, mad, mzs)
+#        print(x, med_x, mad, mzs)
         return 1
     else:
         return 0
@@ -56,18 +57,32 @@ def spike3(x, zs_t):
     x = x[::-1]
     x_bar = x.mean()
     dev = np.abs(x[0]-x_bar)/x_bar
-    if dev > 5 and x_bar > 12:
-        print(x, x_bar, dev)
+    if dev > 2 and x_bar > delta1:
+        print(x)
         return 1
     else:
         return 0
+    
+def spike4(x, QA4, lowValue4):
+    x = x[::-1]
+    x_med = np.median(x)
+    dev = np.abs(x[0] - x_med)/x_med
+    if dev > QA4 and x_med > lowValue4:
+        return 1
+    else:
+        return 0
+    
+    
+def winCount(x):
+    x = x[::-1]
+    return len(x)
     
 def spike3_mod(x, zs_t):
     x = x[::-1]
     x_bar = x[0:len(x)-2].mean()
     dev = np.abs(x[0]-x_bar)/x_bar
-    if dev > 5 and x_bar > 12:
-        print(x, x_bar, dev)
+    if dev > 2 and x_bar > delta1:
+#        print(x, x_bar, dev)
         return 1
     else:    
         return 0
@@ -76,11 +91,11 @@ def lowvar(x, p_delta):
     x = x[::-1]
     x_bar = x.mean()
     sdev = np.std(x)
-    print(np.abs(np.subtract(x,x_bar)).sum()/len(x))
+#    print(np.abs(np.subtract(x,x_bar)).sum()/len(x))
     if np.abs(np.subtract(x,x_bar)).sum()/len(x) < p_delta*sdev:
         return 1
     else:
-        return np.abs(np.subtract(x,x_bar)).sum()/len(x) < p_delta*sdev
+        return 0
 
 # persistent value test.  This will check if the current observation has repeated over the length of the test window.    
 def persist(x):
@@ -126,8 +141,8 @@ sigma = 7
 freq = 60
 tu = 'h'
 window = 2
-delta = 20
-delta1 = 10
+delta = 4
+delta1 = 4
 p_delta = 0.55
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -186,12 +201,11 @@ frame['date'] = pd.to_datetime(frame['date'])
 # determine subhourly observations within the aggregation target time unit (standard: 1 hour for subhourly data)
 hourCount = data.groupby('id').resample('D', on='date').count()
 
-
-
-
-def func(x,c):
-    x = x[::-1]
-    return (x[0] - x.mean())/c
+QA1 = 4
+QA2 = 4.0
+QA3 = 0.5
+QA4 = 3.0
+lowValue4 = 5
 
  
 df_list = []
@@ -207,13 +221,16 @@ for group in gp:
     #df = list(group[1].rolling(2).mean())
     #df = list(frame.rolling(2)['X'].apply(func, args=(np.array(frame['Y'])[0],)))
     df  = list(frame.set_index('date').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
-    df2 = list(frame.set_index('date').rolling(2)['signal'].apply(spike, args=(mu, 5,)))
-    df3 = list(frame.set_index('date').rolling(10)['signal'].apply(spike2, args=(1.5,)))
-    df4 = list(frame.set_index('date').rolling(10)['signal'].apply(spike3, args=(3.5,)))
+    df2 = list(frame.set_index('date').rolling(10)['signal'].apply(spike1, args=(mu, QA1,)))
+    df3 = list(frame.set_index('date').rolling(10)['signal'].apply(spike2, args=(QA2,)))
+    df4 = list(frame.set_index('date').rolling(10)['signal'].apply(spike3, args=(QA3,)))
     df5 = list(frame.set_index('date').rolling(10)['signal'].apply(spike3_mod, args=(3.5,)))
     df6 = list(frame.set_index('date').rolling(10)['signal'].apply(lowvar, args=(p_delta,)))
     df7 = list(frame.set_index('date').rolling(6)['signal'].apply(persist))
     df8 = list(frame.set_index('date').rolling(10)['signal'].apply(mzs_test, args=(3.5,)))
+    df9 = list(frame.set_index('date').rolling('10H')['signal'].apply(winCount))
+    df10 = list(frame.set_index('date').rolling('10H')['signal'].apply(spike4, args=(QA4, lowValue4)))
+    
     #df = pd.DataFrame(df)
     df1 = np.array(group)[1]
     print(df1)
@@ -226,6 +243,8 @@ for group in gp:
     df1['QA_LV']       = df6
     df1['QA_per']      = df7
     df1['mzs_test']    = df8
+    df1['count']       = df9
+    df1['QA_spk4']     = df10
 #   proc = df.rolling(2).apply(func, args=(2,)).reset_index()
     df_list.append(df1)
 #    print(df_list)
@@ -260,7 +279,7 @@ ax2.scatter(x, df_result['QA_per'].iloc[13100:13200], color="red", s=9)
 ax2.vlines(x, ymin=0, ymax=df_result['QA_per'].iloc[13100:13200], color="red", lw=2)
 #ax2.ylim(-1.5, 1.5)
 """
-
+"""
 fig = pylab.figure()
 ax1 = fig.add_subplot(311)
 ax2 = fig.add_subplot(312)
@@ -284,6 +303,7 @@ ax2.scatter(x, y2, color=color,s=9)
 ax3.scatter(x, df_result['QA_spk2'].iloc[13100:13200], color="red", s=9)
 ax3.vlines(x, ymin=0, ymax=df_result['QA_spk2'].iloc[13100:13200], color="red", lw=2)
 #ax2.ylim(-1.5, 1.5)
+"""
 
 
 
