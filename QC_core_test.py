@@ -39,15 +39,16 @@ def spike(x, mu, delta):
         return 0
     
 # mean absoute deviation based spike detection.    
-def spike1(x, mu, delta):
+def spike1(x, QA1):
+    x = x[::-1]
     df=x
     x_bar=np.abs(x).mean()
-    print(x, np.abs(x).mean(), x[0], np.abs(np.abs(df[0]) - x_bar)/x_bar)
-    if np.abs(np.abs(df[0]) - x_bar)/x_bar >= delta: # if MAD is > assigned threshold then set flag.
+    if np.abs(df[0])> delta*x_bar : # if MAD is > assigned threshold then set flag.
+        print(x, x_bar)
         return 1
     else:
         return 0
-    
+
 # modified z-score spike detector.  This is a robust method based on the median absolute deviation.
 # at this point this is the preferable method for detection obvious outliers
 def spike2(x, mzs_t):
@@ -56,11 +57,11 @@ def spike2(x, mzs_t):
     mad = np.median(np.abs(np.subtract(x, -med_x))) # compute the median absolute deviation
     mzs = 0.675*(x[0] - med_x)/mad # compute the modified z-score (mzs)
     if mzs > 3.5:
-        print(x, med_x, mad, mzs)
+#        print(x, med_x, mad, mzs)
         return 1
     else:
         return 0
-    
+   
 # method to return msz for testing purposes and visualization (will be removed in production)
 # the output of this function is currently being used for testing and visualization of the data
 def mzs_test(x, mzs_t):
@@ -70,17 +71,26 @@ def mzs_test(x, mzs_t):
     mzs = 0.675*(x[0] - med_x)/mad # compute the modified z-score (mzs)
     return mzs
 
-
+# normalized deviation above the mean
 def spike3(x, zs_t):
     x = x[::-1]
     x_bar = x.mean()
     dev = np.abs(x[0]-x_bar)/x_bar
-    if dev > 5 and x_bar > 12:
-        print(x, x_bar, dev)
+    if dev > 2 and x_bar > delta1:
+        print(x)
         return 1
     else:
         return 0
     
+def spike4(x, QA4, lowValue4):
+    x = x[::-1]
+    x_med = np.median(x)
+    dev = np.abs(x[0] - x_med)/x_med
+    if dev > QA4 and x_med > lowValue4:
+        return 1
+    else:
+        return 0
+
 def spike3_mod(x, zs_t):
     x = x[::-1]
     x_bar = x[0:len(x)-2].mean()
@@ -138,6 +148,10 @@ def t_delta(x):
     delta = np.array(delta)/60
     return delta
 
+def winCount(x):
+    x = x[::-1]
+    return len(x)
+
 ##############################################################3 end QA function definitions    
 #statiscal parameter definitions
 # temporatily substitues for values that will be retrieved from the QA metadata table in the database
@@ -164,6 +178,14 @@ frame['date1'] = pd.to_timedelta(frame['StartDateTime']).astype('timedelta64[m]'
 frame['date2'] = t_delta(frame['StartDateTime'])
 
 
+QA1 = 4
+QA2 = 4.0
+QA3 = 0.5
+QA4 = 3.0
+lowValue4 = 5
+
+
+
 # determine subhourly observations within the aggregation target time unit (standard: 1 hour for subhourly data)
 # hourcount will give a count of records present for a given target hour to be used for computing the completeness requirement
 # this resampling operation will support hourly aggregation of sub-hourly data
@@ -177,15 +199,17 @@ df_list = []
 for group in gp:
     frame = pd.DataFrame(group[1])
     df  = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
-    df2 = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(spike, args=(mu, 5,)))
-    df3 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike2, args=(1.5,)))
-    df4 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike3, args=(3.5,)))
+    df2 = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(spike1, args=(QA1,)))
+    df3 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike2, args=(QA2,)))
+    df4 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike3, args=(QA3,)))
     df5 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike3_mod, args=(3.5,)))
     df6 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(lowvar, args=(p_delta,)))
     df7 = list(frame.set_index('StartDateTime').rolling(6)['AObs'].apply(persist))
     df8 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(mzs_test, args=(3.5,)))
     df9 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(udlcheck, args=(udl,)))
     df10 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(ldlcheck, args=(ldl,)))
+    df11 = list(frame.set_index('StartDateTime').rolling(8)['AObs'].apply(spike4, args=(QA4, lowValue4)))
+    df12 = list(frame.set_index('StartDateTime').rolling('10H')['AObs'].apply(winCount))
     
     # set staging frame for group
     df1 = np.array(group)[1]
@@ -201,6 +225,8 @@ for group in gp:
     df1['mzs_test']    = df8
     df1['QA_udl']      = df9
     df1['QA_ldl']      = df10
+    df1['QA_spk4']     = df11
+    df1['winCount']    = df12
     df_list.append(df1)  # add resulting QC flag column to result dataframe
 
 # conversion to JSON object 
@@ -238,7 +264,7 @@ ax2.scatter(x, df_result['QA_per'].iloc[13100:13200], color="red", s=9)
 ax2.vlines(x, ymin=0, ymax=df_result['QA_per'].iloc[13100:13200], color="red", lw=2)
 #ax2.ylim(-1.5, 1.5)
 """
-
+"""
 fig = pylab.figure()
 ax1 = fig.add_subplot(311)
 ax2 = fig.add_subplot(312)
@@ -262,6 +288,7 @@ ax2.scatter(x, y2, color=color,s=9)
 ax3.scatter(x, df_result['QA_spk2'].iloc[13100:13200], color="red", s=9)
 ax3.vlines(x, ymin=0, ymax=df_result['QA_spk2'].iloc[13100:13200], color="red", lw=2)
 #ax2.ylim(-1.5, 1.5)
+"""
 
 
 

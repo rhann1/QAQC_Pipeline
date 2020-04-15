@@ -38,8 +38,8 @@ class TestDataSource:
         frame = frame.append(frame2, ignore_index=True)
 
         #data = pd.read_csv('OCAP_SJV.csv')
-        #data.rename(columns={'DateTime':'date', 'MeasuredValue':'signal', 'SiteName':'id'}, inplace=True)
-        frame['StartDateTime'] = pd.to_datetime(frame['StartDateTime'])    
+        #data.rename(columns={'DateTime':'StartDateTime', 'MeasuredValue':'AObs', 'SiteName':'StreamId'}, inplace=True)
+#        frame['StartDateTime'] = pd.to_datetime(frame['StartDateTime'])    
         return frame
 
 if __name__ == "__main__":
