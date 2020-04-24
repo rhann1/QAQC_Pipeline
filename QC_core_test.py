@@ -51,32 +51,23 @@ def spike1(x, QA1):
 
 # modified z-score spike detector.  This is a robust method based on the median absolute deviation.
 # at this point this is the preferable method for detection obvious outliers
-def spike2(x, mzs_t):
+def spike2(x, QA2):
     x = x[::-1]
     med_x = np.median(x) # find the median of the window
     mad = np.median(np.abs(np.subtract(x, -med_x))) # compute the median absolute deviation
     mzs = 0.675*(x[0] - med_x)/mad # compute the modified z-score (mzs)
-    if mzs > 3.5:
+    if mzs > QA2:
 #        print(x, med_x, mad, mzs)
         return 1
-    else:
+    else: 
         return 0
    
-# method to return msz for testing purposes and visualization (will be removed in production)
-# the output of this function is currently being used for testing and visualization of the data
-def mzs_test(x, mzs_t):
-    x = x[::-1]
-    med_x = np.median(x) # find the median of the window
-    mad = np.median(np.abs(np.subtract(x, -med_x))) # compute the median absolute deviation
-    mzs = 0.675*(x[0] - med_x)/mad # compute the modified z-score (mzs)
-    return mzs
-
 # normalized deviation above the mean
-def spike3(x, zs_t):
+def spike3(x, QA3):
     x = x[::-1]
     x_bar = x.mean()
     dev = np.abs(x[0]-x_bar)/x_bar
-    if dev > 2 and x_bar > delta1:
+    if dev > QA3 and x_bar > lowValue3:
         print(x)
         return 1
     else:
@@ -121,6 +112,42 @@ def persist(x):
         return 1
     else:
         return 0
+
+################################################################################################################
+# function for supporting data completeness and aggregation operations on sub-hourly data
+################################################################################################################
+    
+# function for determining if computed average is valid based on completeness requirement
+# QC flagged records and missing records (gaps) do not count towards completeness
+def validAvg(x, freq):
+    x = x.loc[x['QA_overall'] == 0]
+    comp = int(freq*24*0.75)
+    if len(x) > comp:
+        return 1
+    else:
+        return 0
+# determines the count of valid records within the aggregation interval (example: for duration= 5min --> valud count should be 12)
+# this is a utility function used for debugging purposes
+def intervalCount(x, freq):
+    x = x.loc[x['QA_overall'] == 0]
+    comp = int(freq*24*0.75)
+    if len(x) > comp:
+        return len(x)
+    else:
+        return len(x)
+    
+# computes the simple specified time-base average from sub-base records    
+def average(x, freq): 
+    print(len(x))
+    print(x['AObs'].mean())
+    y = x.loc[x['QA_overall'] == 0]
+    print(len(y))
+    print(y.reset_index()[['AObs']].mean())
+    avg = y.reset_index()['AObs'].mean()
+    print(avg)
+    return avg
+
+
 # these are supporting functions for determining if the expected number of records are occuring withing a time interval           
 def timeDiff(x, freq, tu):
     diff = np.abs(x[0] - x[1])
@@ -164,11 +191,12 @@ tu = 'h'
 window = 2
 delta = 20
 delta1 = 10
-p_delta = 0.55 
+p_delta = 0.55
 
 # get simulated data from data source object
 tds = TestDataSource()
 frame = tds.getSimulatedDataSeries()
+store = frame
 # the production script will use the method 'dh.getHourlyData()' and 'dh.getSubhourlyData()' from the DataHandler() class
 
 # convert successive datetime objects to timedeltas on a unit seconds basis
@@ -178,10 +206,11 @@ frame['date1'] = pd.to_timedelta(frame['StartDateTime']).astype('timedelta64[m]'
 frame['date2'] = t_delta(frame['StartDateTime'])
 
 
-QA1 = 4
+QA1 = 3
 QA2 = 4.0
-QA3 = 0.5
+QA3 = 2.1
 QA4 = 3.0
+lowValue3 = 5
 lowValue4 = 5
 
 
@@ -194,21 +223,27 @@ hourCount = frame.groupby('StreamId').resample('D', on='StartDateTime').count()
 ########################################################################################################################################################
 # QC function drivers. Each driver applies the specified function operating over a moving window.  The window sizes and function parameters are sourced 
 # from the QA config dataframe.  A 'groupby' is performed on the measurement data by 'StreamId' and the operations are performed on each group.
+
+# create 'groupby' object 
 gp = frame.groupby('StreamId')
-df_list = []
+
+# create empty sub-hourly and aggregation list object to be populated with records from the processed groups
+df_list  = []
+adf_list = []
+
+# process each StreamId group
 for group in gp:
     frame = pd.DataFrame(group[1])
-    df  = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
-    df2 = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(spike1, args=(QA1,)))
-    df3 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike2, args=(QA2,)))
-    df4 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike3, args=(QA3,)))
-    df5 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike3_mod, args=(3.5,)))
-    df6 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(lowvar, args=(p_delta,)))
-    df7 = list(frame.set_index('StartDateTime').rolling(6)['AObs'].apply(persist))
-    df8 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(mzs_test, args=(3.5,)))
-    df9 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(udlcheck, args=(udl,)))
+    df   = list(frame.set_index('StartDateTime').rolling(2)[ 'date2'].apply(timeDiff, args=(freq, tu,)))
+    df2  = list(frame.set_index('StartDateTime').rolling(2)[ 'AObs'].apply(spike1, args=(QA1,)))
+    df3  = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike2, args=(QA2,)))
+    df4  = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike3, args=(QA3,)))
+    df5  = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike3_mod, args=(3.5,)))
+    df6  = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(lowvar, args=(p_delta,)))
+    df7  = list(frame.set_index('StartDateTime').rolling(6)[ 'AObs'].apply(persist))
+    df9  = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(udlcheck, args=(udl,)))
     df10 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(ldlcheck, args=(ldl,)))
-    df11 = list(frame.set_index('StartDateTime').rolling(8)['AObs'].apply(spike4, args=(QA4, lowValue4)))
+    df11 = list(frame.set_index('StartDateTime').rolling(8)[ 'AObs'].apply(spike4, args=(QA4, lowValue4)))
     df12 = list(frame.set_index('StartDateTime').rolling('10H')['AObs'].apply(winCount))
     
     # set staging frame for group
@@ -222,19 +257,39 @@ for group in gp:
     df1['QA_spk3_mod'] = df5
     df1['QA_LV']       = df6
     df1['QA_per']      = df7
-    df1['mzs_test']    = df8
     df1['QA_udl']      = df9
     df1['QA_ldl']      = df10
     df1['QA_spk4']     = df11
     df1['winCount']    = df12
+
+    # compute overall QC flag using bitwise logical 'or' combination of level 1 flags
+    df1['QA_overall']  = df1['QA_spk3'].loc[df1['QA_spk3'].notnull()].apply(lambda x: int(x)) | \
+                         df1['QA_per'].loc[df1['QA_per'].notnull()].apply(lambda x: int(x))   | \
+                         df1['QA_udl'].loc[df1['QA_udl'].notnull()].apply(lambda x: int(x))   | \
+                         df1['QA_ldl'].loc[df1['QA_ldl'].notnull()].apply(lambda x: int(x))   
+                         
     df_list.append(df1)  # add resulting QC flag column to result dataframe
+    
+    adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(validAvg, freq=1))
+    adf_temp = list(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(intervalCount, freq=1))
+    adf1['validCount'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(intervalCount, freq=1))
+    adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1D').apply(average, freq=1))[0] 
+    
+    adf_list.append(adf1) # add resulting averages and supporting columns to  result aggregation dataframe
+    
+    
+
+# concatentate QC flag and aggregations list to a dataframe
+df_result  = pd.concat(df_list)
+adf_result = pd.concat(adf_list)
+print(df_result)
+
+# end function drivers
+####################################################################################################################################################
 
 # conversion to JSON object 
 # this will be replace by 'putData()' method exported by the Data Handler in production
-df_result = pd.concat(df_list)
-print(df_result)
-# end function drivers
-####################################################################################################################################################
+
 
 # dh.putData() # this call will transfer QC flag dataframes back to the data handler
 

@@ -10,7 +10,7 @@ import numpy as np
 
 class TestDataSource:
     
-    def __init__(self, mu = 12.0, sigma = 7):
+    def __init__(self, mu = 15.0, sigma = 7):
         self.mu = mu
         self.sigma = sigma
         
@@ -37,9 +37,9 @@ class TestDataSource:
         # append ID=1 group
         frame = frame.append(frame2, ignore_index=True)
 
-        #data = pd.read_csv('OCAP_SJV.csv')
-        #data.rename(columns={'DateTime':'StartDateTime', 'MeasuredValue':'AObs', 'SiteName':'StreamId'}, inplace=True)
-#        frame['StartDateTime'] = pd.to_datetime(frame['StartDateTime'])    
+        data = pd.read_csv('sample_hourly_data/OCAP_SJV.csv')
+        data.rename(columns={'DateTime':'StartDateTime', 'MeasuredValue':'AObs', 'SiteName':'StreamId'}, inplace=True)
+        frame['StartDateTime'] = pd.to_datetime(frame['StartDateTime'])    
         return frame
 
 if __name__ == "__main__":
