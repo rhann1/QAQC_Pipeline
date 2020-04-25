@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 
 
 import pandas as pd
@@ -127,6 +127,7 @@ def validAvg(x, freq):
         return 1
     else:
         return 0
+    
 # determines the count of valid records within the aggregation interval (example: for duration= 5min --> valud count should be 12)
 # this is a utility function used for debugging purposes
 def intervalCount(x, freq):
@@ -136,7 +137,14 @@ def intervalCount(x, freq):
         return len(x)
     else:
         return len(x)
-    
+
+# determines the percentage associtated with the completeness criteria for an averaging interval
+def PercentageCompletion(x, freq, expectedCount):
+    x = x.loc[x['QA_overall'] == 0]
+    validRecords = len(x)
+    percentageCompletion = validRecords/expectedCount*100
+    return percentageCompletion
+
 # computes the simple specified time-base average from sub-base records    
 def average(x, freq): 
     print(len(x))
@@ -193,6 +201,7 @@ window = 2
 delta = 20
 delta1 = 10
 p_delta = 0.55
+expectedCount = 24
 
 # get simulated data from data source object
 tds = TestDataSource()
@@ -271,21 +280,20 @@ for group in gp:
                          
     df_list.append(df1)  # add resulting QC flags to the temporary list object for each StreamId group
 
-    # Begin aggregation operations
-        
+    # Begin aggregation operations       
     adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(validAvg, freq=1)).rename({0:'validAvg'}, axis=1)
     adf1['StreamId'] = group[0]
-    adf_temp = list(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(intervalCount, freq=1))
     adf1['validCount'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(intervalCount, freq=1))
+    adf1['percentCompetion'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(PercentageCompletion, freq=1, expectedCount = expectedCount))
     adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1D').apply(average, freq=1))[0] 
     
     adf_list.append(adf1) # add resulting averages and supporting columns to  result aggregation dataframe
     
-    
-
 # concatentate QC flag and aggregations list to a dataframe
 df_result  = pd.concat(df_list)
 adf_result = pd.concat(adf_list)
+
+# write testing results to output files
 df_result.to_csv('testing_results/test_result.csv')
 adf_result.to_csv('testing_results/test_avgs.csv')
 print(df_result)
