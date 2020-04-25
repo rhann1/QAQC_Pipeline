@@ -21,6 +21,7 @@ def udlcheck(x, udl):
 
 # lower instrument detection limit (LDL)    
 def ldlcheck(x, ldl):
+    x = x[::-1]
     if x[0] < ldl:
         return 1
     else:
@@ -268,9 +269,12 @@ for group in gp:
                          df1['QA_udl'].loc[df1['QA_udl'].notnull()].apply(lambda x: int(x))   | \
                          df1['QA_ldl'].loc[df1['QA_ldl'].notnull()].apply(lambda x: int(x))   
                          
-    df_list.append(df1)  # add resulting QC flag column to result dataframe
-    
-    adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(validAvg, freq=1))
+    df_list.append(df1)  # add resulting QC flags to the temporary list object for each StreamId group
+
+    # Begin aggregation operations
+        
+    adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(validAvg, freq=1)).rename({0:'validAvg'}, axis=1)
+    adf1['StreamId'] = group[0]
     adf_temp = list(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(intervalCount, freq=1))
     adf1['validCount'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(intervalCount, freq=1))
     adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1D').apply(average, freq=1))[0] 
@@ -282,6 +286,8 @@ for group in gp:
 # concatentate QC flag and aggregations list to a dataframe
 df_result  = pd.concat(df_list)
 adf_result = pd.concat(adf_list)
+df_result.to_csv('testing_results/test_result.csv')
+adf_result.to_csv('testing_results/test_avgs.csv')
 print(df_result)
 
 # end function drivers
