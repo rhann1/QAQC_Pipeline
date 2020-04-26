@@ -42,9 +42,12 @@ class TestDataSource:
         # append ID=1 group
         frame = frame.append(frame2, ignore_index=True)
 
-        data = pd.read_csv('sample_hourly_data/OCAP_SJV.csv')
-        data.rename(columns={'DateTime':'StartDateTime', 'MeasuredValue':'AObs', 'SiteName':'StreamId'}, inplace=True)
+        #data = pd.read_csv('sample_hourly_data/OCAP_SJV.csv')
+        frame = pd.read_csv('sample_subhourly_data/2020-02-08_1.csv')
+        #data.rename(columns={'DateTime':'StartDateTime', 'MeasuredValue':'AObs', 'SiteName':'StreamId'}, inplace=True)
+        frame.rename(columns={'MonitorId':'StreamId'}, inplace=True)
         frame['StartDateTime'] = pd.to_datetime(frame['StartDateTime'])    
+        frame = frame.loc[frame['Parameter'] == 88101]
         return frame
 
 if __name__ == "__main__":
