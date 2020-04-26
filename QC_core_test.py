@@ -122,7 +122,7 @@ def persist(x):
 # QC flagged records and missing records (gaps) do not count towards completeness
 def validAvg(x, freq):
     x = x.loc[x['QA_overall'] == 0]
-    comp = int(freq*24*0.75)
+    comp = int(60/freq*0.75)
     if len(x) > comp:
         return 1
     else:
@@ -132,7 +132,7 @@ def validAvg(x, freq):
 # this is a utility function used for debugging purposes
 def intervalCount(x, freq):
     x = x.loc[x['QA_overall'] == 0]
-    comp = int(freq*24*0.75)
+    comp = int(freq*12*0.75)
     if len(x) > comp:
         return len(x)
     else:
@@ -201,7 +201,7 @@ window = 2
 delta = 20
 delta1 = 10
 p_delta = 0.55
-expectedCount = 24
+expectedCount = 12
 
 # get simulated data from data source object
 tds = TestDataSource()
@@ -246,15 +246,15 @@ for group in gp:
     frame = pd.DataFrame(group[1])
     df   = list(frame.set_index('StartDateTime').rolling(2)[ 'date2'].apply(timeDiff, args=(freq, tu,)))
     df2  = list(frame.set_index('StartDateTime').rolling(2)[ 'AObs'].apply(spike1, args=(QA1,)))
-    df3  = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike2, args=(QA2,)))
-    df4  = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike3, args=(QA3,)))
-    df5  = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(spike3_mod, args=(3.5,)))
-    df6  = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(lowvar, args=(p_delta,)))
+    df3  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(spike2, args=(QA2,)))
+    df4  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(spike3, args=(QA3,)))
+    df5  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(spike3_mod, args=(3.5,)))
+    df6  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(lowvar, args=(p_delta,)))
     df7  = list(frame.set_index('StartDateTime').rolling(6)[ 'AObs'].apply(persist))
-    df9  = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(udlcheck, args=(udl,)))
-    df10 = list(frame.set_index('StartDateTime').rolling(10)['AObs'].apply(ldlcheck, args=(ldl,)))
-    df11 = list(frame.set_index('StartDateTime').rolling(8)[ 'AObs'].apply(spike4, args=(QA4, lowValue4)))
-    df12 = list(frame.set_index('StartDateTime').rolling('10H')['AObs'].apply(winCount))
+    df9  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(udlcheck, args=(udl,)))
+    df10 = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(ldlcheck, args=(ldl,)))
+    df11 = list(frame.set_index('StartDateTime').rolling('1H')[ 'AObs'].apply(spike4, args=(QA4, lowValue4)))
+    df12 = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(winCount))
     
     # set staging frame for group
     df1 = np.array(group)[1]
@@ -281,11 +281,11 @@ for group in gp:
     df_list.append(df1)  # add resulting QC flags to the temporary list object for each StreamId group
 
     # Begin aggregation operations       
-    adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(validAvg, freq=1)).rename({0:'validAvg'}, axis=1)
+    adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(validAvg, freq=5)).rename({0:'validAvg'}, axis=1)
     adf1['StreamId'] = group[0]
-    adf1['validCount'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(intervalCount, freq=1))
-    adf1['percentCompetion'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1D')).apply(PercentageCompletion, freq=1, expectedCount = expectedCount))
-    adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1D').apply(average, freq=1))[0] 
+    adf1['validCount'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(intervalCount, freq=5))
+    adf1['percentCompetion'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(PercentageCompletion, freq=5, expectedCount = expectedCount))
+    adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1H').apply(average, freq=5))[0] 
     
     adf_list.append(adf1) # add resulting averages and supporting columns to  result aggregation dataframe
     
