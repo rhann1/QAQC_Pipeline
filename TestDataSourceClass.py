@@ -7,6 +7,7 @@ Created on Tue Mar 31 11:49:26 2020
 
 import pandas as pd
 import numpy as np
+from read_data_files import TestDataFileReader
 
 class TestDataSource:
     
@@ -67,6 +68,10 @@ class TestDataSource:
         frame = frame[frame.columns[[0, 2, 1, 3]]] # resequence column order in dataframe
         #frame = frame.reindex(['StreamId', 'StartDateTime', 'Parameter', 'AObs'], axis=1) # alternative for resequencing order of columns
         frame = frame.loc[frame['Parameter'] == 88101]
+        
+        # create data source object
+        reader = TestDataFileReader()
+        frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'CCV')
         
         # end read from CSV file block
         #####################################################################################################################
