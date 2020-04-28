@@ -99,7 +99,7 @@ def lowvar(x, p_delta):
     x = x[::-1]
     x_bar = x.mean()
     sdev = np.std(x)
-    print(np.abs(np.subtract(x,x_bar)).sum()/len(x))
+    #print(np.abs(np.subtract(x,x_bar)).sum()/len(x))
     if np.abs(np.subtract(x,x_bar)).sum()/len(x) < p_delta*sdev:
         return 1
     else:
@@ -147,13 +147,8 @@ def PercentageCompletion(x, freq, expectedCount):
 
 # computes the simple specified time-base average from sub-base records    
 def average(x, freq): 
-    print(len(x))
-    print(x['AObs'].mean())
     y = x.loc[x['QA_overall'] == 0]
-    print(len(y))
-    print(y.reset_index()[['AObs']].mean())
     avg = y.reset_index()['AObs'].mean()
-    print(avg)
     return avg
 
 
