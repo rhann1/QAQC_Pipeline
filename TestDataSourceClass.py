@@ -67,11 +67,12 @@ class TestDataSource:
         frame['StartDateTime'] = pd.to_datetime(frame['StartDateTime'])   
         frame = frame[frame.columns[[0, 2, 1, 3]]] # resequence column order in dataframe
         #frame = frame.reindex(['StreamId', 'StartDateTime', 'Parameter', 'AObs'], axis=1) # alternative for resequencing order of columns
-        frame = frame.loc[frame['Parameter'] == 88101]
+        #frame = frame.loc[frame['Parameter'] == 88101]
         
         # create data source object
         reader = TestDataFileReader()
         frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'CCV')
+        frame = frame.loc[frame['Parameter'] == 85101]
         
         # end read from CSV file block
         #####################################################################################################################

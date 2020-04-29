@@ -37,7 +37,7 @@ class TestDataFileReader:
         frame = frame[frame.columns[[0, 2, 1, 3]]] # resequence column order in dataframe
         #frame = frame.reindex(['StreamId', 'StartDateTime', 'Parameter', 'AObs'], axis=1) # alternative for resequencing order of columns
         # only keep these parameters (this can be a list)
-        frame = frame.loc[frame['Parameter'] == 88101]
+        #frame = frame.loc[frame['Parameter'] == 88101]
         return frame
 
 if __name__ == "__main__":
