@@ -14,12 +14,8 @@ class TestDataSource:
     def __init__(self, mu = 15.0, sigma = 7):
         self.mu = mu
         self.sigma = sigma
-
-    def getQAConfigDataFromFile(self, source):
-        self.dataSource = source
-        configFrame = pd.read_csv(self.dataSource)
-        return configFrame
         
+
     def getSimulatedDataSeries(self):
         
         ###################################################################################################################
@@ -88,7 +84,6 @@ if __name__ == "__main__":
     # create data source object
     tds = TestDataSource()
     data = tds.getSimulatedDataSeries()
-    configData = tds.getQAConfigDataFromFile('sample_QA_metadata/QA_metadata_sample_1.csv')
     print(data)
     
     

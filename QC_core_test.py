@@ -57,7 +57,7 @@ def spike2(x, QA2):
     med_x = np.median(x) # find the median of the window
     mad = np.median(np.abs(np.subtract(x, -med_x))) # compute the median absolute deviation
     mzs = 0.675*(x[0] - med_x)/mad # compute the modified z-score (mzs)
-    if mzs > QA2:
+    if mzs > QA2 and mzs != float("inf"):
 #        print(x, med_x, mad, mzs)
         return 1
     else: 
@@ -113,6 +113,13 @@ def persist(x):
         return 1
     else:
         return 0
+    
+def modZScore(x):
+    x = x[::-1]
+    med_x = np.median(x) # find the median of the window
+    mad = np.median(np.abs(np.subtract(x, -med_x))) # compute the median absolute deviation
+    mzs = 0.675*(x[0] - med_x)/mad # compute the modified z-score (mzs)
+    return mzs
 
 ################################################################################################################
 # function for supporting data completeness and aggregation operations on sub-hourly data
@@ -201,6 +208,9 @@ expectedCount = 12
 # get simulated data from data source object
 tds = TestDataSource()
 frame = tds.getSimulatedDataSeries()
+
+# get QA metadata from local CSV file (would normally be sourced from API call)
+configData = tds.getQAConfigDataFromFile('sample_QA_metadata/QA_metadata_sample_1.csv')
 store = frame
 # the production script will use the method 'dh.getHourlyData()' and 'dh.getSubhourlyData()' from the DataHandler() class
 
@@ -211,12 +221,12 @@ frame['date1'] = pd.to_timedelta(frame['StartDateTime']).astype('timedelta64[m]'
 frame['date2'] = t_delta(frame['StartDateTime'])
 
 
-QA1 = 3
-QA2 = 4.0
-QA3 = 2.1
-QA4 = 3.0
-lowValue3 = 5
-lowValue4 = 5
+QA1 = 2.0
+QA2 = 4
+QA3 = 4
+QA4 = 4
+lowValue3 = 0
+lowValue4 = 0
 
 
 
@@ -238,59 +248,88 @@ adf_list = []
 
 # process each StreamId group
 for group in gp:
-    frame = pd.DataFrame(group[1])
-    df   = list(frame.set_index('StartDateTime').rolling(2)[ 'date2'].apply(timeDiff, args=(freq, tu,)))
-    df2  = list(frame.set_index('StartDateTime').rolling(2)[ 'AObs'].apply(spike1, args=(QA1,)))
-    df3  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(spike2, args=(QA2,)))
-    df4  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(spike3, args=(QA3,)))
-    df5  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(spike3_mod, args=(3.5,)))
-    df6  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(lowvar, args=(p_delta,)))
-    df7  = list(frame.set_index('StartDateTime').rolling(6)[ 'AObs'].apply(persist))
-    df9  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(udlcheck, args=(udl,)))
-    df10 = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(ldlcheck, args=(ldl,)))
-    df11 = list(frame.set_index('StartDateTime').rolling('1H')[ 'AObs'].apply(spike4, args=(QA4, lowValue4)))
-    df12 = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(winCount))
     
-    # set staging frame for group
-    df1 = np.array(group)[1]
+    # process only if QC metadata exists
+    if len(configData.loc[configData['StreamId'] == group[0]].values) != 0:
+    
+        udl             = configData.loc[configData['StreamId'] == group[0]]['UDL'].values[0]
+        ldl             = configData.loc[configData['StreamId'] == group[0]]['LDL'].values[0]
+        mdl             = configData.loc[configData['StreamId'] == group[0]]['MDL'].values[0]
+        durationMinutes = configData.loc[configData['StreamId'] == group[0]]['DurationMinutes'].values[0]
+        persistCount    = configData.loc[configData['StreamId'] == group[0]]['PersistCount'].values[0]
+        QC1             = configData.loc[configData['StreamId'] == group[0]]['Anom1Thresh'].values[0]
+        QC2             = configData.loc[configData['StreamId'] == group[0]]['Anom2Thresh'].values[0]
+        QC3             = configData.loc[configData['StreamId'] == group[0]]['Anom3Thresh'].values[0]
+        QC4             = configData.loc[configData['StreamId'] == group[0]]['Anom4Thresh'].values[0]
+        QC1WinSize      = configData.loc[configData['StreamId'] == group[0]]['Anom1WindowSize'].values[0]
+        QC2WinSize      = configData.loc[configData['StreamId'] == group[0]]['Anom2WindowSize'].values[0]
+        QC3WinSize      = configData.loc[configData['StreamId'] == group[0]]['Anom3WindowSize'].values[0]
+        QC4WinSize      = configData.loc[configData['StreamId'] == group[0]]['Anom4WindowSize'].values[0]
+        persistWinSize  = configData.loc[configData['StreamId'] == group[0]]['PersistWindowSize'].values[0]
+        print(QC1)
+    
 
-    # set value for each QC flag
-    df1['QA_valid']    = df
-    df1['QA_spk1']     = df2
-    df1['QA_spk2']     = df3
-    df1['QA_spk3']     = df4
-    df1['QA_spk3_mod'] = df5
-    df1['QA_LV']       = df6
-    df1['QA_per']      = df7
-    df1['QA_udl']      = df9
-    df1['QA_ldl']      = df10
-    df1['QA_spk4']     = df11
-    df1['winCount']    = df12
+        frame = pd.DataFrame(group[1])
+    
+        df   = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
+        df2  = list(frame.set_index('StartDateTime').rolling(QC1WinSize)['AObs'].apply(spike1, args=(QA1,)))
+        df3  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QA2,)))
+        df4  = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3, args=(QA3,)))
+        df5  = list(frame.set_index('StartDateTime').rolling(QC4WinSize)['AObs'].apply(spike3_mod, args=(3.5,)))
+        df6  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['AObs'].apply(lowvar, args=(p_delta,)))
+        df7  = list(frame.set_index('StartDateTime').rolling(persistWinSize)[ 'AObs'].apply(persist))
+        df9  = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(udlcheck, args=(udl,)))
+        df10 = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(ldlcheck, args=(ldl,)))
+        df11 = list(frame.set_index('StartDateTime').rolling(QC4WinSize)[ 'AObs'].apply(spike4, args=(QA4, lowValue4)))
+        df12 = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(winCount))
+        df13 = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(modZScore))
+    
+        # set staging frame for group
+        df1 = np.array(group)[1]
 
-    # compute overall QC flag using bitwise logical 'or' combination of level 1 flags
-    df1['QA_overall']  = df1['QA_spk3'].loc[df1['QA_spk3'].notnull()].apply(lambda x: int(x)) | \
-                         df1['QA_per'].loc[df1['QA_per'].notnull()].apply(lambda x: int(x))   | \
-                         df1['QA_udl'].loc[df1['QA_udl'].notnull()].apply(lambda x: int(x))   | \
-                         df1['QA_ldl'].loc[df1['QA_ldl'].notnull()].apply(lambda x: int(x))   
+        # set value for each QC flag
+        df1['QA_valid']    = df
+        df1['QA_spk1']     = df2
+        df1['QA_spk2']     = df3
+        df1['QA_spk3']     = df4
+        df1['QA_spk3_mod'] = df5
+        df1['QA_LV']       = df6
+        df1['QA_per']      = df7
+        df1['QA_udl']      = df9
+        df1['QA_ldl']      = df10
+        df1['QA_spk4']     = df11
+        df1['winCount']    = df12
+        df1['mzs']         = df13
+
+        # compute overall QC flag using bitwise logical 'or' combination of level 1 flags
+        df1['QA_overall']  = df1['QA_spk3'].loc[df1['QA_spk3'].notnull()].apply(lambda x: int(x)) | \
+                             df1['QA_per'].loc[df1['QA_per'].notnull()].apply(lambda x: int(x))   | \
+                             df1['QA_udl'].loc[df1['QA_udl'].notnull()].apply(lambda x: int(x))   | \
+                             df1['QA_ldl'].loc[df1['QA_ldl'].notnull()].apply(lambda x: int(x))   
                          
-    df_list.append(df1)  # add resulting QC flags to the temporary list object for each StreamId group
+        df_list.append(df1)  # add resulting QC flags to the temporary list object for each StreamId group
 
-    # Begin aggregation operations       
-    adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(validAvg, freq=5)).rename({0:'validAvg'}, axis=1)
-    adf1['StreamId'] = group[0]
-    adf1['validCount'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(intervalCount, freq=5))
-    adf1['percentCompetion'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(PercentageCompletion, freq=5, expectedCount = expectedCount))
-    adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1H').apply(average, freq=5))[0] 
-    
-    adf_list.append(adf1) # add resulting averages and supporting columns to  result aggregation dataframe
+        # Begin sub-hourly to hourly aggregation operations
+        # only aggregate sub-hourly streams
+        if durationMinutes < 60:
+            adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(validAvg, freq=5)).rename({0:'validAvg'}, axis=1)
+            adf1['StreamId'] = group[0]
+            adf1['validCount'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(intervalCount, freq=5))
+            adf1['percentCompetion'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(PercentageCompletion, freq=5, expectedCount = expectedCount))
+            adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1H').apply(average, freq=5))[0] 
+            
+            adf_list.append(adf1) # add resulting averages and supporting columns to  result aggregation dataframe
     
 # concatentate QC flag and aggregations list to a dataframe
-df_result  = pd.concat(df_list)
-adf_result = pd.concat(adf_list)
+if len(df_list) != 0:
+    df_result  = pd.concat(df_list)
+    df_result.to_csv('testing_results/test_result.csv')    
 
-# write testing results to output files
-df_result.to_csv('testing_results/test_result.csv')
-adf_result.to_csv('testing_results/test_avgs.csv')
+# create hourly average dataframe
+if len(adf_list) != 0 and durationMinutes < 60:
+    adf_result = pd.concat(adf_list)
+    adf_result.to_csv('testing_results/test_avgs.csv')
+    
 print(df_result)
 
 # end function drivers
