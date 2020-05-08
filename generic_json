@@ -8,7 +8,7 @@
     {
       "StreamSegmentId": 2,
       "StartDateTime": 2,
-      "Aobs": 1
+      "AObs": 1
     }
   ],
   "configuration": [
