@@ -65,7 +65,7 @@ class DataHandler:
 if __name__ == "__main__":
     
     # read test JSON object from file (not needed in production)
-    with open('generic_json') as f:
+    with open('sample_json_payload/simple_payload.json') as f:
         payload = json.load(f)
 
     print(payload)
