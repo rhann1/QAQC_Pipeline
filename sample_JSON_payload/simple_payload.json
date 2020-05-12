@@ -1,0 +1,44 @@
+{
+  "measurements": [
+    {
+      "StreamSegmentId": 1,
+      "StartDateTime": "04-12-2020 04:05:00",
+      "AObs": 1
+    },
+    {
+      "StreamSegmentId": 2,
+      "StartDateTime": "04-12-2020 04:05:00",
+      "AObs": 1
+    }
+  ],
+  "configuration": [
+    {
+      "StreamSegmentId": 1,
+      "SamplingFrequencyId": 1,
+      "SamplingDurationId": 1,
+      "UOMId": 1,
+      "QaConfigurationSettings": [
+        {
+          "UDL": "500"
+        },
+        {
+          "LDL": "0"
+        }
+      ]
+    },
+    {
+      "StreamSegmentId": 2,
+      "SamplingFrequencyId": 1,
+      "SamplingDurationId": 1,
+      "UOMId": 1,
+      "QaConfigurationSettings": [
+        {
+          "UDL": "400"
+        },
+        {
+          "LDL": "-2"
+        }
+      ]
+    }
+  ]
+}
