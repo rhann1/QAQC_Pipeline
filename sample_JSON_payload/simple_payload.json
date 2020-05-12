@@ -2,12 +2,12 @@
   "measurements": [
     {
       "StreamSegmentId": 1,
-      "StartDateTime": 1,
+      "StartDateTime": "04-12-2020 04:05:00",
       "AObs": 1
     },
     {
       "StreamSegmentId": 2,
-      "StartDateTime": 2,
+      "StartDateTime": "04-12-2020 04:05:00",
       "AObs": 1
     }
   ],

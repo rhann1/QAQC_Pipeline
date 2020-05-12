@@ -14,6 +14,7 @@ from TestDataSourceClass import TestDataSource
 # upper instrument detection limit check (UDL)
 # simple threshold comparison against the current record x[0]
 def udlcheck(x, udl):
+    x = x[::-1]
     if x[0] > udl:
         return 1
     else:
@@ -42,10 +43,10 @@ def spike(x, mu, delta):
 # mean absoute deviation based spike detection.    
 def spike1(x, QA1):
     x = x[::-1]
-    df=x
-    x_bar=np.abs(x).mean()
-    if np.abs(df[0])> delta*x_bar : # if MAD is > assigned threshold then set flag.
-        print(x, x_bar)
+    print(x)
+    x_med = np.median(x)
+    dev = np.abs(x[0] - x_med)/x_med
+    if dev > QA4:
         return 1
     else:
         return 0
@@ -68,33 +69,26 @@ def spike3(x, QA3):
     x = x[::-1]
     x_bar = x.mean()
     dev = np.abs(x[0]-x_bar)/x_bar
-    if dev > QA3 and x_bar > lowValue3:
-        print(x)
-        return 1
-    else:
-        return 0
-    
-def spike4(x, QA4, lowValue4):
-    x = x[::-1]
-    x_med = np.median(x)
-    dev = np.abs(x[0] - x_med)/x_med
-    if dev > QA4 and x_med > lowValue4:
+    if dev > QA3:
         return 1
     else:
         return 0
 
-def spike3_mod(x, zs_t):
+# IQR outlier detection.
+# This method needs a large observation window and may not be feasible as a Level 1 QC test
+def spike4(x, QA4):
     x = x[::-1]
-    x_bar = x[0:len(x)-2].mean()
-    dev = np.abs(x[0]-x_bar)/x_bar
-    if dev > 5 and x_bar > 12:
-        print(x, x_bar, dev)
+    q25, q75 = np.percentile(x, 25), np.percentile(x, 75)
+    iqr = q75 - q25
+    threshold = iqr*10
+    lower, upper = q25 - threshold, q75 + threshold
+    if x[0] > upper:
         return 1
-    else:    
+    else: 
         return 0
 
 # test to see if data within window varies below a given threshold value
-# this still needs work 
+# this still needs work (not implemented to compute flag yet)
 def lowvar(x, p_delta):
     x = x[::-1]
     x_bar = x.mean()
@@ -190,6 +184,17 @@ def winCount(x):
     x = x[::-1]
     return len(x)
 
+# supporting function to check if the spike detection function has a valid window
+def spikeValid(x, freq, width):
+    x = x[::-1]
+    l = len(x)
+    t_delta = x[0] - x[l-1] # compute time delta associated with the window 
+    print(l, t_delta, freq*(width - 1))
+    if t_delta > freq*(width - 1): # if time delta in larger than expected based on freq, mark window as invalid (missing observations in time interval)
+        return 1
+    else:
+        return 0
+
 ##############################################################3 end QA function definitions    
 #statiscal parameter definitions
 # temporatily substitues for values that will be retrieved from the QA metadata table in the database
@@ -209,8 +214,32 @@ expectedCount = 12
 tds = TestDataSource()
 frame = tds.getSimulatedDataSeries()
 
+#############################################################################################################
+## TO BE REMOVED ##
+# temporary simulated time-series for testing centered window
+
+StartDateTime = pd.date_range('2000-1-1 00:00:00', periods=72, freq='5min')
+simFrame = pd.DataFrame(data=np.random.randn(72)+30, index=StartDateTime, columns=['AObs'])
+frame = simFrame.reset_index()
+frame['StreamId'] = 1111
+frame['Parameter'] = '99999'
+frame.columns = ['StartDateTime', 'AObs', 'StreamId', 'Parameter']
+frame.loc[24, 'AObs'] = 1000
+frame.loc[25, 'AObs'] = 1000
+frame.loc[26, 'AObs'] = 1000
+frame.loc[27, 'AObs'] = 1000
+
+frame.loc[40, 'AObs'] = 120
+frame.loc[41, 'AObs'] = 120
+frame.loc[42, 'AObs'] = 120
+frame.loc[43, 'AObs'] = 120
+
+
+## TO BE REMOVED ##
+#############################################################################################################
+
 # get QA metadata from local CSV file (would normally be sourced from API call)
-configData = tds.getQAConfigDataFromFile('sample_QA_metadata/QA_metadata_sample_1.csv')
+configData = tds.getQAConfigDataFromFile('sample_QA_metadata/QA_metadata_sample_2.csv')
 store = frame
 # the production script will use the method 'dh.getHourlyData()' and 'dh.getSubhourlyData()' from the DataHandler() class
 
@@ -245,6 +274,7 @@ gp = frame.groupby('StreamId')
 # create empty sub-hourly and aggregation list object to be populated with records from the processed groups
 df_list  = []
 adf_list = []
+print(frame)
 
 # process each StreamId group
 for group in gp:
@@ -252,38 +282,63 @@ for group in gp:
     # process only if QC metadata exists
     if len(configData.loc[configData['StreamId'] == group[0]].values) != 0:
     
-        udl             = configData.loc[configData['StreamId'] == group[0]]['UDL'].values[0]
-        ldl             = configData.loc[configData['StreamId'] == group[0]]['LDL'].values[0]
-        mdl             = configData.loc[configData['StreamId'] == group[0]]['MDL'].values[0]
-        durationMinutes = configData.loc[configData['StreamId'] == group[0]]['DurationMinutes'].values[0]
-        persistCount    = configData.loc[configData['StreamId'] == group[0]]['PersistCount'].values[0]
-        QC1             = configData.loc[configData['StreamId'] == group[0]]['Anom1Thresh'].values[0]
-        QC2             = configData.loc[configData['StreamId'] == group[0]]['Anom2Thresh'].values[0]
-        QC3             = configData.loc[configData['StreamId'] == group[0]]['Anom3Thresh'].values[0]
-        QC4             = configData.loc[configData['StreamId'] == group[0]]['Anom4Thresh'].values[0]
-        QC1WinSize      = configData.loc[configData['StreamId'] == group[0]]['Anom1WindowSize'].values[0]
-        QC2WinSize      = configData.loc[configData['StreamId'] == group[0]]['Anom2WindowSize'].values[0]
-        QC3WinSize      = configData.loc[configData['StreamId'] == group[0]]['Anom3WindowSize'].values[0]
-        QC4WinSize      = configData.loc[configData['StreamId'] == group[0]]['Anom4WindowSize'].values[0]
-        persistWinSize  = configData.loc[configData['StreamId'] == group[0]]['PersistWindowSize'].values[0]
-        print(QC1)
+        udl                = float(configData.loc[configData['StreamId'] == group[0]]['UDL'].values[0])
+        ldl                = float(configData.loc[configData['StreamId'] == group[0]]['LDL'].values[0])
+        mdl                = float(configData.loc[configData['StreamId'] == group[0]]['MDL'].values[0])
+        durationMinutes    = float(configData.loc[configData['StreamId'] == group[0]]['DurationMinutes'].values[0])
+        persistCount       = int(configData.loc[configData['StreamId'] == group[0]]['PersistCount'].values[0])
+        QC1                = float(configData.loc[configData['StreamId'] == group[0]]['Anom1Thresh'].values[0])
+        QC2                = float(configData.loc[configData['StreamId'] == group[0]]['Anom2Thresh'].values[0])
+        QC3                = float(configData.loc[configData['StreamId'] == group[0]]['Anom3Thresh'].values[0])
+        QC4                = float(configData.loc[configData['StreamId'] == group[0]]['Anom4Thresh'].values[0])
+        useUDL             = float(configData.loc[configData['StreamId'] == group[0]]['useUDL'].values[0])
+        useLDL             = float(configData.loc[configData['StreamId'] == group[0]]['useLDL'].values[0])
+        useMDL             = float(configData.loc[configData['StreamId'] == group[0]]['useMDL'].values[0])
+        usePersistCount    = int(configData.loc[configData['StreamId'] == group[0]]['usePCount'].values[0])
+        useQC1             = float(configData.loc[configData['StreamId'] == group[0]]['useA1Check'].values[0])
+        useQC2             = float(configData.loc[configData['StreamId'] == group[0]]['useA2Check'].values[0])
+        useQC3             = float(configData.loc[configData['StreamId'] == group[0]]['useA3Check'].values[0])
+        useQC4             = float(configData.loc[configData['StreamId'] == group[0]]['useA4Check'].values[0])
+        QC1WinSize         = int(configData.loc[configData['StreamId'] == group[0]]['Anom1WindowSize'].values[0])
+        QC2WinSize         = int(configData.loc[configData['StreamId'] == group[0]]['Anom2WindowSize'].values[0])
+        QC3WinSize         = int(configData.loc[configData['StreamId'] == group[0]]['Anom3WindowSize'].values[0])
+        QC4WinSize         = int(configData.loc[configData['StreamId'] == group[0]]['Anom4WindowSize'].values[0])
+        persistWinSize     = int(configData.loc[configData['StreamId'] == group[0]]['PersistWindowSize'].values[0])
+        
     
 
         frame = pd.DataFrame(group[1])
     
-        df   = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
-        df2  = list(frame.set_index('StartDateTime').rolling(QC1WinSize)['AObs'].apply(spike1, args=(QA1,)))
-        df3  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QA2,)))
-        df4  = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3, args=(QA3,)))
-        df5  = list(frame.set_index('StartDateTime').rolling(QC4WinSize)['AObs'].apply(spike3_mod, args=(3.5,)))
-        df6  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['AObs'].apply(lowvar, args=(p_delta,)))
-        df7  = list(frame.set_index('StartDateTime').rolling(persistWinSize)[ 'AObs'].apply(persist))
-        df9  = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(udlcheck, args=(udl,)))
-        df10 = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(ldlcheck, args=(ldl,)))
-        df11 = list(frame.set_index('StartDateTime').rolling(QC4WinSize)[ 'AObs'].apply(spike4, args=(QA4, lowValue4)))
-        df12 = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(winCount))
-        df13 = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(modZScore))
-    
+        df    = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
+        df2   = list(frame.set_index('StartDateTime').rolling(QC1WinSize)['AObs'].apply(spike1, args=(QA1,)))
+        df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QA2,)).shift(-30, freq='m'))
+        df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QA2,)))
+        df4   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3, args=(QA3,)))
+        df5   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
+        df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
+        df6   = list(frame.set_index('StartDateTime').rolling(persistWinSize)['AObs'].apply(lowvar, args=(p_delta,)))
+        df7   = list(frame.set_index('StartDateTime').rolling(persistWinSize)[ 'AObs'].apply(persist))
+        df9   = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(udlcheck, args=(udl,)))
+        df10  = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(ldlcheck, args=(ldl,)))
+        df11  = list(frame.set_index('StartDateTime').rolling(QC4WinSize)[ 'AObs'].apply(spike4, args=(QA4,)))
+        df12  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(winCount))
+        df13  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(modZScore))
+        
+        df2v  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC2WinSize,)))
+        df3v  = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC3WinSize,)))
+        df4v  = list(frame.set_index('StartDateTime').rolling(QC4WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC4WinSize,)))
+        df5v  = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC3WinSize,)))
+        df6v  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['date1'].apply(spikeValid, args=(durationMinutes, persistWinSize,)))
+        df7v  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['date1'].apply(spikeValid, args=(durationMinutes, persistWinSize,)))
+        
+        # set value of QC flags with window validity check that are based on previous observations (e.g., outlier tests)
+        df2 = [d if v < 1 else -1 for d,v in zip(df2,df2v)]
+        df3 = [d if v < 1 else -1 for d,v in zip(df3,df3v)]
+        df4 = [d if v < 1 else -1 for d,v in zip(df4,df4v)]
+        df5 = [d if v < 1 else -1 for d,v in zip(df5,df5v)]
+        df6 = [d if v < 1 else -1 for d,v in zip(df6,df6v)]
+        df7 = [d if v < 1 else -1 for d,v in zip(df7,df7v)]
+        
         # set staging frame for group
         df1 = np.array(group)[1]
 

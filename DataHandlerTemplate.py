@@ -9,6 +9,7 @@ Created on Mon May  4 20:10:22 2020
 import pandas as pd
 import re
 import json
+from pprint import pprint
 from flatten_json import flatten
 from token_handler import TokenHandler
 
@@ -64,11 +65,12 @@ class DataHandler:
         
 if __name__ == "__main__":
     
+    # test of JSON to dataframe conversion feature of 'getData()" method
     # read test JSON object from file (not needed in production)
     with open('sample_json_payload/simple_payload.json') as f:
         payload = json.load(f)
 
-    print(payload)
+    pprint(payload)
     print('')
     dh = DataHandler()
     frames = dh.getData(payload)
