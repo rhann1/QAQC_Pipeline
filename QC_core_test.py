@@ -184,13 +184,17 @@ def winCount(x):
     x = x[::-1]
     return len(x)
 
-# supporting function to check if the spike detection function has a valid window
+# supporting function to check if the rolling window meets a 75% completeness requirment
+# Window maintains a fixed width.  Missing observations are counted as temporal gaps and can not exceed the completeness threshold
 def spikeValid(x, freq, width):
     x = x[::-1]
     l = len(x)
+    t_expected = freq*(width - 1)
     t_delta = x[0] - x[l-1] # compute time delta associated with the window 
-    print(l, t_delta, freq*(width - 1))
-    if t_delta > freq*(width - 1): # if time delta in larger than expected based on freq, mark window as invalid (missing observations in time interval)
+    gaps = (t_delta - t_expected)/freq
+    gap_fraction = (width - gaps)/width
+    print(l, t_delta, freq*(width - 1), x[0]-x[1], gaps, gap_fraction)
+    if gap_fraction < 0.75: # if time delta in larger than expected based on freq, mark window as invalid (missing observations in time interval)
         return 1
     else:
         return 0
@@ -233,6 +237,9 @@ frame.loc[40, 'AObs'] = 120
 frame.loc[41, 'AObs'] = 120
 frame.loc[42, 'AObs'] = 120
 frame.loc[43, 'AObs'] = 120
+
+frame.drop(frame.index[40], inplace=True)
+frame.drop(frame.index[41], inplace=True)
 
 
 ## TO BE REMOVED ##
@@ -291,14 +298,14 @@ for group in gp:
         QC2                = float(configData.loc[configData['StreamId'] == group[0]]['Anom2Thresh'].values[0])
         QC3                = float(configData.loc[configData['StreamId'] == group[0]]['Anom3Thresh'].values[0])
         QC4                = float(configData.loc[configData['StreamId'] == group[0]]['Anom4Thresh'].values[0])
-        useUDL             = float(configData.loc[configData['StreamId'] == group[0]]['useUDL'].values[0])
-        useLDL             = float(configData.loc[configData['StreamId'] == group[0]]['useLDL'].values[0])
-        useMDL             = float(configData.loc[configData['StreamId'] == group[0]]['useMDL'].values[0])
+        useUDL             = int(configData.loc[configData['StreamId'] == group[0]]['useUDL'].values[0])
+        useLDL             = int(configData.loc[configData['StreamId'] == group[0]]['useLDL'].values[0])
+        useMDL             = int(configData.loc[configData['StreamId'] == group[0]]['useMDL'].values[0])
         usePersistCount    = int(configData.loc[configData['StreamId'] == group[0]]['usePCount'].values[0])
-        useQC1             = float(configData.loc[configData['StreamId'] == group[0]]['useA1Check'].values[0])
-        useQC2             = float(configData.loc[configData['StreamId'] == group[0]]['useA2Check'].values[0])
-        useQC3             = float(configData.loc[configData['StreamId'] == group[0]]['useA3Check'].values[0])
-        useQC4             = float(configData.loc[configData['StreamId'] == group[0]]['useA4Check'].values[0])
+        useQC1             = int(configData.loc[configData['StreamId'] == group[0]]['useA1Check'].values[0])
+        useQC2             = int(configData.loc[configData['StreamId'] == group[0]]['useA2Check'].values[0])
+        useQC3             = int(configData.loc[configData['StreamId'] == group[0]]['useA3Check'].values[0])
+        useQC4             = int(configData.loc[configData['StreamId'] == group[0]]['useA4Check'].values[0])
         QC1WinSize         = int(configData.loc[configData['StreamId'] == group[0]]['Anom1WindowSize'].values[0])
         QC2WinSize         = int(configData.loc[configData['StreamId'] == group[0]]['Anom2WindowSize'].values[0])
         QC3WinSize         = int(configData.loc[configData['StreamId'] == group[0]]['Anom3WindowSize'].values[0])
@@ -308,7 +315,8 @@ for group in gp:
     
 
         frame = pd.DataFrame(group[1])
-    
+        
+        # compute lists of QC flags for each test
         df    = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
         df2   = list(frame.set_index('StartDateTime').rolling(QC1WinSize)['AObs'].apply(spike1, args=(QA1,)))
         df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QA2,)).shift(-30, freq='m'))
@@ -324,6 +332,7 @@ for group in gp:
         df12  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(winCount))
         df13  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(modZScore))
         
+        # determine validity of window-based QC test.  Window must be of the expected representative time interval to be a valid test.
         df2v  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC2WinSize,)))
         df3v  = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC3WinSize,)))
         df4v  = list(frame.set_index('StartDateTime').rolling(QC4WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC4WinSize,)))
@@ -357,10 +366,13 @@ for group in gp:
         df1['mzs']         = df13
 
         # compute overall QC flag using bitwise logical 'or' combination of level 1 flags
-        df1['QA_overall']  = df1['QA_spk3'].loc[df1['QA_spk3'].notnull()].apply(lambda x: int(x)) | \
-                             df1['QA_per'].loc[df1['QA_per'].notnull()].apply(lambda x: int(x))   | \
-                             df1['QA_udl'].loc[df1['QA_udl'].notnull()].apply(lambda x: int(x))   | \
-                             df1['QA_ldl'].loc[df1['QA_ldl'].notnull()].apply(lambda x: int(x))   
+        df1['QA_overall']  = df1['QA_spk1'].loc[df1['QA_spk1'].notnull()].apply(lambda x: int(x))*useQC1          | \
+                             df1['QA_spk2'].loc[df1['QA_spk2'].notnull()].apply(lambda x: int(x))*useQC2          | \
+                             df1['QA_spk3'].loc[df1['QA_spk3'].notnull()].apply(lambda x: int(x))*useQC3          | \
+                             df1['QA_spk4'].loc[df1['QA_spk4'].notnull()].apply(lambda x: int(x))*useQC4          | \
+                             df1['QA_per'].loc[df1['QA_per'].notnull()].apply(lambda x: int(x))*usePersistCount   | \
+                             df1['QA_udl'].loc[df1['QA_udl'].notnull()].apply(lambda x: int(x))*useUDL            | \
+                             df1['QA_ldl'].loc[df1['QA_ldl'].notnull()].apply(lambda x: int(x))*useLDL
                          
         df_list.append(df1)  # add resulting QC flags to the temporary list object for each StreamId group
 
