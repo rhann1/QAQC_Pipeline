@@ -56,7 +56,6 @@ if __name__ == "__main__":
     # inspect response
     print(response.text.encode('utf8'))
     print(response.headers)
-
     print(response)
 
 

@@ -4,8 +4,6 @@ Created on Mon May  4 20:10:22 2020
 
 @author: rhann
 """
-
-
 import pandas as pd
 import re
 import json
