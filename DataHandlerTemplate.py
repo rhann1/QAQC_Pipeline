@@ -11,7 +11,6 @@ from pprint import pprint
 from flatten_json import flatten
 from token_handler import TokenHandler
 
-
 class DataHandler:
     
     def getData(self, payload): # method to call measurement data API (# 13 on QC Pipeline sequence diagram)
@@ -75,9 +74,4 @@ if __name__ == "__main__":
     
     print(frames[0])
     print('')
-    print(frames[1])
-        
-    
-        
-        
-        
+    print(frames[1])  
