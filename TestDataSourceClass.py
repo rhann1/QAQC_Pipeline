@@ -88,7 +88,7 @@ if __name__ == "__main__":
     # create data source object
     tds = TestDataSource()
     data = tds.getSimulatedDataSeries()
-    configData = tds.getQAConfigDataFromFile('sample_QA_metadata/QA_metadata_sample_1.csv')
+    configData = tds.getQAConfigDataFromFile('sample_QA_metadata/QA_metadata_sample_2.csv')
     print(data)
     
     

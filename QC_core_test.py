@@ -28,19 +28,7 @@ def ldlcheck(x, ldl):
     else:
         return 0
 
-# Simple spiike detector.
-# compares value with previous record and returns potential outlier if difference is > than %delta 
-# only value above a given threshold are considered
-# this method is not preferable 
-def spike(x, mu, delta):
-    df=x
-    x_bar=x.mean()                       # store the mean of the windowed values
-    if np.abs(df[0] - df[1]) >= delta:   # check if the difference between current and previous is > than threshold
-        return 1
-    else:
-        return 0
-    
-# mean absoute deviation based spike detection.    
+# median deviation based spike detection.    
 def spike1(x, QA1):
     x = x[::-1]
     print(x)
@@ -55,21 +43,33 @@ def spike1(x, QA1):
 # at this point this is the preferable method for detection obvious outliers
 def spike2(x, QA2):
     x = x[::-1]
+    b = [0, 0, 0, 0, 1.363, 1.206, 1.200, 1.140, 1.129, 1.107] # quartile correction factors for window widths < 10
+    k = 1.4826 # reciprocal of quartile function for a normal distribution
+    q = QA2 # MAD threshold value from QC metadata table. The larger the value of 'q', the lower the probability of capturing an outlier.  Use q=10 for very large deviations.
+    
+    if len(x) < 4: return -1
+    # compute distribution quartile correction factor based on number of windowed observations
+    if len(x) < 10:
+        b_n = b[len(x)]
+    else:
+        b_n = len(x)/(len(x) - 0.8)
+        
     med_x = np.median(x) # find the median of the window
-    mad = np.median(np.abs(np.subtract(x, -med_x))) # compute the median absolute deviation
-    mzs = 0.675*(x[0] - med_x)/mad # compute the modified z-score (mzs)
-    if mzs > QA2 and mzs != float("inf"):
-#        print(x, med_x, mad, mzs)
+    mad_adj = np.median(np.abs(np.subtract(x, -med_x)))*b_n*q*k # compute the adjusted median absolute deviation
+    
+    if ((med_x - mad_adj >= x[0]) or (med_x + mad_adj <= x[0])) and mad_adj > 0:
         return 1
     else: 
         return 0
-   
-# normalized deviation above the mean
+    
+
+# standard score (z-score)
 def spike3(x, QA3):
     x = x[::-1]
     x_bar = x.mean()
-    dev = np.abs(x[0]-x_bar)/x_bar
-    if dev > QA3:
+    x_sdev = np.std(x)
+    z_score = np.abs((x[0] - x_bar)/x_sdev)
+    if z_score > QA3:
         return 1
     else:
         return 0
@@ -221,7 +221,7 @@ frame = tds.getSimulatedDataSeries()
 #############################################################################################################
 ## TO BE REMOVED ##
 # temporary simulated time-series for testing centered window
-
+"""
 StartDateTime = pd.date_range('2000-1-1 00:00:00', periods=72, freq='5min')
 simFrame = pd.DataFrame(data=np.random.randn(72)+30, index=StartDateTime, columns=['AObs'])
 frame = simFrame.reset_index()
@@ -233,14 +233,14 @@ frame.loc[25, 'AObs'] = 1000
 frame.loc[26, 'AObs'] = 1000
 frame.loc[27, 'AObs'] = 1000
 
-frame.loc[40, 'AObs'] = 120
-frame.loc[41, 'AObs'] = 120
+frame.loc[40, 'AObs'] = 1000
+frame.loc[41, 'AObs'] = 1000
 frame.loc[42, 'AObs'] = 120
 frame.loc[43, 'AObs'] = 120
 
 frame.drop(frame.index[40], inplace=True)
 frame.drop(frame.index[41], inplace=True)
-
+"""
 
 ## TO BE REMOVED ##
 #############################################################################################################
@@ -331,6 +331,11 @@ for group in gp:
         df11  = list(frame.set_index('StartDateTime').rolling(QC4WinSize)[ 'AObs'].apply(spike4, args=(QA4,)))
         df12  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(winCount))
         df13  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(modZScore))
+        
+        # these window drivers are experimental at the moment and use a time shifted offese to evaluate a target record at the mid-window point
+        # this will allow distinction between a spike anomaly and ramp concentration profile (e.g., [1,1,1,100,1,1,1] vs [100,80,60,40,20,10,0]) 
+        df5   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
+        df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
         
         # determine validity of window-based QC test.  Window must be of the expected representative time interval to be a valid test.
         df2v  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC2WinSize,)))
