@@ -387,6 +387,8 @@ for group in gp:
         df1['QA_spk4']     = df11
         df1['winCount']    = df12
         df1['mzs']         = df13
+        
+        #df1.replace(np.nan, -2, regex=True, inplace=True) # replace any NaN values with -2 indicating flag could not be computed due to insufficient window.
 
         # compute overall QC flag using bitwise logical 'or' combination of level 1 flags
         df1['QA_overall']  = df1['QA_spk1'].loc[df1['QA_spk1'].notnull()].apply(lambda x: int(x))*useQC1          | \
