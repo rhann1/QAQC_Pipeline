@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """
 Created on Mon May  4 20:10:22 2020
-
-@author: rhann
+@author: rhann, thelgestad
+Last Modified on ___
 """
 import pandas as pd
 import re
 import json
 from pprint import pprint
 from flatten_json import flatten
-from token_handler import TokenHandler
+from token_handler import TokenHandler as th
 
 class DataHandler:
     
@@ -20,6 +20,27 @@ class DataHandler:
         # 3. call API and get JSON payload containing measurement data and QA metadata (sequence #16)
         # 4. convert JSON object to QAConfig dataframe and measurement dataframe (sequence #18)
         
+        def RequestToken():
+    
+            token = th.getToken(self)
+            
+            if token[1] != 200:
+                sys.exit("Token retrieval error: " + token[2])
+                
+            else:
+                return(token[0])
+
+        def GetQAScript(): 
+            
+            try:
+                response = requests.get('http://caqm-web-uat:8081/api/qa/getqascript', 
+                                        headers = {'Authorization': 'Bearer '+ token[0], 
+                                                    'Content-Type': 'multipart/form-data; boundary=--------------------------651623359726858260475474'})
+                return(Response)
+
+            except requests.exceptions.RequestException as e:  
+                raise SystemExit(e)
+
         # inner function to extract measurement and configuration data and convert to dataframe objects (# 18 on QC Pipeline sequence diagram)        
         def ConvertJSONtoDataframes(payload):
     
@@ -35,9 +56,11 @@ class DataHandler:
     
             # convert measurement data object to dataframe
             measurementFrame = pd.DataFrame(jMeasurementData)
-    
+
             return measurementFrame, configurationFrame
-        
+                                                                                    
+        token = RequestToken()
+        print(token)
         frames = ConvertJSONtoDataframes(payload)
         return frames
     
@@ -64,7 +87,7 @@ if __name__ == "__main__":
     
     # test of JSON to dataframe conversion feature of 'getData()" method
     # read test JSON object from file (not needed in production)
-    with open('sample_json_payload/simple_payload.json') as f:
+    with open('sample_JSON_payload/simple_payload.json') as f:
         payload = json.load(f)
 
     pprint(payload)
