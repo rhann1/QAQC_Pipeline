@@ -1,4 +1,4 @@
 StreamId,Description,DetectionLimitUOMcode,DurationMinutes,SamplingFreqSeconds,UDL,useUDL,LDL,useLDL,MDL,useMDL,PersistCount,usePCount,PersistThresh,usePThresh,Anom1Thresh,useA1Check,Anom2Thresh,useA2Check,Anom3Thresh,useA3Check,Anom4Thresh,useA4Check,PersistWindowSize,Anom1WindowSize,Anom2WindowSize,Anom3WindowSize,Anom4WindowSize,Thresh1,Thresh2,Thresh3,Thresh4,WindowSize1,WindowSize2,WindowSize3,WindowSize4,PerformCheck1,PerformCheck2,PerformCheck3,PerformCheck4,PerformCheck5,PerformCheck6,PerformCheck7
 2,check1,105,5,4,500,1,0,1,0,0,6,1,0.001,0,2,1,3.5,1,4,1,4,1,6,12,12,12,24,,,,,,,,,,,1,,,,
-72,check2,105,5,4, ,1,0,0,0,0,7,1,0.005,0,2,1,3.5,1,4,1,4,1,6,12,12,12,24,,,,,,,,,,,1,,,,
+72,check2,105,5,4,,0,0,0,0,0,7,1,0.005,0,2,1,3.5,1,4,1,4,1,6,12,12,12,24,,,,,,,,,,,1,,,,
 1111,check2,105,5,4,500,1,0,0,1,0,7,1,0.005,0,2,1,4,1,4,1,4,1,6,12,12,12,12,,,,,,,,,,,1,,,,

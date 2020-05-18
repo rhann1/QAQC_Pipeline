@@ -339,8 +339,8 @@ for group in gp:
         df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QA2,)).shift(-30, freq='m'))
         df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QA2,)))
         df4   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3, args=(QA3,)))
-        df5   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
-        df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
+        df5   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3, args=(3.5,)).shift(-15, freq='m'))
+        df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(spike3, args=(3.5,)).shift(-15, freq='m'))
         df6   = list(frame.set_index('StartDateTime').rolling(persistWinSize)['AObs'].apply(lowvar, args=(p_delta,)))
         df7   = list(frame.set_index('StartDateTime').rolling(persistWinSize)[ 'AObs'].apply(persist))
         df9   = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(udlcheck, args=(udl,)))
@@ -375,32 +375,33 @@ for group in gp:
         df1 = np.array(group)[1]
 
         # set value for each QC flag
-        df1['QA_valid']    = df
+        #df1['QA_valid']    = df
         df1['QA_spk1']     = df2
         df1['QA_spk2']     = df3
         df1['QA_spk3']     = df4
-        df1['QA_spk3_mod'] = df5
-        df1['QA_LV']       = df6
+        #df1['QA_spk3_mod'] = df5
+        #df1['QA_LV']       = df6
         df1['QA_per']      = df7
         df1['QA_udl']      = df9
         df1['QA_ldl']      = df10
         df1['QA_spk4']     = df11
-        df1['winCount']    = df12
+        #df1['winCount']    = df12
         df1['mzs']         = df13
         
         #df1.replace(np.nan, -2, regex=True, inplace=True) # replace any NaN values with -2 indicating flag could not be computed due to insufficient window.
 
         # compute overall QC flag using bitwise logical 'or' combination of level 1 flags
-        df1['QA_overall']  = df1['QA_spk1'].loc[df1['QA_spk1'].notnull()].apply(lambda x: int(x))*useQC1          | \
+        df1['QA_overall']  = (df1['QA_spk1'].loc[df1['QA_spk1'].notnull()].apply(lambda x: int(x))*useQC1         | \
                              df1['QA_spk2'].loc[df1['QA_spk2'].notnull()].apply(lambda x: int(x))*useQC2          | \
                              df1['QA_spk3'].loc[df1['QA_spk3'].notnull()].apply(lambda x: int(x))*useQC3          | \
                              df1['QA_spk4'].loc[df1['QA_spk4'].notnull()].apply(lambda x: int(x))*useQC4          | \
                              df1['QA_per'].loc[df1['QA_per'].notnull()].apply(lambda x: int(x))*usePersistCount   | \
                              df1['QA_udl'].loc[df1['QA_udl'].notnull()].apply(lambda x: int(x))*useUDL            | \
-                             df1['QA_ldl'].loc[df1['QA_ldl'].notnull()].apply(lambda x: int(x))*useLDL
+                             df1['QA_ldl'].loc[df1['QA_ldl'].notnull()].apply(lambda x: int(x))*useLDL).astype(int)
                              
         # QA_overall must meet completeness criteria (proposed 75% of input flags must be valid)
         # 'validOverall' is a list of completeness measures used for computing QA_overall'.
+        #### THIS SEGMENT NEEDS REPAIR: THE COMPLETION VALUE IS COMPUTED CORRECTLY BUT THE OVERALL FLAG ALWAYS ASSERTS HIGH. ####
         validOverall = [(len(y)-sum(i<0 for i in y))/len(y) for y in [list(a) for a in zip(df2,df3,df4,df5,df6,df7,df9)]] # input flags used for computing QAoverall in zip().
         df1['QA_overall'] = [d if v > 0.75 else -2 for d,v in zip(df1['QA_overall'], validOverall)]
         
@@ -418,16 +419,18 @@ for group in gp:
             
             adf_list.append(adf1) # add resulting averages and supporting columns to  result aggregation dataframe
     
-# concatentate QC flag and aggregations list to a dataframe
-if len(df_list) != 0:
-    df_result  = pd.concat(df_list)
-    df_result.to_csv('testing_results/test_result.csv')    
+        # concatentate QC flag and aggregations list to a dataframe
+        if len(df_list) != 0:
+            df_result  = pd.concat(df_list)
+            df_result.to_csv('testing_results/test_result.csv')    
 
-# create hourly average dataframe
-if len(adf_list) != 0 and durationMinutes < 60:
-    adf_result = pd.concat(adf_list)
-    adf_result.to_csv('testing_results/test_avgs.csv')
-    
+        # create hourly average dataframe
+        if len(adf_list) != 0 and durationMinutes < 60:
+            adf_result = pd.concat(adf_list)
+            adf_result.to_csv('testing_results/test_avgs.csv')
+
+            #subHourlyQFlags = df_result[['MeasurementID', 'StreamId', 'StartDateTime', 'QF01', 'QF02', 'QF03', 'QF04', 'QOverall']]
+            
 print(df_result)
 
 # end function drivers
