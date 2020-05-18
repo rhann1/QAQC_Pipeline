@@ -376,28 +376,28 @@ for group in gp:
 
         # set value for each QC flag
         #df1['QA_valid']    = df
-        df1['QA_spk1']     = df2
-        df1['QA_spk2']     = df3
-        df1['QA_spk3']     = df4
+        df1['QF01']     = df2
+        df1['QF02']     = df3
+        df1['QF03']     = df4
         #df1['QA_spk3_mod'] = df5
         #df1['QA_LV']       = df6
-        df1['QA_per']      = df7
-        df1['QA_udl']      = df9
-        df1['QA_ldl']      = df10
-        df1['QA_spk4']     = df11
+        df1['QF04']      = df7
+        df1['QF05']      = df9
+        df1['QF06']      = df10
+        df1['QF07']     = df11
         #df1['winCount']    = df12
-        df1['mzs']         = df13
+        #df1['mzs']         = df13
         
         #df1.replace(np.nan, -2, regex=True, inplace=True) # replace any NaN values with -2 indicating flag could not be computed due to insufficient window.
 
         # compute overall QC flag using bitwise logical 'or' combination of level 1 flags
-        df1['QA_overall']  = (df1['QA_spk1'].loc[df1['QA_spk1'].notnull()].apply(lambda x: int(x))*useQC1         | \
-                             df1['QA_spk2'].loc[df1['QA_spk2'].notnull()].apply(lambda x: int(x))*useQC2          | \
-                             df1['QA_spk3'].loc[df1['QA_spk3'].notnull()].apply(lambda x: int(x))*useQC3          | \
-                             df1['QA_spk4'].loc[df1['QA_spk4'].notnull()].apply(lambda x: int(x))*useQC4          | \
-                             df1['QA_per'].loc[df1['QA_per'].notnull()].apply(lambda x: int(x))*usePersistCount   | \
-                             df1['QA_udl'].loc[df1['QA_udl'].notnull()].apply(lambda x: int(x))*useUDL            | \
-                             df1['QA_ldl'].loc[df1['QA_ldl'].notnull()].apply(lambda x: int(x))*useLDL).astype(int)
+        df1['QA_overall']  = (df1['QF01'].loc[df1['QF01'].notnull()].apply(lambda x: int(x))*useQC1             | \
+                              df1['QF02'].loc[df1['QF02'].notnull()].apply(lambda x: int(x))*useQC2             | \
+                              df1['QF03'].loc[df1['QF03'].notnull()].apply(lambda x: int(x))*useQC3             | \
+                              df1['QF07'].loc[df1['QF07'].notnull()].apply(lambda x: int(x))*useQC4             | \
+                              df1['QF04'].loc[df1['QF04'].notnull()].apply(lambda x: int(x))*usePersistCount    | \
+                              df1['QF05'].loc[df1['QF05'].notnull()].apply(lambda x: int(x))*useUDL             | \
+                              df1['QF06'].loc[df1['QF06'].notnull()].apply(lambda x: int(x))*useLDL).astype(int)
                              
         # QA_overall must meet completeness criteria (proposed 75% of input flags must be valid)
         # 'validOverall' is a list of completeness measures used for computing QA_overall'.
