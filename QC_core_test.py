@@ -269,9 +269,9 @@ store = frame
 
 # convert successive datetime objects to timedeltas on a unit seconds basis
 #data = data.sort_values(['id','date'], ascending=False)
-frame['date1'] = pd.to_timedelta(frame['StartDateTime']).astype('timedelta64[m]').astype(int)
+#frame['date1'] = pd.to_timedelta(frame['StartDateTime']).astype('timedelta64[m]').astype(int)
 #prepare frame for group operation
-frame['date2'] = t_delta(frame['StartDateTime'])
+frame['date1'] = t_delta(frame['StartDateTime']).astype(int)
 
 
 QA1 = 2.0
@@ -334,7 +334,7 @@ for group in gp:
         frame = pd.DataFrame(group[1])
         
         # compute lists of QC flags for each test
-        df    = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
+        #df    = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
         df2   = list(frame.set_index('StartDateTime').rolling(QC1WinSize)['AObs'].apply(spike1, args=(QA1,)))
         df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QA2,)).shift(-30, freq='m'))
         df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QA2,)))
@@ -351,8 +351,8 @@ for group in gp:
         
         # these window drivers are experimental at the moment and use a time shifted offese to evaluate a target record at the mid-window point
         # this will allow distinction between a spike anomaly and ramp concentration profile (e.g., [1,1,1,100,1,1,1] vs [100,80,60,40,20,10,0]) 
-        df5   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
-        df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
+        #df5   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
+        #df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
         
         # determine validity of window-based QC test.  Window must be of the expected representative time interval to be a valid test.
         df2v  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC2WinSize,)))
