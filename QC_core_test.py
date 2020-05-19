@@ -389,7 +389,7 @@ for group in gp:
         #df1['mzs']         = df13
         
         #df1.replace(np.nan, -2, regex=True, inplace=True) # replace any NaN values with -2 indicating flag could not be computed due to insufficient window.
-
+        """
         # compute overall QC flag using bitwise logical 'or' combination of level 1 flags
         df1['QA_overall']  = (df1['QF01'].loc[df1['QF01'].notnull()].apply(lambda x: int(x))*useQC1             | \
                               df1['QF02'].loc[df1['QF02'].notnull()].apply(lambda x: int(x))*useQC2             | \
@@ -405,20 +405,20 @@ for group in gp:
         validOverall = [(len(y)-sum(i<0 for i in y))/len(y) for y in [list(a) for a in zip(df2,df3,df4,df5,df6,df7,df9)]] # input flags used for computing QAoverall in zip().
         df1['QA_overall'] = [d if v > 0.75 else -2 for d,v in zip(df1['QA_overall'], validOverall)]
         
-                         
+                       
         df_list.append(df1)  # add resulting QC flags to the temporary list object for each StreamId group
 
         # Begin sub-hourly to hourly aggregation operations
         # only aggregate sub-hourly streams
         if durationMinutes < 60:
-            adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(validAvg, freq=5)).rename({0:'validAvg'}, axis=1)
+            #adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(validAvg, freq=5)).rename({0:'validAvg'}, axis=1)
             adf1['StreamId'] = group[0]
             adf1['validCount'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(intervalCount, freq=5))
             adf1['percentCompetion'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(PercentageCompletion, freq=5, expectedCount = expectedCount))
             adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1H').apply(average, freq=5))[0] 
             
             adf_list.append(adf1) # add resulting averages and supporting columns to  result aggregation dataframe
-    
+        """
         # concatentate QC flag and aggregations list to a dataframe
         if len(df_list) != 0:
             df_result  = pd.concat(df_list)
