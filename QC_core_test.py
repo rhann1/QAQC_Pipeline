@@ -37,7 +37,6 @@ def spike1(x, QA1):
     if pd.isnull(QA1):
         return -1
     x = x[::-1]
-    print(x)
     x_med = np.median(x)
     dev = np.abs(x[0] - x_med)/x_med
     if dev > QA4:
@@ -48,6 +47,7 @@ def spike1(x, QA1):
 # modified z-score spike detector.  This is a robust method based on the median absolute deviation.
 # at this point this is the preferable method for detection obvious outliers
 def spike2(x, QA2):
+    x = np.array(x)
     if pd.isnull(QA2):
         return -1
     x = x[::-1]
@@ -63,14 +63,28 @@ def spike2(x, QA2):
         b_n = len(x)/(len(x) - 0.8)
         
     med_x = np.median(x) # find the median of the window
-    mad_adj = np.median(np.abs(np.subtract(x, -med_x)))*b_n*q*k # compute the adjusted median absolute deviation
-    
+    mad_adj = np.median(np.abs(np.subtract(x, -med_x))) #*b_n*q*k # compute the adjusted median absolute deviation
+    print(mad_adj, med_x, len(x))     
     if ((med_x - mad_adj >= x[0]) or (med_x + mad_adj <= x[0])) and mad_adj > 0:
         return 1
     else: 
         return 0
     
-
+# this function distinguishes a true isoloated spike [ 0 0 100 0 0 ] from a spike-ramp [0 0 100 80 40]
+def true_spike(x, QA2):
+    x = x[::-1]  
+    x_0 = int(len(x)/2)
+    xLeft = x[:x_0+1]
+    xLeft = xLeft[::-1]
+    xRight = x[x_0:]
+    qLeft = spike2(xLeft, QA2)
+    qRight = spike2(xRight, QA2)
+    print(np.array(x), xLeft, xRight, np.median(xLeft), np.median(xRight), len(xLeft), len(xRight))
+    if qLeft == 1 and qRight == 1:
+        return 1
+    else:
+        return 0
+        
 # standard score (z-score)
 def spike3(x, QA3):
     if pd.isnull(QA3):
@@ -107,7 +121,6 @@ def lowvar(x, p_delta):
     x = x[::-1]
     x_bar = x.mean()
     sdev = np.std(x)
-    #print(np.abs(np.subtract(x,x_bar)).sum()/len(x))
     if np.abs(np.subtract(x,x_bar)).sum()/len(x) < p_delta*sdev:
         return 1
     else:
@@ -183,7 +196,7 @@ def timeDiff(x, freq, tu):
 def timeDiff1(x, freq, tu):
     diff = (x[0] - x[-1])
     #diff = diff/np.timedelta64(1,tu)
-    if diff == freq:
+    if diff == freq:  
         return diff
     if diff == 2*freq*1.0:
         return diff
@@ -209,7 +222,6 @@ def spikeValid(x, freq, width):
     t_delta = x[0] - x[l-1] # compute time delta associated with the window 
     gaps = (t_delta - t_expected)/freq
     gap_fraction = (width - gaps)/width
-    print(l, t_delta, freq*(width - 1), x[0]-x[1], gaps, gap_fraction)
     if gap_fraction < 0.75: # if time delta in larger than expected based on freq, mark window as invalid (missing observations in time interval)
         return 1
     else:
@@ -237,7 +249,7 @@ frame = tds.getSimulatedDataSeries()
 #############################################################################################################
 ## TO BE REMOVED ##
 # temporary simulated time-series for testing centered window
-"""
+
 StartDateTime = pd.date_range('2000-1-1 00:00:00', periods=72, freq='5min')
 simFrame = pd.DataFrame(data=np.random.randn(72)+30, index=StartDateTime, columns=['AObs'])
 frame = simFrame.reset_index()
@@ -249,6 +261,9 @@ frame.loc[25, 'AObs'] = 1000
 frame.loc[26, 'AObs'] = 1000
 frame.loc[27, 'AObs'] = 1000
 
+frame.loc[37, 'AObs'] = 1000
+
+
 frame.loc[40, 'AObs'] = 1000
 frame.loc[41, 'AObs'] = 1000
 frame.loc[42, 'AObs'] = 120
@@ -256,7 +271,7 @@ frame.loc[43, 'AObs'] = 120
 
 frame.drop(frame.index[40], inplace=True)
 frame.drop(frame.index[41], inplace=True)
-"""
+
 
 ## TO BE REMOVED ##
 #############################################################################################################
@@ -298,7 +313,7 @@ gp = frame.groupby('StreamId')
 # create empty sub-hourly and aggregation list object to be populated with records from the processed groups
 df_list  = []
 adf_list = []
-print(frame)
+#print(frame)
 
 # process each StreamId group
 for group in gp:
@@ -340,7 +355,7 @@ for group in gp:
         df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QA2,)))
         df4   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3, args=(QA3,)))
         df5   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3, args=(3.5,)).shift(-15, freq='m'))
-        df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(spike3, args=(3.5,)).shift(-15, freq='m'))
+        df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(true_spike, args=(3.2,)).shift(-30, freq='m'))
         df6   = list(frame.set_index('StartDateTime').rolling(persistWinSize)['AObs'].apply(lowvar, args=(p_delta,)))
         df7   = list(frame.set_index('StartDateTime').rolling(persistWinSize)[ 'AObs'].apply(persist))
         df9   = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(udlcheck, args=(udl,)))
@@ -379,7 +394,7 @@ for group in gp:
         df1['QF01']     = df2
         df1['QF02']     = df3
         df1['QF03']     = df4
-        #df1['QA_spk3_mod'] = df5
+        df1['QA_spk3_mod'] = df5b
         #df1['QA_LV']       = df6
         df1['QF04']      = df7
         df1['QF05']      = df9
@@ -389,7 +404,7 @@ for group in gp:
         #df1['mzs']         = df13
         
         #df1.replace(np.nan, -2, regex=True, inplace=True) # replace any NaN values with -2 indicating flag could not be computed due to insufficient window.
-        
+
         # compute overall QC flag using bitwise logical 'or' combination of level 1 flags
         df1['QA_overall']  = (df1['QF01'].loc[df1['QF01'].notnull()].apply(lambda x: int(x))*useQC1             | \
                               df1['QF02'].loc[df1['QF02'].notnull()].apply(lambda x: int(x))*useQC2             | \
@@ -405,21 +420,20 @@ for group in gp:
         validOverall = [(len(y)-sum(i<0 for i in y))/len(y) for y in [list(a) for a in zip(df2,df3,df4,df5,df6,df7,df9)]] # input flags used for computing QAoverall in zip().
         df1['QA_overall'] = [d if v > 0.75 else -2 for d,v in zip(df1['QA_overall'], validOverall)]
         
-                       
+                         
         df_list.append(df1)  # add resulting QC flags to the temporary list object for each StreamId group
 
         # Begin sub-hourly to hourly aggregation operations
         # only aggregate sub-hourly streams
         if durationMinutes < 60:
-            adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(validAvg, freq=durationMinutes)).rename({0:'validAvg'}, axis=1)
+            adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(validAvg, freq=5)).rename({0:'validAvg'}, axis=1)
             adf1['StreamId'] = group[0]
-            adf1['validCount'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(intervalCount, freq=durationMinutes))
-            adf1['percentCompetion'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(PercentageCompletion, freq=durationMinutes, expectedCount = expectedCount))
-            adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1H').apply(average, freq=durationMinutes))[0] 
-            adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(intervalCount, freq=durationMinutes))
-            
+            adf1['validCount'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(intervalCount, freq=5))
+            adf1['percentCompetion'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(PercentageCompletion, freq=5, expectedCount = expectedCount))
+            #adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1H').apply(average, freq=5))[0] 
+            adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(average, freq=5))
             adf_list.append(adf1) # add resulting averages and supporting columns to  result aggregation dataframe
-        
+
         # concatentate QC flag and aggregations list to a dataframe
         if len(df_list) != 0:
             df_result  = pd.concat(df_list)
@@ -429,10 +443,10 @@ for group in gp:
         if len(adf_list) != 0 and durationMinutes < 60:
             adf_result = pd.concat(adf_list)
             adf_result.to_csv('testing_results/test_avgs.csv')
-
+  
             #subHourlyQFlags = df_result[['MeasurementID', 'StreamId', 'StartDateTime', 'QF01', 'QF02', 'QF03', 'QF04', 'QOverall']]
             
-print(df_result)
+#print(df_result)
 
 # end function drivers
 ####################################################################################################################################################
