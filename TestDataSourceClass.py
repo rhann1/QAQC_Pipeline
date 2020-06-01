@@ -63,20 +63,21 @@ class TestDataSource:
         
         # select CSV formatted file to read
         #frame = pd.read_csv('sample_hourly_data/OCAP_SJV.csv')
-        frame = pd.read_csv('sample_subhourly_data/2020-02-08_1.csv', usecols = ['StartDateTime', 'MonitorId', 'Parameter', 'AObs'])
+        #frame = pd.read_csv('sample_subhourly_data/2020-02-08_1.csv', usecols = ['StartDateTime', 'MonitorId', 'Parameter', 'AObs'])
         
         # rename columns to match QC_Core module requirements
         #data.rename(columns={'DateTime':'StartDateTime', 'MeasuredValue':'AObs', 'SiteName':'StreamId'}, inplace=True)
-        frame.rename(columns={'MonitorId':'StreamId'}, inplace=True)
-        frame['StartDateTime'] = pd.to_datetime(frame['StartDateTime'])   
-        frame = frame[frame.columns[[0, 2, 1, 3]]] # resequence column order in dataframe
+        #frame.rename(columns={'MonitorId':'StreamId'}, inplace=True)
+        #frame['StartDateTime'] = pd.to_datetime(frame['StartDateTime'])   
+        #frame = frame[frame.columns[[0, 2, 1, 3]]] # resequence column order in dataframe
         #frame = frame.reindex(['StreamId', 'StartDateTime', 'Parameter', 'AObs'], axis=1) # alternative for resequencing order of columns
         #frame = frame.loc[frame['Parameter'] == 88101]
         
         # create data source object
         reader = TestDataFileReader()
-        frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'CCV')
-        frame = frame.loc[frame['Parameter'] == 85101]
+        #frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'CCV')
+        frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'SM')
+        #frame = frame.loc[frame['Parameter'] == 85101]
         
         # end read from CSV file block
         #####################################################################################################################
