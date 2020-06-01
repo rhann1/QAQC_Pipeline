@@ -257,8 +257,6 @@ QA4 = 4
 lowValue3 = 0
 lowValue4 = 0
 
-
-
 # determine subhourly observations within the aggregation target time unit (standard: 1 hour for subhourly data)
 # hourcount will give a count of records present for a given target hour to be used for computing the completeness requirement
 # this resampling operation will support hourly aggregation of sub-hourly data
