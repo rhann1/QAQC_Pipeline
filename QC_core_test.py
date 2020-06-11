@@ -535,7 +535,7 @@ if __name__ == "__main__":
     maxStreamLimit = 5000
     
     #set mode of processing (testing using local files: testMode=True, processing from APIs: testMode=False)
-    testMode=True
+    testMode=False
     
     #performation data exchange operations    
     #get measurement and configuration data
@@ -548,11 +548,13 @@ if __name__ == "__main__":
     else:
         dh = DataHandler()
         
+        """
         # SubHourly data processing
-        measurementFrame, configFrame = dh.getData(True, intervalHoursForSubHourly, maxStreamLimit) # getData() returns tuple of dataframes.  Passed argument is 'IsSubHourly'.
-        computedQFlagFrame, subHourlyAggregations = QC_Core(True, measurementFrame, configFrame) # QC flags and aggregations are returned
+        measurementFrame, configFrame = dh.getData(False, intervalHoursForSubHourly, maxStreamLimit) # getData() returns tuple of dataframes.  Passed argument is 'IsSubHourly'.
+        computedQFlagFrame, subHourlyAggregations = QC_Core(False, measurementFrame, configFrame) # QC flags and aggregations are returned
         dh.PutData(True, computedQFlagFrame) # Boolean argument is 'IsSubHourly'
         dh.PutData(False, subHourlyAggregations)
+        """
         
         # Hourly data processing
         measurementFrame, configFrame = dh.getData(False, intervalHoursForHourly, maxStreamLimit) # getData() returns tuple of dataframes.  Passed argument is 'IsSubHourly'.
