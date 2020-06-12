@@ -241,9 +241,9 @@ frame = tds.getSimulatedDataSeries()
 StartDateTime = pd.date_range('2000-1-1 00:00:00', periods=72, freq='5min')
 simFrame = pd.DataFrame(data=np.random.randn(72)+30, index=StartDateTime, columns=['AObs'])
 frame = simFrame.reset_index()
-frame['StreamId'] = 1111
+frame['StreamSegmentId'] = 1111
 frame['Parameter'] = '99999'
-frame.columns = ['StartDateTime', 'AObs', 'StreamId', 'Parameter']
+frame.columns = ['StartDateTime', 'AObs', 'StreamSegmentId', 'Parameter']
 frame.loc[24, 'AObs'] = 1000
 frame.loc[25, 'AObs'] = 1000
 frame.loc[26, 'AObs'] = 1000
@@ -286,48 +286,48 @@ lowValue4 = 0
 # determine subhourly observations within the aggregation target time unit (standard: 1 hour for subhourly data)
 # hourcount will give a count of records present for a given target hour to be used for computing the completeness requirement
 # this resampling operation will support hourly aggregation of sub-hourly data
-hourCount = frame.groupby('StreamId').resample('D', on='StartDateTime').count()
+hourCount = frame.groupby('StreamSegmentId').resample('D', on='StartDateTime').count()
 
 ########################################################################################################################################################
 # QC function drivers. Each driver applies the specified function operating over a moving window.  The window sizes and function parameters are sourced 
-# from the QA config dataframe.  A 'groupby' is performed on the measurement data by 'StreamId' and the operations are performed on each group.
+# from the QA config dataframe.  A 'groupby' is performed on the measurement data by 'StreamSegmentId' and the operations are performed on each group.
 
 # create 'groupby' object 
-gp = frame.groupby('StreamId')
+gp = frame.groupby('StreamSegmentId')
 
 # create empty sub-hourly and aggregation list object to be populated with records from the processed groups
 df_list  = []
 adf_list = []
 print(frame)
 
-# process each StreamId group
+# process each StreamSegmentId group
 for group in gp:
     
     # process only if QC metadata exists
-    if len(configData.loc[configData['StreamId'] == group[0]].values) != 0:
+    if len(configData.loc[configData['StreamSegmentId'] == group[0]].values) != 0:
     
-        udl                = float(configData.loc[configData['StreamId'] == group[0]]['UDL'].values[0])
-        ldl                = float(configData.loc[configData['StreamId'] == group[0]]['LDL'].values[0])
-        mdl                = float(configData.loc[configData['StreamId'] == group[0]]['MDL'].values[0])
-        durationMinutes    = float(configData.loc[configData['StreamId'] == group[0]]['DurationMinutes'].values[0])
-        persistCount       = int(configData.loc[configData['StreamId'] == group[0]]['PersistCount'].values[0])
-        QC1                = float(configData.loc[configData['StreamId'] == group[0]]['Anom1Thresh'].values[0])
-        QC2                = float(configData.loc[configData['StreamId'] == group[0]]['Anom2Thresh'].values[0])
-        QC3                = float(configData.loc[configData['StreamId'] == group[0]]['Anom3Thresh'].values[0])
-        QC4                = float(configData.loc[configData['StreamId'] == group[0]]['Anom4Thresh'].values[0])
-        useUDL             = int(configData.loc[configData['StreamId'] == group[0]]['useUDL'].values[0])
-        useLDL             = int(configData.loc[configData['StreamId'] == group[0]]['useLDL'].values[0])
-        useMDL             = int(configData.loc[configData['StreamId'] == group[0]]['useMDL'].values[0])
-        usePersistCount    = int(configData.loc[configData['StreamId'] == group[0]]['usePCount'].values[0])
-        useQC1             = int(configData.loc[configData['StreamId'] == group[0]]['useA1Check'].values[0])
-        useQC2             = int(configData.loc[configData['StreamId'] == group[0]]['useA2Check'].values[0])
-        useQC3             = int(configData.loc[configData['StreamId'] == group[0]]['useA3Check'].values[0])
-        useQC4             = int(configData.loc[configData['StreamId'] == group[0]]['useA4Check'].values[0])
-        QC1WinSize         = int(configData.loc[configData['StreamId'] == group[0]]['Anom1WindowSize'].values[0])
-        QC2WinSize         = int(configData.loc[configData['StreamId'] == group[0]]['Anom2WindowSize'].values[0])
-        QC3WinSize         = int(configData.loc[configData['StreamId'] == group[0]]['Anom3WindowSize'].values[0])
-        QC4WinSize         = int(configData.loc[configData['StreamId'] == group[0]]['Anom4WindowSize'].values[0])
-        persistWinSize     = int(configData.loc[configData['StreamId'] == group[0]]['PersistWindowSize'].values[0])
+        udl                = float(configData.loc[configData['StreamSegmentId'] == group[0]]['UDL'].values[0])
+        ldl                = float(configData.loc[configData['StreamSegmentId'] == group[0]]['LDL'].values[0])
+        mdl                = float(configData.loc[configData['StreamSegmentId'] == group[0]]['MDL'].values[0])
+        durationMinutes    = float(configData.loc[configData['StreamSegmentId'] == group[0]]['DurationMinutes'].values[0])
+        persistCount       = int(configData.loc[configData['StreamSegmentId'] == group[0]]['PersistCount'].values[0])
+        QC1                = float(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom1Thresh'].values[0])
+        QC2                = float(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom2Thresh'].values[0])
+        QC3                = float(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom3Thresh'].values[0])
+        QC4                = float(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom4Thresh'].values[0])
+        useUDL             = int(configData.loc[configData['StreamSegmentId'] == group[0]]['useUDL'].values[0])
+        useLDL             = int(configData.loc[configData['StreamSegmentId'] == group[0]]['useLDL'].values[0])
+        useMDL             = int(configData.loc[configData['StreamSegmentId'] == group[0]]['useMDL'].values[0])
+        usePersistCount    = int(configData.loc[configData['StreamSegmentId'] == group[0]]['usePCount'].values[0])
+        useQC1             = int(configData.loc[configData['StreamSegmentId'] == group[0]]['useA1Check'].values[0])
+        useQC2             = int(configData.loc[configData['StreamSegmentId'] == group[0]]['useA2Check'].values[0])
+        useQC3             = int(configData.loc[configData['StreamSegmentId'] == group[0]]['useA3Check'].values[0])
+        useQC4             = int(configData.loc[configData['StreamSegmentId'] == group[0]]['useA4Check'].values[0])
+        QC1WinSize         = int(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom1WindowSize'].values[0])
+        QC2WinSize         = int(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom2WindowSize'].values[0])
+        QC3WinSize         = int(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom3WindowSize'].values[0])
+        QC4WinSize         = int(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom4WindowSize'].values[0])
+        persistWinSize     = int(configData.loc[configData['StreamSegmentId'] == group[0]]['PersistWindowSize'].values[0])
         
     
 
@@ -406,13 +406,13 @@ for group in gp:
         df1['QA_overall'] = [d if v > 0.75 else -2 for d,v in zip(df1['QA_overall'], validOverall)]
         
                        
-        df_list.append(df1)  # add resulting QC flags to the temporary list object for each StreamId group
+        df_list.append(df1)  # add resulting QC flags to the temporary list object for each StreamSegmentId group
 
         # Begin sub-hourly to hourly aggregation operations
         # only aggregate sub-hourly streams
         if durationMinutes < 60:
             adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(validAvg, freq=durationMinutes)).rename({0:'validAvg'}, axis=1)
-            adf1['StreamId'] = group[0]
+            adf1['StreamSegmentId'] = group[0]
             adf1['validCount'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(intervalCount, freq=durationMinutes))
             adf1['percentCompetion'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(PercentageCompletion, freq=durationMinutes, expectedCount = expectedCount))
             adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1H').apply(average, freq=durationMinutes))[0] 
@@ -430,7 +430,7 @@ for group in gp:
             adf_result = pd.concat(adf_list)
             adf_result.to_csv('testing_results/test_avgs.csv')
 
-            #subHourlyQFlags = df_result[['MeasurementID', 'StreamId', 'StartDateTime', 'QF01', 'QF02', 'QF03', 'QF04', 'QOverall']]
+            #subHourlyQFlags = df_result[['MeasurementID', 'StreamSegmentId', 'StartDateTime', 'QF01', 'QF02', 'QF03', 'QF04', 'QOverall']]
             
 print(df_result)
 

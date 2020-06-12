@@ -64,6 +64,8 @@ class DataHandler:
         Token = RequestToken()
         MeasurementPayload = GetMeasurementandConfig(GetDataSettingsPayload, Token)
         DfsForProcessing = ConvertJSONtoDataframe(MeasurementPayload)
+        
+        # added return statement for getData() method (RHann)
         return DfsForProcessing[0], DfsForProcessing[1]
         
  #       DfsForProcessing[0].to_csv(r"C:\Users\tahelges\Desktop\payload0.csv", index = False)
