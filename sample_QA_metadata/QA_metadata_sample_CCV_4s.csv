@@ -1,0 +1,5 @@
+MonitorId,Parameter,StreamSegmentId,Description,DetectionLimitUOMcode,DurationMinutes,SamplingFreqSeconds,UDL,useUDL,LDL,useLDL,MDL,useMDL,PersistCount,usePCount,PersistThresh,usePThresh,Anom1Thresh,useA1Check,Anom2Thresh,useA2Check,Anom3Thresh,useA3Check,Anom4Thresh,useA4Check,PersistWindowSize,Anom1WindowSize,Anom2WindowSize,Anom3WindowSize,Anom4WindowSize,Thresh1,Thresh2,Thresh3,Thresh4,WindowSize1,WindowSize2,WindowSize3,WindowSize4,PerformCheck1,PerformCheck2,PerformCheck3,PerformCheck4,PerformCheck5,PerformCheck6,PerformCheck7
+65,88101,7,Standard Settings for Dylos PM2.5,105,5,4,500,1,0,1,0,0,6,1,0.001,0,2,1,7,1,4,1,4,1,6,12,12,12,24,,,,,,,,,,,1,,,,
+65,85101,8,Standard Settings for Dylos PM2.5,105,5,4,500,1,0,1,0,0,24,1,0.001,0,2,1,7,1,4,1,4,1,6,12,12,12,24,,,,,,,,,,,1,,,,
+63,88101,15,Standard Settings for Dylos PM2.5,105,5,4,500,1,0,1,0,0,6,1,0.001,0,2,1,7,1,4,1,4,1,6,12,12,12,24,,,,,,,,,,,1,,,,
+63,85101,16,Standard Settings for Dylos PM2.5,105,5,4,500,1,0,1,0,0,24,1,0.001,0,2,1,7,1,4,1,4,1,6,12,12,12,24,,,,,,,,,,,1,,,,

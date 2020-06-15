@@ -25,7 +25,7 @@ class TestDataFileReader:
         for filename in all_files:
             # read each CSV file and only use specified columns
             # this read is for SM files
-            df = pd.read_csv(filename, index_col=None, header=0, usecols = ['StartDateTime', 'StreamId', 'MonitorId', 'Parameter', 'AObs'])
+            df = pd.read_csv(filename, index_col=None, header=0, usecols = ['StartDateTime', 'StreamSegmentId', 'MonitorId', 'Parameter', 'AObs'])
             # this read is for CCV files
             #df = pd.read_csv(filename, index_col=None, header=0, usecols = ['StartDateTime', 'MonitorId', 'Parameter', 'AObs'])
             li.append(df)
@@ -45,12 +45,12 @@ class TestDataFileReader:
         #frame = frame.loc[frame['Parameter'] == 88101]
         return frame
 
-if __name__ == "__main__":
+if __name__ == "__main__":  
     
     # create data source object
     reader = TestDataFileReader()
-    frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'SM')
-    #frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'CCV')
+    #frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'SM')
+    frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'CCV')
     print(frame)
     
 

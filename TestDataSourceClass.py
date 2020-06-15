@@ -75,9 +75,9 @@ class TestDataSource:
         
         # create data source object
         reader = TestDataFileReader()
-        #frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'CCV')
+        frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'CCV')
         #frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'SM')
-        frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'SM')
+        #frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'SM')
         #frame = frame.loc[frame['Parameter'] == 85101]
         
         # end read from CSV file block
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         # create data source object
         tds = TestDataSource()
         data = tds.getSimulatedDataSeries()
-        configData = tds.getQAConfigDataFromFile('sample_QA_metadata/QA_metadata_sample_2.csv')
+        configData = tds.getQAConfigDataFromFile('sample_QA_metadata/QA_metadata_sample_CCV.csv')
         print(data)
     
     
