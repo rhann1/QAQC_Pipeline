@@ -289,7 +289,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
     #############################################################################################################
     
     # get QA metadata from local CSV file (would normally be sourced from API call)
-    configData = tds.getQAConfigDataFromFile('sample_QA_metadata/QA_metadata_sample_CCV_16s.csv')
+    configData = tds.getQAConfigDataFromFile('sample_QA_metadata/QA_metadata_sample_CCV.csv')
     
     # get QA metadata sourced from API endpoint
     #configData = configFrame

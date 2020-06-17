@@ -1,4 +1,4 @@
-StreamId,MonitorId,Parameter,StartDateTime,AObs,BObs,CObs,AObsAdj,BObsAdj,CObsAdj,UOM,AdjCode
+StreamSegmentId,MonitorId,Parameter,StartDateTime,AObs,BObs,CObs,AObsAdj,BObsAdj,CObsAdj,UOM,AdjCode
 1,AGW9HQ1Y,42602,5/26/2020 11:01,-14.5469429,,,0,,,8,claritycal
 2,AGW9HQ1Y,85101,5/26/2020 11:01,8.428571701,,,,,,105,
 3,AGW9HQ1Y,88101,5/26/2020 11:01,6.714286327,,,3.770428912,,,105,claritycal
