@@ -5,6 +5,7 @@ Created on Sat Mar 28 21:23:13 2020
 @author: rhann
 """
 
+# convert CSV QC config file to JSON object
 import json
 import pandas as pd
 import pprint as pp
