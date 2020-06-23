@@ -6,6 +6,7 @@ Created on Sun Mar 22 20:00:28 2020
 """
 import requests
 import json
+import pandas as pd
 from pandas.io.json import json_normalize
 import base64
 
@@ -199,8 +200,7 @@ jstring = '[{"IsSubHourly": false, "MeasurementId": 121888, "StreamSegmentId": 5
      
      
     
-    
-        
+
     
     
     
