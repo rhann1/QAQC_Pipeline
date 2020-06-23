@@ -543,10 +543,12 @@ if __name__ == "__main__":
     
     if len(sys.argv) < 2:
         IsSubHourly=True
-        QaConfigurationId = 1
+        QaScriptId = 1
+        QaProcessingLogId = 1
     else:
         IsSubHourly = sys.argv[0]
-        QaConfigurationId = sys.argv[1]
+        QaScriptId = sys.argv[1]
+        QaProcessingLogId = sys.argv[2]
         
     intervalHoursForHourly = 1
     intervalHoursForSubHourly = 1
@@ -571,6 +573,7 @@ if __name__ == "__main__":
         
         """
         # SubHourly data processing
+        QaProcessingStart = time.time()
         measurementFrame, configFrame = dh.getData(False, intervalHoursForSubHourly, maxStreamLimit) # getData() returns tuple of dataframes.  Passed argument is 'IsSubHourly'.
         computedQFlagFrame, subHourlyAggregations = QC_Core(False, measurementFrame, configFrame) # QC flags and aggregations are returned
         dh.PutData(True, computedQFlagFrame) # Boolean argument is 'IsSubHourly'
@@ -583,6 +586,9 @@ if __name__ == "__main__":
         processedFrames = QC_Core(False, measurementFrame, configFrame) # QC flags
         #dh.PutData(True, computedQFlagFrame) # Boolean argument is 'IsSubHourly'
         #dh.PutData(False, subHourlyAggregations)
+        #QaProcessingEnd = time.time()
+        
+        dh.PutProcessingLogData(QaProcessingLog) # transfer processing log data to database
 
 
 
