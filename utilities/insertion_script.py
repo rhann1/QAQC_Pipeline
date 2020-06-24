@@ -12,10 +12,14 @@ import base64
 import pprint as pp
 from token_handler import TokenHandler
 
-# code for inserting script into database
+
 # get token from token handler
 th = TokenHandler()
 token = th.getToken()
+
+
+
+# code for inserting encoded QC Core script into the database
 
 #Base64 encode QA script
 with open("QC_core_test.py", "rb") as script_file:
@@ -31,11 +35,11 @@ response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAScript', headers
                                                                                     json=payload)
 print(response)
 
+
 # code for inserting QC metadata into the database
 
-
 # read QC metadata into dataframe
-df = pd.read_csv("sample_QA_metadata/QA_metadata_sample_CCV_1s.csv")
+df = pd.read_csv("../sample_QA_metadata/QA_metadata_sample_CCV_2s.csv")
 
 # convert CSV QC config file to JSON object
 
@@ -71,12 +75,26 @@ for c in obj['configurations']:
     s = c['QaConfigurationSettings'][0]
     c.update({"QaConfigurationSettings": None})
     c.update({"QaConfigurationSettings": s})
+    #c.update({"QaConfigurationId": None})
     pp.pprint(c)
     print(' ')
     
-pp.pprint(obj)  
+    
+pp.pprint(obj)
+# convert JSON object to string  
+jdata = json.dumps(obj)
 
 # need to insert API request here
+response = requests.post('http://ab617-web-dev:8082/api/qa/PutStreamConfigurations', headers = {'Authorization': 'Bearer '+ token[0], 
+                                                                                'Content-Type': 'application/json; \
+                                                                                boundary=--------------------------651623359726858260475474'}, \
+                            
+
+                                                                                data=jdata)
+
+print(response)
+
+
 
 
 
