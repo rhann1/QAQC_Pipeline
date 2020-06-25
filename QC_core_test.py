@@ -47,7 +47,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
         if dev > QA1:
             return 1
         else:
-            return 1
+            return 0
     
     # modified z-score spike detector.  This is a robust method based on the median absolute deviation.
     # at this point this is the preferable method for detection obvious outliers
