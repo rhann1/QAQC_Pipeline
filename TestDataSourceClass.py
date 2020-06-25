@@ -75,8 +75,8 @@ class TestDataSource:
         
         # create data source object
         reader = TestDataFileReader()
-        frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'CCV')
-        #frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'SM')
+        #frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'CCV')
+        frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'SM')
         #frame = reader.getDataFrameFromFiles('sample_subhourly_data', 'SM')
         #frame = frame.loc[frame['Parameter'] == 85101]
         
