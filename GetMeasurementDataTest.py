@@ -57,7 +57,7 @@ if __name__ == "__main__":
     response = requests.post('http://ab617-web-dev:8082/api/qa/GetMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
-                                                                                    json={"IsSubHourly": "False", "IntervalHours": "1", "MaxNumberOfStreams": "1000"})
+                                                                                    json={"IsSubHourly": "False", "IntervalHours": "1", "MaxNumberOfStreams": "1"})
     # inspect response
     print(response.text.encode('utf8'))
     print(response.headers)

@@ -159,7 +159,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             return -1
         x = x.loc[x['QA_overall'] == 0]
         comp = int(60/freq*0.75)
-        if len(x) > comp:
+        if len(x) >= comp:
             return 1
         else:
             return 0
