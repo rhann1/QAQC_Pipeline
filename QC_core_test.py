@@ -44,7 +44,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
         x = x[::-1]
         x_med = np.median(x)
         dev = np.abs(x[0] - x_med)/x_med
-        if dev > QA1:
+        if dev > QA1 and x_med > 0:
             return 1
         else:
             return 0
@@ -58,6 +58,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             return -1
         x = x[::-1]
         b = [0, 0, 0, 0, 1.363, 1.206, 1.200, 1.140, 1.129, 1.107] # quartile correction factors for window widths < 10
+        #b = [0, 0, 0, 0, 1.500, 1.363, 1.206, 1.200, 1.140, 1.129, 1.107]
         k = 1.4826 # reciprocal of quartile function for a normal distribution
         q = QA2 # MAD threshold value from QC metadata table. The larger the value of 'q', the lower the probability of capturing an outlier.  Use q=10 for very large deviations.
         
@@ -99,7 +100,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
         x_bar = x.mean()
         x_sdev = np.std(x)
         z_score = np.abs((x[0] - x_bar)/x_sdev)
-        if z_score > QA3:
+        if z_score > QA3 and np.abs(x_sdev) > 0 and x[1] > 0.4:
             return 1
         else:
             return 0
@@ -112,7 +113,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
         x = x[::-1]
         q25, q75 = np.percentile(x, 25), np.percentile(x, 75)
         iqr = q75 - q25
-        threshold = iqr*10
+        threshold = iqr*QA4
         lower, upper = q25 - threshold, q75 + threshold
         if x[0] > upper:
             return 1
@@ -375,7 +376,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             #df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QA2,)).shift(-30, freq='m'))
             df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QC2,)))
             df4   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3, args=(QC3,)))
-            df5   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3, args=(3.5,)).shift(-15, freq='m'))
+            df5   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike2, args=(3.5,)).shift(-15, freq='m'))
             df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(true_spike, args=(3.2,)).shift(-30, freq='m'))
             df6   = list(frame.set_index('StartDateTime').rolling(persistWinSize)['AObs'].apply(lowvar, args=(p_delta,)))
             df7   = list(frame.set_index('StartDateTime').rolling(persistWinSize)[ 'AObs'].apply(persist))
@@ -415,7 +416,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             df1['QF01']     = df2
             df1['QF02']     = df3
             df1['QF03']     = df4
-            df1['QA_spk3_mod'] = df5b
+            df1['QA_spk3_mod'] = df5
             #df1['QA_LV']       = df6
             df1['QF04']      = df7
             df1['QF05']      = df9
