@@ -25,7 +25,7 @@ class TestDataFileReader:
         for filename in all_files:
             # read each CSV file and only use specified columns
             # this read is for SM files
-            df = pd.read_csv(filename, index_col=None, header=0, usecols = ['StartDateTime', 'StreamSegmentId', 'MonitorId', 'Parameter', 'AObs'])
+            df = pd.read_csv(filename, index_col=None, header=0, usecols = ['StartDateTime', 'StreamSegmentId', 'MonitorId', 'Parameter', 'AObs', 'AObsAdj'])
             # this read is for CCV files
             #df = pd.read_csv(filename, index_col=None, header=0, usecols = ['StartDateTime', 'MonitorId', 'Parameter', 'AObs'])
             li.append(df)
@@ -38,7 +38,7 @@ class TestDataFileReader:
         # this is required for all local test files that don't have a StreamID assigned (example: CCV data files)
         #frame.rename(columns={'MonitorId':'StreamId'}, inplace=True)
         frame['StartDateTime'] = pd.to_datetime(frame['StartDateTime'])   
-        frame = frame[frame.columns[[0, 2, 1, 3, 4]]] # resequence column order in dataframe (example for Clarity data files)
+        frame = frame[frame.columns[[0, 2, 1, 3, 4, 5]]] # resequence column order in dataframe (example for Clarity data files)
         #frame = frame[frame.columns[[0, 2, 1, 3]]] # resequence column order in dataframe (example for CCV data files)
         #frame = frame.reindex(['StreamId', 'StartDateTime', 'Parameter', 'AObs'], axis=1) # alternative for resequencing order of columns
         # only keep these parameters (this can be a list)

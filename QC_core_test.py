@@ -252,7 +252,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
     # get simulated data from data source object
     tds = TestDataSource()
     # retrieve measurement dataframe from simulated source
-    frame = tds.getSimulatedDataSeries()
+    aframe = tds.getSimulatedDataSeries()
     # retrieve measurement dataframe sourced from API endpoint
     frame = measurementFrame
     # convert StartDateTime column to datetime objects
@@ -364,10 +364,13 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             QC3WinSize         = int(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom3WindowSize'].values[0])
             QC4WinSize         = int(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom4WindowSize'].values[0])
             persistWinSize     = int(configData.loc[configData['StreamSegmentId'] == group[0]]['PersistWindowSize'].values[0])
+            useAdj             = int(configData.loc[configData['StreamSegmentId'] == group[0]]['useAdj'].values[0])
             
         
     
             frame = pd.DataFrame(group[1])
+            if useAdj == 1:
+                frame['AObs'] == frame['AObsAdj']
             
             
             # compute lists of QC flags for each test
@@ -549,9 +552,8 @@ if __name__ == "__main__":
         QaScriptId = 1
         QaProcessingLogId = 1
     else:
-        IsSubHourly = sys.argv[0]
-        QaScriptId = sys.argv[1]
-        QaProcessingLogId = sys.argv[2]
+        QaScriptId = sys.argv[0]
+        #QaProcessingLogId = sys.argv[2]
         
     intervalHoursForHourly = 1
     intervalHoursForSubHourly = 1

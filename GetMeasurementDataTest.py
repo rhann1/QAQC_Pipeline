@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
     # inspect token
     print(token[0])
-    
+    """    
     # obtain script and QA metadata from /getqascript API endpoint
     response = requests.post('http://ab617-web-dev:8082/api/qa/GetMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
@@ -61,6 +61,8 @@ if __name__ == "__main__":
     # inspect response
     print(response.text.encode('utf8'))
     print(response.headers)
+    
+    """
     jstring = '[{"IsSubHourly": false, "MeasurementId": 121888, "StreamSegmentId": 54, "IsCalculated": true, "QaProcessingLogId": 1, "QaConfigurationId": 3, "QF01": 1, "Qf02": 2, "Qf03": 3, "Qf04": 4, "Qf05": 5, "Qf06": 6, "Qf07": 7, "Qf08": 8, "Qf09": 9, "Qf10": 10, "QcValue01": 1.00001, "QcValue02": 2.00001, "QcValue03": 3.00001, "QcValue04": 4.00001, "QcValue05": 5.00001, "QcValue06": 6.00001, "QcValue07": 7.00001, "QcValue08": 8.00001, "QcValue09": 9.00001, "QcValue10": 10.00001, "QcText01": "pass1", "QcText02": "pass2", "QcText03": "pass3", "QcText04": "pass4", "QcText05": "pass5", "QcText06": "pass6", "QcText07": "pass7", "QcText08": "pass8", "QcText09": "pass9", "QcText10": "pass10"}, {"IsSubHourly": false, "MeasurementId": 143510, "StreamSegmentId": 54, "IsCalculated": true, "QaProcessingLogId": 1, "QaConfigurationId": 3, "QF01": 1, "Qf02": 2, "Qf03": 3, "Qf04": 4, "Qf05": 5, "Qf06": 6, "Qf07": 7, "Qf08": 8, "Qf09": 9, "Qf10": 10, "QcValue01": 1.00001, "QcValue02": 2.00001, "QcValue03": 3.00001, "QcValue04": 4.00001, "QcValue05": 5.00001, "QcValue06": 6.00001, "QcValue07": 7.00001, "QcValue08": 8.00001, "QcValue09": 9.00001, "QcValue10": 10.00001, "QcText01": "pass1", "QcText02": "pass2", "QcText03": "pass3", "QcText04": "pass4", "QcText05": "pass5", "QcText06": "pass6", "QcText07": "pass7", "QcText08": "pass8", "QcText09": "pass9", "QcText10": "pass10"}]'
     jobs = json.loads(jstring)
     QCFlagFrame = pd.DataFrame.from_dict(jobs, orient='columns')
@@ -166,7 +168,7 @@ if __name__ == "__main__":
     print(response.text.encode('utf8'))
     print(response.headers)
 """    
-"""    #Base64 encode QA script
+    #Base64 encode QA script
     with open("QC_core_test.py", "rb") as script_file:
         encoded_script = base64.b64encode(script_file.read()).decode('utf-8')
         print(encoded_script)
@@ -192,7 +194,7 @@ if __name__ == "__main__":
         download_file.write(decoded_bytes)
     
     
-    """  
+  
     
 jstring = '[{"IsSubHourly": false, "MeasurementId": 121888, "StreamSegmentId": 54, "IsCalculated": true, "QaProcessingLogId": 1, "QaConfigurationId": 3, "QF01": 1, "Qf02": 2, "Qf03": 3, "Qf04": 4, "Qf05": 5, "Qf06": 6, "Qf07": 7, "Qf08": 8, "Qf09": 9, "Qf10": 10, "QcValue01": 1.00001, "QcValue02": 2.00001, "QcValue03": 3.00001, "QcValue04": 4.00001, "QcValue05": 5.00001, "QcValue06": 6.00001, "QcValue07": 7.00001, "QcValue08": 8.00001, "QcValue09": 9.00001, "QcValue10": 10.00001, "QcText01": "pass1", "QcText02": "pass2", "QcText03": "pass3", "QcText04": "pass4", "QcText05": "pass5", "QcText06": "pass6", "QcText07": "pass7", "QcText08": "pass8", "QcText09": "pass9", "QcText10": "pass10"}, {"IsSubHourly": false, "MeasurementId": 143510, "StreamSegmentId": 54, "IsCalculated": true, "QaProcessingLogId": 1, "QaConfigurationId": 3, "QF01": 1, "Qf02": 2, "Qf03": 3, "Qf04": 4, "Qf05": 5, "Qf06": 6, "Qf07": 7, "Qf08": 8, "Qf09": 9, "Qf10": 10, "QcValue01": 1.00001, "QcValue02": 2.00001, "QcValue03": 3.00001, "QcValue04": 4.00001, "QcValue05": 5.00001, "QcValue06": 6.00001, "QcValue07": 7.00001, "QcValue08": 8.00001, "QcValue09": 9.00001, "QcValue10": 10.00001, "QcText01": "pass1", "QcText02": "pass2", "QcText03": "pass3", "QcText04": "pass4", "QcText05": "pass5", "QcText06": "pass6", "QcText07": "pass7", "QcText08": "pass8", "QcText09": "pass9", "QcText10": "pass10"}]'
   
