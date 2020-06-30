@@ -169,7 +169,7 @@ if __name__ == "__main__":
     print(response.headers)
 """    
     #Base64 encode QA script
-    with open("QC_core_test.py", "rb") as script_file:
+    with open("QC_core_test_DL.py", "rb") as script_file:
         encoded_script = base64.b64encode(script_file.read()).decode('utf-8')
         print(encoded_script)
     

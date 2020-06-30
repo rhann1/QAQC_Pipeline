@@ -39,8 +39,12 @@ if __name__ == "__main__":
     
     if ShouldQARun(token) == 'true':
         print('run')
+        response = json.loads(FetchQAScript(token))['script']['QaScriptId']
         scriptId = json.loads(FetchQAScript(token))['script']['QaScriptId']
-        call(['python3', 'C:\Users\rhann\Documents\GitHub\QAQC_Pipeline\QC_core_test_DL.py'])
+        #call(['QC_core_test_DL.py', 'scriptId'], shell=True)
+        import QC_core_test_DL
+        QC_core_test_DL.main('0', scriptId)
+        print('program complete')
         # retrieve active QA script and ScriptId
         
 

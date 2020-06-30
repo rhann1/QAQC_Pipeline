@@ -13,15 +13,15 @@ from DataHandler import DataHandler
 import sys
 import time
 
-def main(dummy, scriptId):
-    if len(sys.argv) < 1:
+def main(scriptId):
+    if len(sys.argv) < 2:
             IsSubHourly=True
             QaScriptId = 1
             QaProcessingLogId = 1
     else:
-            #IsSubHourly = sys.argv[0]
-            QaScriptId = scriptId
-            #QaProcessingLogId = sys.argv[2]
+            IsSubHourly = sys.argv[0]
+            QaScriptId = sys.argv[1]
+            QaProcessingLogId = sys.argv[2]
         
     intervalHoursForHourly = 1
     intervalHoursForSubHourly = 1
@@ -41,7 +41,6 @@ def main(dummy, scriptId):
         computedQFlagFrame, subHourlyAggregations = QC_Core(True, frame, configData)
         end = time.time()
         print("execution time = " + str(end - start))
-        print("QaScriptId =" + str(QaScriptId))
     else:
         dh = DataHandler()
         
@@ -598,4 +597,4 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
 
 if __name__ == "__main__":
     
-    sys.exit(main(sys.argv[1], sys.argv[2]))
+    sys.exit(main(sys.argv[0]))
