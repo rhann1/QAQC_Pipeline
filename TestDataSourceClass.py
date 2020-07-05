@@ -50,7 +50,7 @@ class TestDataSource:
 
         # initialize two group IDs
         frame['StreamId']=0
-        frame2['StreamId']=1
+        frame2['StreamId']=1 
         # concatenate dataframes
         frame = frame.append(frame2, ignore_index=True)
         

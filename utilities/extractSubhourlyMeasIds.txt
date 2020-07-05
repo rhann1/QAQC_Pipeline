@@ -1,0 +1,57 @@
+df_result
+computedQFlagFrame
+f = computedQFlagFrame[['StartDateTime','StreamSegmentId']]
+f
+f.groupby(["StreamSegmentId", "StartDateTime"])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+f
+f['StartDateTime']
+f['StartDateTime'].hour
+a = f.groupby(["StreamSegmentId", "StartDateTime"].hour)
+a = f.groupby(["StreamSegmentId", "StartDateTime".hour])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+a
+f['StartDateTime'].hour
+
+f['StartDateTime'].dt.hour
+f['StartDateTime'].dt.date
+f['StartDateTime'].dt.date.hour
+f['StartDateTime'].dt.datetime
+f['StartDateTime'].dt.date.hour
+f['StartDateTime'].dt.date
+f['StartDateTime'].dt.strptime("='%Y-%m-%d %H:%M')
+f['StartDateTime'].dt.strptime('%Y-%m-%d %H:%M')
+f['StartDateTime']
+f['StartDateTime'] = pd.to_datetime(f['StartDateTime'])
+f['StartDateTime'].dt.strptime("='%Y-%m-%d %H:%M')
+f['StartDateTime'].dt.strptime('%Y-%m-%d %H:%M')
+f['StartDateTime'].dt.strftime('%Y-%m-%d %H:%M')
+f['StartDateTime'].dt.strftime('%Y-%m-%d %H:00')
+f
+f['StartDateTime'].dt.strftime('%Y-%m-%d %H:00')
+f['StartDateTime'] = f['StartDateTime'].dt.strftime('%Y-%m-%d %H:00')
+f
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+pd.DataFrame(list(a))
+pd.DataFrame(list(a)).columns
+pd.DataFrame(list(a))
+pd.DataFrame(list(a))[0]
+pd.DataFrame(list(a))[1]
+list(a)
+list(a)[0]
+list(a)[1]
+list(a)[0]
+list(a)[0][0]
+list(a)[0][1]
+list(a)[0][1][0]
+
+list(a)[0][1]
+pd.DataFrame(list(a)[0][1])
+pd.DataFrame(list(a)[0][1])[0]
+pd.DataFrame(list(a)[0][1])
+pd.DataFrame(list(a)[0][1])['StartDateTime']
+runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+computedQFlagFrame
+computedQFlagFrame['StartDateTime']

@@ -59,7 +59,6 @@ def main(dummy, scriptId):
         #computedQFlagFrame, subHourlyAggregations = QC_Core(False, measurementFrame, configFrame) # QC flags
         processedFrames = QC_Core(testMode, False, measurementFrame, configFrame) # QC flags
         print(processedFrames)
-        return processedFrames
         #dh.PutData(True, computedQFlagFrame) # Boolean argument is 'IsSubHourly'
         #dh.PutData(False, subHourlyAggregations)
         #QaProcessingEnd = time.time()
@@ -393,7 +392,6 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
     # process each StreamSegmentId group
     for group in gp:
         
-        
         # process only if QC metadata exists
         if len(configData.loc[configData['StreamSegmentId'] == group[0]].values) != 0:
             print('Processing StreamSegmentId = ' + str(group[0]))
@@ -427,8 +425,7 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
             frame = pd.DataFrame(group[1])
             if useAdj == 1:
                 frame['AObs'] == frame['AObsAdj']
-                
-            frame['QaConfigurationId'] = configData['QaConfigurationId'].loc[configData['StreamSegmentId'] == group[0]].values[0]
+            
             
             # compute lists of QC flags for each test
             #df    = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
@@ -604,5 +601,4 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
 
 if __name__ == "__main__":
     
-    #sys.exit(main(sys.argv[1], sys.argv[2]))
-    processedFrames = main(0, 1)
+    sys.exit(main(sys.argv[1], sys.argv[2]))

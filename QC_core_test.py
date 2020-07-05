@@ -292,6 +292,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
     
     # get QA metadata from local CSV file (would normally be sourced from API call)
     configData = tds.getQAConfigDataFromFile('sample_QA_metadata/Sactest_QCMetadata_Final.csv')
+    configData = configFrame
     
     # get QA metadata sourced from API endpoint
     #configData = configFrame
@@ -364,14 +365,14 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             QC3WinSize         = int(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom3WindowSize'].values[0])
             QC4WinSize         = int(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom4WindowSize'].values[0])
             persistWinSize     = int(configData.loc[configData['StreamSegmentId'] == group[0]]['PersistWindowSize'].values[0])
-            useAdj             = int(configData.loc[configData['StreamSegmentId'] == group[0]]['useAdj'].values[0])
+            #useAdj             = int(configData.loc[configData['StreamSegmentId'] == group[0]]['useAdj'].values[0])
             
         
     
             frame = pd.DataFrame(group[1])
-            if useAdj == 1:
+            """if useAdj == 1:
                 frame['AObs'] == frame['AObsAdj']
-            
+            """
             
             # compute lists of QC flags for each test
             #df    = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
@@ -560,7 +561,7 @@ if __name__ == "__main__":
     maxStreamLimit = 5000
     
     #set mode of processing (testing using local files: testMode=True, processing from APIs: testMode=False)
-    testMode=True
+    testMode=False
     
     #performation data exchange operations    
     #get measurement and configuration data

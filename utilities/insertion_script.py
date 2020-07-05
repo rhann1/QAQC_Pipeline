@@ -17,7 +17,7 @@ from token_handler import TokenHandler
 th = TokenHandler()
 token = th.getToken()
 
-
+""
 
 # code for inserting encoded QC Core script into the database
 
@@ -35,16 +35,17 @@ response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAScript', headers
                                                                                     json=payload)
 print(response)
 
+""
 
 # code for inserting QC metadata into the database
 
 # read QC metadata into dataframe
-df = pd.read_csv("../sample_QA_metadata/QA_metadata_sample_CCV_2s.csv")
+df = pd.read_csv("../sample_QA_metadata/QA_metadata_sample_SC_2s.csv")
 
 # convert CSV QC config file to JSON object
 
 # define column list for extensible key-value pairs
-cols = ['UDL', 'useUDL', 'LDL', 'useLDL', 'MDL', 'useMDL','PersistCount', 'usePCount', 'PersistThresh', 'usePThresh', 'Anom1Thresh', 'useA1Check', 
+cols = ['UDL', 'useUDL', 'LDL', 'useLDL', 'MDL', 'useMDL','PersistCount', 'usePCount', 'PersistThresh', 'usePThresh', 'useAdj', 'Anom1Thresh', 'useA1Check', 
       'Anom2Thresh', 'useA2Check', 'Anom3Thresh', 'useA3Check', 'Anom4Thresh', 'useA4Check', 'PersistWindowSize','Anom1WindowSize','Anom2WindowSize',
 	  'Anom3WindowSize', 'Anom4WindowSize','Thresh1','Thresh2','Thresh3','Thresh4','WindowSize1','WindowSize2','WindowSize3','WindowSize4',
       'PerformCheck1','PerformCheck2','PerformCheck3','PerformCheck4','PerformCheck5','PerformCheck6','PerformCheck7']
