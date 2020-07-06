@@ -96,6 +96,70 @@ class DataHandler:
             raise SystemExit(e)
 
         return(response.text)
+        
+    def PutProcessingLog(self, QaProcessingLogId, QaProcessingEnd, successfulRecordCount):
+        
+        def RequestToken():
+    
+            token = th.getToken(self)
+            
+            if token[1] != 200:
+                sys.exit("Token retrieval error: " + token[2])
+            else:
+                return(token[0])
+                
+        jobj = {'QaProcessingLogId': str(QaProcessingLogId), 
+                'QaProcessingEnd': str(QaProcessingEnd), 
+                'SuccessfulRecordCount': str(successfulRecordCount)}
+        
+        token = RequestToken()
+                    
+        try:
+       
+            response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token, 
+                                                                                    'Content-Type': 'application/json; \
+                                                                                    boundary=--------------------------651623359726858260475474'}, \
+                                                                                    json=jobj)
+        except requests.exceptions.RequestException as e:  
+            raise SystemExit(e)
+
+        return(response.text)
+        
+    def PutComputedFlags(self, computedFlags):
+        
+        def RequestToken():
+    
+            token = th.getToken(self)
+            
+            if token[1] != 200:
+                sys.exit("Token retrieval error: " + token[2])
+            else:
+                return(token[0])
+        
+        
+        
+        
+        
+        payload = {'DataToPut': None}
+        jobj = computedFlags.to_json(orient = 'records')
+        payload.update({'DataToPut': jobj})
+        
+        token = RequestToken()
+                    
+        try:
+       
+            response = requests.post('http://ab617-web-dev:8082/api/qa/PutMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token, 
+                                                                                    'Content-Type': 'application/json; \
+                                                                                    boundary=--------------------------651623359726858260475474'}, \
+                                                                                    json=jobj)
+        except requests.exceptions.RequestException as e:  
+            raise SystemExit(e)
+
+        return(response.text)
+                
+        
+        
+        
 
         
  #       DfsForProcessing[0].to_csv(r"C:\Users\tahelges\Desktop\payload0.csv", index = False)

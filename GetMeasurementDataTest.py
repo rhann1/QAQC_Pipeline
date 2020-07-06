@@ -115,13 +115,15 @@ if __name__ == "__main__":
     measurementsFrame = json_normalize(measurements)
     measurementsFrame.drop(['Aobs', 'AobsAdj', 'Bobs', 'BobsAdj', 'Cobs', 'CobsAdj', 'ConvUomid', 'StartDateTime', 'Uomid'], axis=1, inplace=True)
     print(measurementsFrame)
-    measurementsFrame['IsCalculated'] = None
-    measurementsFrame['QaProcessingLogId'] = None
-    measurementsFrame['QaConfigurationId'] = None
-    measurementsFrame['Qf01'] = None   
-    measurementsFrame['Qf01'] = None
-    measurementsFrame['Qf02'] = None
-    measurementsFrame['Qf03'] = None
+    """
+    measurementsFrame = pd.DataFrame()
+    measurementsFrame['IsCalculated'] = True
+    measurementsFrame['QaProcessingLogId'] = 23
+    measurementsFrame['QaConfigurationId'] = 40
+    measurementsFrame['Qf01'] = 1   
+    measurementsFrame['Qf01'] = 0
+    measurementsFrame['Qf02'] = 0
+    measurementsFrame['Qf03'] = 0 
     measurementsFrame['Qf04'] = None
     measurementsFrame['Qf05'] = None
     measurementsFrame['Qf06'] = None
@@ -149,7 +151,8 @@ if __name__ == "__main__":
     measurementsFrame['QcText08'] = None
     measurementsFrame['QcText09'] = None
     measurementsFrame['QcText10'] = None
-        
+
+    """    
     measurementsFrame['Qf01'][measurementsFrame['StreamSegmentId'] == 54] = 0
     measurementsFrame['QaConfigurationId'][measurementsFrame['StreamSegmentId'] == 54] = 3
     measurementsFrame['QaProcessingLogId'][measurementsFrame['StreamSegmentId'] == 54] = 16
@@ -215,10 +218,6 @@ if __name__ == "__main__":
                                                                                     json=payload)
     print(response)
     
-    response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
-                                                                                    'Content-Type': 'application/json; \
-                                                                                    boundary=--------------------------651623359726858260475474'}, \
-                                                                                    json=payload)
 
     response = requests.get('http://ab617-web-dev:8082/api/qa/GetQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
