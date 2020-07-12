@@ -142,19 +142,25 @@ class DataHandler:
         
         payload = {'DataToPut': None}
         jobj = computedFlags.to_json(orient = 'records')
+        jobj = json.loads(jobj)
         payload.update({'DataToPut': jobj})
         
         token = RequestToken()
+        print(payload)
+        
                     
         try:
        
             response = requests.post('http://ab617-web-dev:8082/api/qa/PutMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token, 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
-                                                                                    json=jobj)
+                                                                                    json=payload)
+            print(response)
+            print(response.text)
         except requests.exceptions.RequestException as e:  
             raise SystemExit(e)
-
+        
+         
         return(response.text)
                 
         

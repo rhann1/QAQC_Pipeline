@@ -22,7 +22,7 @@ token = th.getToken()
 # code for inserting encoded QC Core script into the database
 
 #Base64 encode QA script
-with open("QC_core_test.py", "rb") as script_file:
+with open("../QC_core_test_DL.py", "rb") as script_file:
     encoded_script = base64.b64encode(script_file.read()).decode('utf-8')
     print(encoded_script)
 
@@ -35,7 +35,7 @@ response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAScript', headers
                                                                                     json=payload)
 print(response)
 
-""
+
 
 # code for inserting QC metadata into the database
 

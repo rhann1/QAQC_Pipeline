@@ -561,7 +561,7 @@ if __name__ == "__main__":
     maxStreamLimit = 5000
     
     #set mode of processing (testing using local files: testMode=True, processing from APIs: testMode=False)
-    testMode=False
+    testMode=True
     
     #performation data exchange operations    
     #get measurement and configuration data

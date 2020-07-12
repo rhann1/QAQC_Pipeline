@@ -14,7 +14,8 @@ from datetime import datetime
 import sys
 import time
 
-def main(dummy, scriptId):
+def main(dummy = 0, scriptId = 1):
+    
     if len(sys.argv) < 1:
             IsSubHourly=True
             QaScriptId = 1
@@ -23,7 +24,10 @@ def main(dummy, scriptId):
             #IsSubHourly = sys.argv[0]
             QaScriptId = scriptId
             #QaProcessingLogId = sys.argv[2]
-        
+    
+
+    IsSubHourly = False
+    QaScriptId = scriptId
     intervalHoursForHourly = 1
     intervalHoursForSubHourly = 1
     maxStreamLimit = 5000
@@ -72,7 +76,8 @@ def main(dummy, scriptId):
                                            'QF01', 'QF02', 'QF03', 'QF04', 
                                            'IsSubHourly', 
                                            'IsCalculated', 
-                                           'StreamSegmentId']]
+                                           'StreamSegmentId',
+                                           'QaScriptId']]
         
         dh.PutComputedFlags(processedFrames)
         dh.PutProcessingLog(batchId, datetime.now(), successfullyProcessedOverall)
@@ -448,6 +453,7 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
                 
             frame['QaConfigurationId'] = configData['QaConfigurationId'].loc[configData['StreamSegmentId'] == group[0]].values[0]
             frame['IsCalculated'] = True 
+            frame['QaScriptId'] = QaScriptId
 
             # compute lists of QC flags for each test
             #df    = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
@@ -496,7 +502,7 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
             df1['QF02']     = df3
             df1['QF03']     = df4
             df1['QA_spk3_mod'] = df5
-            #df1['QA_LV']       = df6
+            df1['QA_LV']       = df6
             df1['QF04']      = df7
             df1['QF05']      = df9
             df1['QF06']      = df10
@@ -552,6 +558,14 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
                 #subHourlyQFlags = df_result[['MeasurementID', 'StreamSegmentId', 'StartDateTime', 'QF01', 'QF02', 'QF03', 'QF04', 'QOverall']]
                 
     #print(df_result)
+    df_result[['QF01', 'QF02', 'QF03', 'QA_spk3_mod', 'QF04',
+       'QF05', 'QF06', 'QF07', 'QA_overall']] = df_result[['QF01', 'QF02', 'QF03', 'QA_spk3_mod', 'QF04',
+       'QF05', 'QF06', 'QF07', 'QA_overall']].fillna(-2)
+    
+
+    df_result[['QF01', 'QF02', 'QF03', 'QA_spk3_mod', 'QF04',
+       'QF05', 'QF06', 'QF07', 'QA_overall']] = df_result[['QF01', 'QF02', 'QF03', 'QA_spk3_mod', 'QF04',
+       'QF05', 'QF06', 'QF07', 'QA_overall']].astype(int)
     
     # end function drivers
     if IsSubHourly:
@@ -623,5 +637,5 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
 
 if __name__ == "__main__":
     
-    sys.exit(main(sys.argv[1], sys.argv[2]))
-    #processedFrames = main(0, 1)
+    #sys.exit(main(sys.argv[1], sys.argv[2]))
+    processedFrames = main(0, 1)
