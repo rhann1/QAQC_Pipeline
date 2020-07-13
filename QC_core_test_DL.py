@@ -14,16 +14,16 @@ from datetime import datetime
 import sys
 import time
 
-def main(dummy = 0, scriptId = 1):
+def main(dummy, scriptId):
     
     if len(sys.argv) < 1:
             IsSubHourly=True
             QaScriptId = 1
             QaProcessingLogId = 1
     else:
-            #IsSubHourly = sys.argv[0]
+            #dummy = sys.argv[0]
             QaScriptId = scriptId
-            #QaProcessingLogId = sys.argv[2]
+            #QaScriptId = sys.argv[2]
     
 
     IsSubHourly = False
@@ -639,3 +639,5 @@ if __name__ == "__main__":
     
     #sys.exit(main(sys.argv[1], sys.argv[2]))
     processedFrames = main(0, 1)
+    #sys.exit(main('0', 1))
+    
