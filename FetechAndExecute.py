@@ -43,7 +43,7 @@ if __name__ == "__main__":
         scriptId = json.loads(FetchQAScript(token))['script']['QaScriptId']
         #call(['QC_core_test_DL.py', 'scriptId'], shell=True)
         import QC_core_test_DL
-        QC_core_test_DL.main('0', scriptId)
+        QC_core_test_DL.main(True, scriptId)
         print('program complete')
         # retrieve active QA script and ScriptId
         

@@ -14,7 +14,7 @@ from datetime import datetime
 import sys
 import time
 
-def main(dummy, scriptId):
+def main(IsSubHourly, scriptId):
     
     if len(sys.argv) < 1:
             IsSubHourly=True
@@ -26,11 +26,11 @@ def main(dummy, scriptId):
             #QaScriptId = sys.argv[2]
     
 
-    IsSubHourly = False
+    #IsSubHourly = False
     QaScriptId = scriptId
     intervalHoursForHourly = 1
-    intervalHoursForSubHourly = 1
-    maxStreamLimit = 5000
+    intervalHoursForSubHourly = 4
+    maxStreamLimit = 2
     
     #set mode of processing (testing using local files: testMode=True, processing from APIs: testMode=False)
     testMode=False
@@ -47,18 +47,42 @@ def main(dummy, scriptId):
         end = time.time()
         print("execution time = " + str(end - start))
         print("QaScriptId =" + str(QaScriptId))
-    else:
+
+    elif not testMode and IsSubHourly:
         dh = DataHandler()
         
-        """
         # SubHourly data processing
-        QaProcessingStart = time.time()
-        measurementFrame, configFrame = dh.getData(False, intervalHoursForSubHourly, maxStreamLimit) # getData() returns tuple of dataframes.  Passed argument is 'IsSubHourly'.
-        computedQFlagFrame, subHourlyAggregations = QC_Core(False, measurementFrame, configFrame) # QC flags and aggregations are returned
-        dh.PutData(True, computedQFlagFrame) # Boolean argument is 'IsSubHourly'
-        dh.PutData(False, subHourlyAggregations)
-        """
+        beginGetData = time.time()
+        measurementFrame, configFrame = dh.getData(True, intervalHoursForSubHourly, maxStreamLimit) # getData() returns tuple of dataframes.  Passed argument is 'IsSubHourly'.
+        endGetData = time.time()
+        #computedQFlagFrame, subHourlyAggregations = QC_Core(False, measurementFrame, configFrame) # QC flags
         
+        batchId = dh.GetBatchId(QaScriptId, datetime.now(), len(measurementFrame)) # get QaProcessingLogId
+        start = time.time()
+        processedFrames = QC_Core(testMode, True, measurementFrame, configFrame) # QC flags
+        end = time.time()
+        processedFrames[0]['QaProcessingLogId'] = batchId
+
+        QC_overallCount = len(processedFrames[0]) # get count of overall quality flags
+        successfullyProcessedOverall = np.sum(processedFrames[0]['QA_overall'].loc[processedFrames[0]['QA_overall'] > -1]) #get count of successfully processed flags
+        
+        processedFrames = processedFrames[0][['MeasurementId', 
+                                           'QaProcessingLogId', 
+                                           'QaConfigurationId', 
+                                           'QF01', 'QF02', 'QF03', 'QF04', 
+                                           'IsSubHourly', 
+                                           'IsCalculated', 
+                                           'StreamSegmentId',
+                                           'QaScriptId']]
+        
+        dh.PutComputedFlags(processedFrames)
+        dh.PutProcessingLog(batchId, datetime.now(), successfullyProcessedOverall)
+        print(processedFrames)
+        print("time to retrieve data set = " + str(endGetData - beginGetData))
+        print("execution time = " + str(end - start))
+        return processedFrames
+
+    else:        
         # Hourly data processing
         measurementFrame, configFrame = dh.getData(False, intervalHoursForHourly, maxStreamLimit) # getData() returns tuple of dataframes.  Passed argument is 'IsSubHourly'.
         #computedQFlagFrame, subHourlyAggregations = QC_Core(False, measurementFrame, configFrame) # QC flags
@@ -638,6 +662,6 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
 if __name__ == "__main__":
     
     #sys.exit(main(sys.argv[1], sys.argv[2]))
-    processedFrames = main(0, 1)
+    processedFrames = main(True, 1)
     #sys.exit(main('0', 1))
     

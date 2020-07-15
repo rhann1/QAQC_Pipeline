@@ -186,7 +186,7 @@ if __name__ == "__main__":
     
     from datetime import datetime
     dh = DataHandler()
-    dfs = dh.getData("False", "1", "2")
+    dfs = dh.getData("True", "1", 4000)
     batchId = dh.GetBatchId(1, datetime.now(), 16000 )
     #dh.ProcessData(dfs)
     #dh.putData()

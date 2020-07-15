@@ -29,18 +29,21 @@ with open("../QC_core_test_DL.py", "rb") as script_file:
 # create JSON payload    
 payload = {'script': encoded_script}
 # issue request to API
+"""
 response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=payload)
-print(response)
 
+print(response)
+"""
 
 
 # code for inserting QC metadata into the database
 
 # read QC metadata into dataframe
-df = pd.read_csv("../sample_QA_metadata/QA_metadata_sample_SC_2s.csv")
+#df = pd.read_csv("../sample_QA_metadata/QA_metadata_sample_SC_2s.csv")
+df = pd.read_csv("../sample_QA_metadata/SM_QCMetadata_2s.csv")
 
 # convert CSV QC config file to JSON object
 
