@@ -347,7 +347,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             ldl                = float(configData.loc[configData['StreamSegmentId'] == group[0]]['LDL'].values[0])
             mdl                = float(configData.loc[configData['StreamSegmentId'] == group[0]]['MDL'].values[0])
             durationMinutes    = float(configData.loc[configData['StreamSegmentId'] == group[0]]['SamplingDurationMinutes'].values[0])
-            dfpersistCount       = int(configData.loc[configData['StreamSegmentId'] == group[0]]['PersistCount'].values[0])
+            persistCount       = int(configData.loc[configData['StreamSegmentId'] == group[0]]['PersistCount'].values[0])
             QC1                = float(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom1Thresh'].values[0])
             QC2                = float(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom2Thresh'].values[0])
             QC3                = float(configData.loc[configData['StreamSegmentId'] == group[0]]['Anom3Thresh'].values[0])
@@ -438,8 +438,8 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             #df1.replace(np.nan, -2, regex=True, inplace=True) # replace any NaN values with -2 indicating flag could not be computed due to insufficient window.
     
             # compute overall QC flag using bitwise logical 'or' combination of level 1 flags
-            df1['QA_overall']  = (df1['QF01'].loc[df1['QF01'].notnull()].apply(lambda x: int(x))*useQC1             | \
-                                  df1['QF02'].loc[df1['QF02'].notnull()].apply(lambda x: int(x))*useQC2             | \
+            df1['QA_overall']  = (df1['QF01'].loc[df1['QF01'].notnull()].apply(lambda x: int(x))*useQC1             & \
+                                  df1['QF02'].loc[df1['QF02'].notnull()].apply(lambda x: int(x))*useQC2             & \
                                   df1['QF03'].loc[df1['QF03'].notnull()].apply(lambda x: int(x))*useQC3             | \
                                   df1['QF07'].loc[df1['QF07'].notnull()].apply(lambda x: int(x))*useQC4             | \
                                   df1['QF04'].loc[df1['QF04'].notnull()].apply(lambda x: int(x))*usePersistCount    | \
