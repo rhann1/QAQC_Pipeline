@@ -48,8 +48,8 @@ df = pd.read_csv("../sample_QA_metadata/SM_QCMetadata_2s.csv")
 # convert CSV QC config file to JSON object
 
 # define column list for extensible key-value pairs
-cols = ['UDL', 'useUDL', 'LDL', 'useLDL', 'MDL', 'useMDL','PersistCount', 'usePCount', 'PersistThresh', 'usePThresh', 'useAdj', 'Anom1Thresh', 'useA1Check', 
-      'Anom2Thresh', 'useA2Check', 'Anom3Thresh', 'useA3Check', 'Anom4Thresh', 'useA4Check', 'PersistWindowSize','Anom1WindowSize','Anom2WindowSize',
+cols = ['computeQuality', 'UDL', 'useUDL', 'LDL', 'useLDL', 'MDL', 'useMDL','PersistCount', 'usePCount', 'PersistThresh', 'usePThresh', 'useAdj', 'Anom1Thresh', 'useA1Check', 
+      'Anom2Thresh', 'useA2Check', 'Anom3Thresh', 'useA3Check', 'Anom4Thresh', 'useA4Check', 'Anom7Thresh', 'useA7Check', 'PersistWindowSize','Anom1WindowSize','Anom2WindowSize',
 	  'Anom3WindowSize', 'Anom4WindowSize','Thresh1','Thresh2','Thresh3','Thresh4','WindowSize1','WindowSize2','WindowSize3','WindowSize4',
       'PerformCheck1','PerformCheck2','PerformCheck3','PerformCheck4','PerformCheck5','PerformCheck6','PerformCheck7']
 

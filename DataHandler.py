@@ -121,8 +121,11 @@ class DataHandler:
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=jobj)
         except requests.exceptions.RequestException as e:  
+            print("error occurs in sending process log")
             raise SystemExit(e)
-
+        
+        print("sent QaProcessingLogId " + str(QaProcessingLogId))
+        print("received response " + str(response))
         return(response.text)
         
     def PutComputedFlags(self, computedFlags):
@@ -135,18 +138,14 @@ class DataHandler:
                 sys.exit("Token retrieval error: " + token[2])
             else:
                 return(token[0])
-        
-        
-        
-        
-        
+                
         payload = {'DataToPut': None}
         jobj = computedFlags.to_json(orient = 'records')
         jobj = json.loads(jobj)
         payload.update({'DataToPut': jobj})
         
         token = RequestToken()
-        print(payload)
+        #print(payload)
         
                     
         try:
@@ -157,10 +156,12 @@ class DataHandler:
                                                                                     json=payload)
             print(response)
             print(response.text)
-        except requests.exceptions.RequestException as e:  
+        except requests.exceptions.RequestException as e: 
+            print("error occured sending QC flags")
             raise SystemExit(e)
         
-         
+        print("sent computed QC flags")
+        print("received response " + str(response))         
         return(response.text)
                 
         

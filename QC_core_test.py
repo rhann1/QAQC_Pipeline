@@ -454,7 +454,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             sFrame['dfspike'] = sFrame.loc[(sFrame['df2'].notnull().astype(int) == 0) | (sFrame['df3'].notnull().astype(int) ==0) | (sFrame['df4'].notnull().astype(int) ==0)] = 0
             """
             # best logic so far for handling both pass/fail composite spike logic and status codes.  This still needs so work.
-            dspike = list([1 if (int(x) == 1 ) & (int(y) == 1) & (int(z) == 1) else 0 for x,y,z in zip(df2,df3,df4)])
+            dspike = list([1 if (int(x) == 1) & (int(y) == 1) & (int(z) == 1) else 0 for x,y,z in zip(df2,df3,df4)])
             dspike2 = list([-3  if (int(x) < 0 ) | (int(y) < 0) | (int(z) < 0) else ds for x,y,z,ds in zip(df2,df3,df4,dspike) ])
             
             #compute composite spike flag (bitwise and of QF01, QF02 and QF03)
