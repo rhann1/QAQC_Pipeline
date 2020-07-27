@@ -30,7 +30,7 @@ def main(IsSubHourly, scriptId):
     QaScriptId = scriptId
     intervalHoursForHourly = 1
     intervalHoursForSubHourly = 4
-    maxStreamLimit = 2
+    maxStreamLimit = 48
     
     #set mode of processing (testing using local files: testMode=True, processing from APIs: testMode=False)
     testMode=False
@@ -73,7 +73,7 @@ def main(IsSubHourly, scriptId):
         processedFrames = processedFrames[0][['MeasurementId', 
                                            'QaProcessingLogId', 
                                            'QaConfigurationId', 
-                                           'QF01', 'QF02', 'QF03', 'QF04', 
+                                           'QA_overall', 'QF01', 'QF02', 'QF03', 'QF04', 'QF05', 'QF06', 'QF07', 
                                            'IsSubHourly', 
                                            'IsCalculated', 
                                            'StreamSegmentId',

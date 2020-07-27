@@ -45,7 +45,7 @@ class DataHandler:
 
         #inner function to extract measurement and configuration data and convert to dataframe objects (# 18 on QC Pipeline sequence diagram)        
         def ConvertJSONtoDataframe(payload):
-            
+                        
             print(payload.text)
             
             jConfigurations = json.loads(payload.text)[0]['Configurations']
@@ -187,7 +187,7 @@ if __name__ == "__main__":
     
     from datetime import datetime
     dh = DataHandler()
-    dfs = dh.getData("True", "1", 4000)
+    dfs = dh.getData("True", "1", 2)
     batchId = dh.GetBatchId(1, datetime.now(), 16000 )
     #dh.ProcessData(dfs)
     #dh.putData()
