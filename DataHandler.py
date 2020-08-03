@@ -7,6 +7,7 @@ Last Modified on ___
 import pandas as pd
 import re
 import json
+import time
 import requests
 import sys
 import pprint
@@ -115,11 +116,11 @@ class DataHandler:
         token = RequestToken()
                     
         try:
-       
             response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token, 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=jobj)
+                    
         except requests.exceptions.RequestException as e:  
             print("error occurs in sending process log")
             raise SystemExit(e)
@@ -149,11 +150,14 @@ class DataHandler:
         
                     
         try:
-       
+            start = time.time()
             response = requests.post('http://ab617-web-dev:8082/api/qa/PutMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token, 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=payload)
+            end = time.time()
+            print("QC flag insertion time = " + str(end - start))
+            
             print(response)
             print(response.text)
         except requests.exceptions.RequestException as e: 

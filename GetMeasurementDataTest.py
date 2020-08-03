@@ -100,13 +100,12 @@ if __name__ == "__main__":
     jstring = '[{"IsSubHourly": false, "MeasurementId": 121888, "StreamSegmentId": 54, "IsCalculated": true, "QaProcessingLogId": 1, "QaConfigurationId": 3, "QF01": 1, "Qf02": 2, "Qf03": 3, "Qf04": 4, "Qf05": 5, "Qf06": 6, "Qf07": 7, "Qf08": 8, "Qf09": 9, "Qf10": 10, "QcValue01": 1.00001, "QcValue02": 2.00001, "QcValue03": 3.00001, "QcValue04": 4.00001, "QcValue05": 5.00001, "QcValue06": 6.00001, "QcValue07": 7.00001, "QcValue08": 8.00001, "QcValue09": 9.00001, "QcValue10": 10.00001, "QcText01": "pass1", "QcText02": "pass2", "QcText03": "pass3", "QcText04": "pass4", "QcText05": "pass5", "QcText06": "pass6", "QcText07": "pass7", "QcText08": "pass8", "QcText09": "pass9", "QcText10": "pass10"}, {"IsSubHourly": false, "MeasurementId": 143510, "StreamSegmentId": 54, "IsCalculated": true, "QaProcessingLogId": 1, "QaConfigurationId": 3, "QF01": 1, "Qf02": 2, "Qf03": 3, "Qf04": 4, "Qf05": 5, "Qf06": 6, "Qf07": 7, "Qf08": 8, "Qf09": 9, "Qf10": 10, "QcValue01": 1.00001, "QcValue02": 2.00001, "QcValue03": 3.00001, "QcValue04": 4.00001, "QcValue05": 5.00001, "QcValue06": 6.00001, "QcValue07": 7.00001, "QcValue08": 8.00001, "QcValue09": 9.00001, "QcValue10": 10.00001, "QcText01": "pass1", "QcText02": "pass2", "QcText03": "pass3", "QcText04": "pass4", "QcText05": "pass5", "QcText06": "pass6", "QcText07": "pass7", "QcText08": "pass8", "QcText09": "pass9", "QcText10": "pass10"}]'
     jobs = json.loads(jstring)
     QCFlagFrame = pd.DataFrame.from_dict(jobs, orient='columns')
-    
+    """
     response = requests.get('http://ab617-web-dev:8082/api/qa/GetQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'})
     
     print(response.text.encode('utf8'))
-    """
     
     
 
@@ -205,7 +204,7 @@ if __name__ == "__main__":
     print(response.text.encode('utf8'))
     print(response.headers)
     """    
-
+    """
     #Base64 encode QA script
     with open("QC_core_test_DL.py", "rb") as script_file:
         encoded_script = base64.b64encode(script_file.read()).decode('utf-8')
@@ -217,8 +216,9 @@ if __name__ == "__main__":
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=payload)
     print(response)
+    """
     
-
+    """
     response = requests.get('http://ab617-web-dev:8082/api/qa/GetQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'})
@@ -227,10 +227,10 @@ if __name__ == "__main__":
     with open("QC_core_test_DL.py", "wb") as download_file:
         download_file.write(decoded_bytes)
     
-    
+    """    
   
     
-    jstring = '[{"IsSubHourly": false, "MeasurementId": 121888, "StreamSegmentId": 54, "IsCalculated": true, "QaProcessingLogId": 1, "QaConfigurationId": 3, "QF01": 1, "Qf02": 2, "Qf03": 3, "Qf04": 4, "Qf05": 5, "Qf06": 6, "Qf07": 7, "Qf08": 8, "Qf09": 9, "Qf10": 10, "QcValue01": 1.00001, "QcValue02": 2.00001, "QcValue03": 3.00001, "QcValue04": 4.00001, "QcValue05": 5.00001, "QcValue06": 6.00001, "QcValue07": 7.00001, "QcValue08": 8.00001, "QcValue09": 9.00001, "QcValue10": 10.00001, "QcText01": "pass1", "QcText02": "pass2", "QcText03": "pass3", "QcText04": "pass4", "QcText05": "pass5", "QcText06": "pass6", "QcText07": "pass7", "QcText08": "pass8", "QcText09": "pass9", "QcText10": "pass10"}, {"IsSubHourly": false, "MeasurementId": 143510, "StreamSegmentId": 54, "IsCalculated": true, "QaProcessingLogId": 1, "QaConfigurationId": 3, "QF01": 1, "Qf02": 2, "Qf03": 3, "Qf04": 4, "Qf05": 5, "Qf06": 6, "Qf07": 7, "Qf08": 8, "Qf09": 9, "Qf10": 10, "QcValue01": 1.00001, "QcValue02": 2.00001, "QcValue03": 3.00001, "QcValue04": 4.00001, "QcValue05": 5.00001, "QcValue06": 6.00001, "QcValue07": 7.00001, "QcValue08": 8.00001, "QcValue09": 9.00001, "QcValue10": 10.00001, "QcText01": "pass1", "QcText02": "pass2", "QcText03": "pass3", "QcText04": "pass4", "QcText05": "pass5", "QcText06": "pass6", "QcText07": "pass7", "QcText08": "pass8", "QcText09": "pass9", "QcText10": "pass10"}]'
+#    jstring = '[{"IsSubHourly": false, "MeasurementId": 121888, "StreamSegmentId": 54, "IsCalculated": true, "QaProcessingLogId": 1, "QaConfigurationId": 3, "QF01": 1, "Qf02": 2, "Qf03": 3, "Qf04": 4, "Qf05": 5, "Qf06": 6, "Qf07": 7, "Qf08": 8, "Qf09": 9, "Qf10": 10, "QcValue01": 1.00001, "QcValue02": 2.00001, "QcValue03": 3.00001, "QcValue04": 4.00001, "QcValue05": 5.00001, "QcValue06": 6.00001, "QcValue07": 7.00001, "QcValue08": 8.00001, "QcValue09": 9.00001, "QcValue10": 10.00001, "QcText01": "pass1", "QcText02": "pass2", "QcText03": "pass3", "QcText04": "pass4", "QcText05": "pass5", "QcText06": "pass6", "QcText07": "pass7", "QcText08": "pass8", "QcText09": "pass9", "QcText10": "pass10"}, {"IsSubHourly": false, "MeasurementId": 143510, "StreamSegmentId": 54, "IsCalculated": true, "QaProcessingLogId": 1, "QaConfigurationId": 3, "QF01": 1, "Qf02": 2, "Qf03": 3, "Qf04": 4, "Qf05": 5, "Qf06": 6, "Qf07": 7, "Qf08": 8, "Qf09": 9, "Qf10": 10, "QcValue01": 1.00001, "QcValue02": 2.00001, "QcValue03": 3.00001, "QcValue04": 4.00001, "QcValue05": 5.00001, "QcValue06": 6.00001, "QcValue07": 7.00001, "QcValue08": 8.00001, "QcValue09": 9.00001, "QcValue10": 10.00001, "QcText01": "pass1", "QcText02": "pass2", "QcText03": "pass3", "QcText04": "pass4", "QcText05": "pass5", "QcText06": "pass6", "QcText07": "pass7", "QcText08": "pass8", "QcText09": "pass9", "QcText10": "pass10"}]'
   
     
      
@@ -252,6 +252,20 @@ def GetBatchId(QaScriptId, QaProcessingStart, BatchSize):
     return response.text
 
     """
+    
+    #test ClearIsCalculatedFlag endpoint
+    
+    jobj = {
+            'IsSubhourly': True, 
+            'StreamSegmentIds': [3211, 3210]
+            }
+    
+    response = requests.post('http://ab617-web-dev:8082/api/qa/ClearIsCalculatedFlag', headers = {'Authorization': 'Bearer '+ token[0], 
+                                                                                    'Content-Type': 'application/json; \
+                                                                                    boundary=--------------------------651623359726858260475474'}, \
+                                                                                    json=jobj)
+        
+        
 
     
     
