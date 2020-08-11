@@ -204,7 +204,7 @@ if __name__ == "__main__":
     print(response.text.encode('utf8'))
     print(response.headers)
     """    
-    """
+    
     #Base64 encode QA script
     with open("QC_core_test_DL.py", "rb") as script_file:
         encoded_script = base64.b64encode(script_file.read()).decode('utf-8')
@@ -216,7 +216,7 @@ if __name__ == "__main__":
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=payload)
     print(response)
-    """
+    
     
     """
     response = requests.get('http://ab617-web-dev:8082/api/qa/GetQAScript', headers = {'Authorization': 'Bearer '+ token[0], 

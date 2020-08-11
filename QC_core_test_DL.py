@@ -30,7 +30,7 @@ def main(IsSubHourly, scriptId):
     QaScriptId = scriptId
     intervalHoursForHourly = 1
     intervalHoursForSubHourly = 4
-    maxStreamLimit = 16
+    maxStreamLimit = 32
     
     #set mode of processing (testing using local files: testMode=True, processing from APIs: testMode=False)
     testMode=False
@@ -96,6 +96,7 @@ def main(IsSubHourly, scriptId):
         print(processedFrames)
         print("time to retrieve data set = " + str(endGetData - beginGetData))
         print("execution time = " + str(end - start))
+        print('maxStreamLimit = ' + str(maxStreamLimit))
         return processedFrames
 
     else:        
@@ -776,7 +777,7 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
 
 if __name__ == "__main__":
     
-    #sys.exit(main(sys.argv[1], sys.argv[2]))
-    processedFrames = main(True, 12)
+    sys.exit(main(sys.argv[1], sys.argv[2]))
+    #processedFrames = main(True, 12)
     #sys.exit(main('0', 1))
     

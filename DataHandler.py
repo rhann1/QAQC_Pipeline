@@ -18,6 +18,7 @@ from pandas.io.json import json_normalize
 class DataHandler:
     
     def getData(self, IsSubHourlyVal, IntervalHoursVal, MaxNumberOfStreamsVal):
+        print("maximum number of streams = " + str(MaxNumberOfStreamsVal))
 
         def PreparePayload(IsSubHourlyVal, IntervalHoursVal, MaxNumberOfStreamsVal):
             
@@ -191,7 +192,7 @@ if __name__ == "__main__":
     
     from datetime import datetime
     dh = DataHandler()
-    dfs = dh.getData("True", "1", 2)
+    dfs = dh.getData("True", "1", 4)
     batchId = dh.GetBatchId(1, datetime.now(), 16000 )
     #dh.ProcessData(dfs)
     #dh.putData()
