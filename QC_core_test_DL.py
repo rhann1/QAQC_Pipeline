@@ -18,7 +18,7 @@ def main(IsSubHourly, scriptId):
     
     if len(sys.argv) < 1:
             IsSubHourly=True
-            QaScriptId = 1
+            QaScriptId = 16
             QaProcessingLogId = 1
     else:
             #dummy = sys.argv[0]
@@ -30,7 +30,7 @@ def main(IsSubHourly, scriptId):
     QaScriptId = scriptId
     intervalHoursForHourly = 1
     intervalHoursForSubHourly = 4
-    maxStreamLimit = 2
+    maxStreamLimit = 32
     
     #set mode of processing (testing using local files: testMode=True, processing from APIs: testMode=False)
     testMode=False
@@ -48,6 +48,7 @@ def main(IsSubHourly, scriptId):
         start = time.time()
         computedQFlagFrame, subHourlyAggregations = QC_Core(testMode, True, frame, configData)
         end = time.time()
+        print("flag computation time = " + str(end - start))
         print("execution time = " + str(end - start))
         print("QaScriptId =" + str(QaScriptId))
 
@@ -66,24 +67,36 @@ def main(IsSubHourly, scriptId):
         end = time.time()
         processedFrames[0]['QaProcessingLogId'] = batchId
         processedFrames[0]['QaScriptId'] = QaScriptId
-
+        start = time.time()
         QC_overallCount = len(processedFrames[0]) # get count of overall quality flags
         successfullyProcessedOverall = np.sum(processedFrames[0]['QA_overall'].loc[processedFrames[0]['QA_overall'] > -1]) #get count of successfully processed flags
         
         processedFrames = processedFrames[0][['MeasurementId', 
                                            'QaProcessingLogId', 
                                            'QaConfigurationId', 
-                                           'QF01', 'QF02', 'QF03', 'QF04', 
+                                           'QA_overall', 'QF01', 'QF02', 'QF03', 'QF04', 'QF05', 'QF06', 'QF07',
                                            'IsSubHourly', 
                                            'IsCalculated', 
                                            'StreamSegmentId',
-                                           'QaScriptId']]
+                                           'QaScriptId']].rename(columns = {'QA_overall': 'QOverall'})
         
+        end = time.time()        
+        print("frane preparation time = " + str(end - start))
+        
+        start = time.time()
         dh.PutComputedFlags(processedFrames)
+        end = time.time()
+        print("data insertion time = " + str(end - start))
+        
+        start = time.time()
         dh.PutProcessingLog(batchId, datetime.now(), successfullyProcessedOverall)
+        end = time.time() 
+        print("log insertion time = " + str(end - start))
+        
         print(processedFrames)
         print("time to retrieve data set = " + str(endGetData - beginGetData))
         print("execution time = " + str(end - start))
+        print('maxStreamLimit = ' + str(maxStreamLimit))
         return processedFrames
 
     else:        
@@ -764,7 +777,7 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
 
 if __name__ == "__main__":
     
-    #sys.exit(main(sys.argv[1], sys.argv[2]))
-    processedFrames = main(True, 1)
+    sys.exit(main(sys.argv[1], sys.argv[2]))
+    #processedFrames = main(True, 12)
     #sys.exit(main('0', 1))
     

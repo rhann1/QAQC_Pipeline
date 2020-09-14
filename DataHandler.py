@@ -7,6 +7,7 @@ Last Modified on ___
 import pandas as pd
 import re
 import json
+import time
 import requests
 import sys
 import pprint
@@ -17,6 +18,7 @@ from pandas.io.json import json_normalize
 class DataHandler:
     
     def getData(self, IsSubHourlyVal, IntervalHoursVal, MaxNumberOfStreamsVal):
+        print("maximum number of streams = " + str(MaxNumberOfStreamsVal))
 
         def PreparePayload(IsSubHourlyVal, IntervalHoursVal, MaxNumberOfStreamsVal):
             
@@ -45,7 +47,7 @@ class DataHandler:
 
         #inner function to extract measurement and configuration data and convert to dataframe objects (# 18 on QC Pipeline sequence diagram)        
         def ConvertJSONtoDataframe(payload):
-            
+                        
             print(payload.text)
             
             jConfigurations = json.loads(payload.text)[0]['Configurations']
@@ -115,11 +117,11 @@ class DataHandler:
         token = RequestToken()
                     
         try:
-       
             response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token, 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=jobj)
+                    
         except requests.exceptions.RequestException as e:  
             print("error occurs in sending process log")
             raise SystemExit(e)
@@ -149,11 +151,14 @@ class DataHandler:
         
                     
         try:
-       
+            start = time.time()
             response = requests.post('http://ab617-web-dev:8082/api/qa/PutMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token, 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=payload)
+            end = time.time()
+            print("QC flag insertion time = " + str(end - start))
+            
             print(response)
             print(response.text)
         except requests.exceptions.RequestException as e: 
@@ -187,7 +192,7 @@ if __name__ == "__main__":
     
     from datetime import datetime
     dh = DataHandler()
-    dfs = dh.getData("True", "1", 4000)
+    dfs = dh.getData("True", "1", 4)
     batchId = dh.GetBatchId(1, datetime.now(), 16000 )
     #dh.ProcessData(dfs)
     #dh.putData()
