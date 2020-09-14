@@ -29,14 +29,14 @@ with open("../QC_core_test_DL.py", "rb") as script_file:
 # create JSON payload    
 payload = {'script': encoded_script}
 # issue request to API
-"""
-response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
+
+response = requests.post('http://caqm-web-uat:8082/api/qa/PutQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=payload)
 
 print(response)
-"""
+
 
 
 # code for inserting QC metadata into the database
@@ -44,7 +44,7 @@ print(response)
 # read QC metadata into dataframe
 #df = pd.read_csv("../sample_QA_metadata/QA_metadata_sample_SC_2s.csv")
 #df = pd.read_csv("../sample_QA_metadata/SM_QCMetadata_2s.csv")
-df = pd.read_csv("../sample_QA_metadata/QC_SM_DEV_full.csv")
+df = pd.read_csv("../sample_QA_metadata/QC_Metadata_SD.csv")
 
 # convert CSV QC config file to JSON object
 
@@ -90,7 +90,7 @@ pp.pprint(obj)
 jdata = json.dumps(obj)
 
 # need to insert API request here
-response = requests.post('http://ab617-web-dev:8082/api/qa/PutStreamConfigurations', headers = {'Authorization': 'Bearer '+ token[0], 
+response = requests.post('http://caqm-web-uat:8082/api/qa/PutStreamConfigurations', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                 'Content-Type': 'application/json; \
                                                                                 boundary=--------------------------651623359726858260475474'}, \
                             

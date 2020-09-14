@@ -64,7 +64,7 @@ def GetBatchId(self, QaScriptId, QaProcessingStart, BatchSize):
             'BatchSize': BatchSize}                     
     try:
        
-       response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token[0], 
+       response = requests.post('http://caqm-web-uat:8082/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=jobj)
@@ -88,7 +88,7 @@ if __name__ == "__main__":
     print(token[0])
         
     # obtain script and QA metadata from /getqascript API endpoint
-    response = requests.post('http://ab617-web-dev:8082/api/qa/GetMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token[0], 
+    response = requests.post('http://caqm-web-uat:8082/api/qa/GetMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json={"IsSubHourly": "False", "IntervalHours": "1", "MaxNumberOfStreams": "1"})
@@ -101,11 +101,19 @@ if __name__ == "__main__":
     jobs = json.loads(jstring)
     QCFlagFrame = pd.DataFrame.from_dict(jobs, orient='columns')
     """
-    response = requests.get('http://ab617-web-dev:8082/api/qa/GetQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
+    response = requests.get('http://caqm-web-uat:8082/api/qa/GetQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'})
     
     print(response.text.encode('utf8'))
+    """
+    jstring = '{{"enabled": True}, {"intervalminutes", "400"}}'
+    jobs = json.loads(jstring)
+    
+    response = requests.post('http://caqm-web-uat:8082/api/qa/PutQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
+                                                                                    'Content-Type': 'application/json; \
+                                                                                    boundary=--------------------------651623359726858260475474'}, json=jobs)
+    """
     
     
 
@@ -196,7 +204,7 @@ if __name__ == "__main__":
     print(measurementsJSON)
     payload = measurementsJSON
     
-    response = requests.post('http://ab617-web-dev:8082/api/qa/PutMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token[0], 
+    response = requests.post('http://caqm-web-uat:8082/api/qa/PutMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=payload)
@@ -211,7 +219,7 @@ if __name__ == "__main__":
         print(encoded_script)
     
     payload = {'script': encoded_script}
-    response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
+    response = requests.post('http://caqm-web-uat:8082/api/qa/PutQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=payload)
@@ -219,7 +227,7 @@ if __name__ == "__main__":
     
     
     """
-    response = requests.get('http://ab617-web-dev:8082/api/qa/GetQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
+    response = requests.get('http://caqm-web-uat:8082/api/qa/GetQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'})
     
@@ -245,7 +253,7 @@ def GetBatchId(QaScriptId, QaProcessingStart, BatchSize):
                'BatchSize': BatchSize}
     
 
-    response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token[0], 
+    response = requests.post('http://caqm-web-uat:8082/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=jobj)
@@ -254,16 +262,22 @@ def GetBatchId(QaScriptId, QaProcessingStart, BatchSize):
     """
     
     #test ClearIsCalculatedFlag endpoint
+    """    
+    jobj = {
+            'IsSubhourly': False, 
+            'StreamSegmentIds': [77, 78, 79 ,80, 81]
+            }
     
     jobj = {
             'IsSubhourly': True, 
-            'StreamSegmentIds': [3211, 3210]
+            'QaScriptIds': [5, 10]
             }
     
-    response = requests.post('http://ab617-web-dev:8082/api/qa/ClearIsCalculatedFlag', headers = {'Authorization': 'Bearer '+ token[0], 
+    response = requests.post('http://caqm-web-uat:8082/api/qa/ClearIsCalculatedFlag', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=jobj)
+    """
         
         
 

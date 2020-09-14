@@ -16,14 +16,14 @@ import base64
 
 
 def ShouldQARun(token):
-    response = requests.get('http://ab617-web-dev:8082/api/qa/GetQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
+    response = requests.get('http://caqm-web-uat:8082/api/qa/GetQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'})
     enabled = json.loads(response.text)
     return enabled['QaSettings']['enabled']
 
 def FetchQAScript(token):
-    response = requests.get('http://ab617-web-dev:8082/api/qa/GetQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
+    response = requests.get('http://caqm-web-uat:8082/api/qa/GetQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'})
     
@@ -44,8 +44,8 @@ if __name__ == "__main__":
         scriptId = json.loads(FetchQAScript(token))['script']['QaScriptId']
         #call(['QC_core_test_DL.py', 'scriptId'], shell=True)
         import QC_core_test_DL
-        QC_core_test_DL.main(True, scriptId)
+        processedFrames = QC_core_test_DL.main(False, scriptId)
         print('program complete')
         # retrieve active QA script and ScriptId
         
-
+ 

@@ -30,7 +30,7 @@ def main(IsSubHourly, scriptId):
     QaScriptId = scriptId
     intervalHoursForHourly = 1
     intervalHoursForSubHourly = 4
-    maxStreamLimit = 32
+    maxStreamLimit = 16
     
     #set mode of processing (testing using local files: testMode=True, processing from APIs: testMode=False)
     testMode=False
@@ -84,7 +84,10 @@ def main(IsSubHourly, scriptId):
         print("frane preparation time = " + str(end - start))
         
         start = time.time()
-        dh.PutComputedFlags(processedFrames)
+        flagFrameList = np.array_split(processedFrames, 10)
+        for frame in flagFrameList:
+            dh.PutComputedFlags(frame)
+            print("sending QC flag frame with " + str(len(frame)) + " records")
         end = time.time()
         print("data insertion time = " + str(end - start))
         
@@ -101,6 +104,7 @@ def main(IsSubHourly, scriptId):
 
     else:        
         # Hourly data processing
+        dh = DataHandler()
         measurementFrame, configFrame = dh.getData(False, intervalHoursForHourly, maxStreamLimit) # getData() returns tuple of dataframes.  Passed argument is 'IsSubHourly'.
         #computedQFlagFrame, subHourlyAggregations = QC_Core(False, measurementFrame, configFrame) # QC flags
         
@@ -112,6 +116,7 @@ def main(IsSubHourly, scriptId):
         QC_overallCount = len(processedFrames) # get count of overall quality flags
         successfullyProcessedOverall = np.sum(processedFrames['QA_overall'].loc[processedFrames['QA_overall'] > -1]) #get count of successfully processed flags
         
+        """
         processedFrames = processedFrames[['MeasurementId', 
                                            'QaProcessingLogId', 
                                            'QaConfigurationId', 
@@ -120,6 +125,16 @@ def main(IsSubHourly, scriptId):
                                            'IsCalculated', 
                                            'StreamSegmentId',
                                            'QaScriptId']]
+        """
+        
+        processedFrames = processedFrames[['MeasurementId', 
+                                           'QaProcessingLogId', 
+                                           'QaConfigurationId', 
+                                           'QA_overall', 'QF01', 'QF02', 'QF03', 'QF04', 'QF05', 'QF06', 'QF07',
+                                           'IsSubHourly', 
+                                           'IsCalculated', 
+                                           'StreamSegmentId',
+                                           'QaScriptId']].rename(columns = {'QA_overall': 'QOverall'})
         
         dh.PutComputedFlags(processedFrames)
         dh.PutProcessingLog(batchId, datetime.now(), successfullyProcessedOverall)
@@ -634,9 +649,9 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
             df1['QF01']     = df2
             df1['QF02']     = df3
             df1['QF03']     = df4
-            #df1['QA_LV']       = df6
+            #df1['QA_LV']       = df7
             df1['QF04']      = df8
-            #df1['repeat']    = df8
+            df1['repeat']    = df8
             df1['QF05']      = df9
             df1['QF06']      = df10
             df1['QF07']      = dspike2
@@ -664,7 +679,7 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
             # QA_overall must meet completeness criteria (proposed 75% of input flags must be valid)
             # 'validOverall' is a list of completeness measures used for computing QA_overall'.
             #### THIS SEGMENT NEEDS REPAIR: THE COMPLETION VALUE IS COMPUTED CORRECTLY BUT THE OVERALL FLAG ALWAYS ASSERTS HIGH. ####
-            validOverall = [(len(y)-sum(i<0 for i in y))/len(y) for y in [list(a) for a in zip(df2,df3,df4,df5,df6)]] # input flags used for computing QAoverall in zip().
+            validOverall = [(len(y)-sum(i<0 for i in y))/len(y) for y in [list(a) for a in zip(df2,df3,df4,df5,df6,df8)]] # input flags used for computing QAoverall in zip().
             df1['QA_overall'] = [d if v >= 0.75 else -3 for d,v in zip(df1['QA_overall'], validOverall)]
             
                              

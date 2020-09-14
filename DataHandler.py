@@ -38,7 +38,7 @@ class DataHandler:
         def GetMeasurementandConfig(GetDataSettingsPayload, token): 
                         
              try:
-                 MeasurementDataPayload = requests.post('http://ab617-web-dev:8082/api/qa/GetMeasurementDataForQA', json = GetDataSettingsPayload, headers = {'Authorization': 'Bearer '+ token, 'Content-Type': 'application/json; boundary=--------------------------651623359726858260475474'})
+                 MeasurementDataPayload = requests.post('http://caqm-web-uat:8082/api/qa/GetMeasurementDataForQA', json = GetDataSettingsPayload, headers = {'Authorization': 'Bearer '+ token, 'Content-Type': 'application/json; boundary=--------------------------651623359726858260475474'})
 
              except requests.exceptions.RequestException as e:  
                  raise SystemExit(e)
@@ -90,7 +90,7 @@ class DataHandler:
                     
         try:
        
-            response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token, 
+            response = requests.post('http://caqm-web-uat:8082/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token, 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=jobj)
@@ -117,7 +117,7 @@ class DataHandler:
         token = RequestToken()
                     
         try:
-            response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token, 
+            response = requests.post('http://caqm-web-uat:8082/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token, 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=jobj)
@@ -152,7 +152,8 @@ class DataHandler:
                     
         try:
             start = time.time()
-            response = requests.post('http://ab617-web-dev:8082/api/qa/PutMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token, 
+            payloadSize = sys.getsizeof(payload)
+            response = requests.post('http://caqm-web-uat:8082/api/qa/PutMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token,
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=payload)
