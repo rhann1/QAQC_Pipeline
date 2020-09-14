@@ -421,20 +421,20 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             
             # compute lists of QC flags for each test
             #df    = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
-            df2   = list(frame.set_index('StartDateTime').rolling(QC1WinSize)['AObs'].apply(spike1, args=(QC1, useQC1)))
+            df2   = list(frame.set_index('StartDateTime').rolling(QC1WinSize)['AObs'].apply(spike1, args=(QC1, useQC1), raw=True))
             #df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QA2,)).shift(-30, freq='m'))
-            df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QC2, useQC2,)))
-            df4   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3, args=(QC3, useQC3,)))
-            df5   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike2, args=(3.5, useQC2,)).shift(-15, freq='m'))
-            df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(true_spike, args=(3.2,)).shift(-30, freq='m'))
-            df6   = list(frame.set_index('StartDateTime').rolling(persistWinSize)['AObs'].apply(lowvar, args=(p_delta,)))
-            df7   = list(frame.set_index('StartDateTime').rolling(persistWinSize)[ 'AObs'].apply(persist, args=(persistThresh, usePersistCount,)))
-            df8   = list(frame.set_index('StartDateTime').rolling(persistWinSize)[ 'AObs'].apply(persist2, args=(persistThresh, usePersistCount,)))
-            df9   = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(udlcheck, args=(udl, useUDL,)))
-            df10  = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(ldlcheck, args=(ldl, useLDL,)))
-            df11  = list(frame.set_index('StartDateTime').rolling(QC4WinSize)[ 'AObs'].apply(spike4, args=(QC4,)))
+            df3   = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(spike2, args=(QC2, useQC2,),raw=True))
+            df4   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3, args=(QC3, useQC3,),raw=True))
+            df5   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike2, args=(3.5, useQC2,),raw=True).shift(-15, freq='m'))
+            df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(true_spike, args=(3.2,),raw=True).shift(-30, freq='m'))
+            df6   = list(frame.set_index('StartDateTime').rolling(persistWinSize)['AObs'].apply(lowvar, args=(p_delta,), raw=True))
+            df7   = list(frame.set_index('StartDateTime').rolling(persistWinSize)[ 'AObs'].apply(persist, args=(persistThresh, usePersistCount,),raw=True))
+            df8   = list(frame.set_index('StartDateTime').rolling(persistWinSize)[ 'AObs'].apply(persist2, args=(persistThresh, usePersistCount,),raw=True))
+            df9   = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(udlcheck, args=(udl, useUDL,),raw=True))
+            df10  = list(frame.set_index('StartDateTime').rolling(2)['AObs'].apply(ldlcheck, args=(ldl, useLDL,),raw=True))
+            df11  = list(frame.set_index('StartDateTime').rolling(QC4WinSize)[ 'AObs'].apply(spike4, args=(QC4,),raw=True))
             #df12  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(winCount))
-            df13  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(modZScore))
+            df13  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(modZScore,raw=True))
             
             
             
@@ -484,13 +484,13 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             #df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
             
             # determine validity of window-based QC test.  Window must be of the expected representative time interval to be a valid test.
-            df2v  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC2WinSize,)))
-            df3v  = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC3WinSize,)))
-            df4v  = list(frame.set_index('StartDateTime').rolling(QC4WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC4WinSize,)))
-            df5v  = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC3WinSize,)))
-            df6v  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['date1'].apply(spikeValid, args=(durationMinutes, persistWinSize,)))
-            df7v  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['date1'].apply(spikeValid, args=(durationMinutes, persistWinSize,)))
-            df8v  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['date1'].apply(spikeValid, args=(durationMinutes, persistWinSize,)))
+            df2v  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC2WinSize,), raw=True))
+            df3v  = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC3WinSize,), raw=True))
+            df4v  = list(frame.set_index('StartDateTime').rolling(QC4WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC4WinSize,), raw=True))
+            df5v  = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC3WinSize,), raw=True))
+            df6v  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['date1'].apply(spikeValid, args=(durationMinutes, persistWinSize,), raw=True))
+            df7v  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['date1'].apply(spikeValid, args=(durationMinutes, persistWinSize,), raw=True))
+            df8v  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['date1'].apply(spikeValid, args=(durationMinutes, persistWinSize,), raw=True))
             
             # set value of QC flags with window validity check that are based on previous observations (e.g., outlier tests)
             # a flag value of -2 is assigned if the window-based check fails to meet the input completeness criteria
@@ -567,16 +567,18 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
                 #df_result.sort_values(['MonitorId', 'Parameter', 'StartDateTime'], ascending=False)
                 # sort for API sourced measurement data
                 df_result.sort_values(['StreamSegmentId', 'StartDateTime'], ascending=False)
-                df_result.to_csv('testing_results/test_result.csv')    
+                    
     
             # create hourly average dataframe
             if len(adf_list) != 0 and IsSubHourly:
                 adf_result = pd.concat(adf_list)
-                adf_result.to_csv('testing_results/test_avgs.csv')
+                
       
                 #subHourlyQFlags = df_result[['MeasurementID', 'StreamSegmentId', 'StartDateTime', 'QF01', 'QF02', 'QF03', 'QF04', 'QOverall']]
                 
     #print(df_result)
+    df_result.to_csv('testing_results/test_result.csv')
+    adf_result.to_csv('testing_results/test_avgs.csv')
     
     # end function drivers
     if IsSubHourly:
