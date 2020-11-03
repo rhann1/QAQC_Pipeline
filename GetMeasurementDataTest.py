@@ -257,13 +257,16 @@ def GetBatchId(QaScriptId, QaProcessingStart, BatchSize):
     
     jobj = {
             'IsSubhourly': True, 
-            'StreamSegmentIds': [3211, 3210]
+            'QaScriptIds': [170]
             }
     
     response = requests.post('http://ab617-web-dev:8082/api/qa/ClearIsCalculatedFlag', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=jobj)
+    print(response)
+    
+    
         
         
 

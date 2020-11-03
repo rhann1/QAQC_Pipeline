@@ -417,6 +417,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             """if useAdj == 1:
                 frame['AObs'] == frame['AObsAdj']
             """
+            frame['IsCalculated'] = True 
             
             
             # compute lists of QC flags for each test
@@ -545,6 +546,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             #### THIS SEGMENT NEEDS REPAIR: THE COMPLETION VALUE IS COMPUTED CORRECTLY BUT THE OVERALL FLAG ALWAYS ASSERTS HIGH. ####
             validOverall = [(len(y)-sum(i<0 for i in y))/len(y) for y in [list(a) for a in zip(df2,df3,df4,df5,df6)]] # input flags used for computing QAoverall in zip().
             df1['QA_overall'] = [d if v >= 0.75 else -3 for d,v in zip(df1['QA_overall'], validOverall)]
+            df1['IsCalculated'] = [True if q >= 0 else False for q in df1['QA_overall']]
             
                              
             df_list.append(df1)  # add resulting QC flags to the temporary list object for each StreamSegmentId group

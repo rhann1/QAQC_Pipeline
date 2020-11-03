@@ -158,7 +158,7 @@ class DataHandler:
                                                                                     json=payload)
             end = time.time()
             print("QC flag insertion time = " + str(end - start))
-            
+            print(payload)
             print(response)
             print(response.text)
         except requests.exceptions.RequestException as e: 

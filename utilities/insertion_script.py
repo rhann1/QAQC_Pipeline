@@ -17,26 +17,8 @@ from token_handler import TokenHandler
 th = TokenHandler()
 token = th.getToken()
 
-""
+api_host = 'ab617-web-dev:8082'
 
-# code for inserting encoded QC Core script into the database
-
-#Base64 encode QA script
-with open("../QC_core_test_DL.py", "rb") as script_file:
-    encoded_script = base64.b64encode(script_file.read()).decode('utf-8')
-    print(encoded_script)
-
-# create JSON payload    
-payload = {'script': encoded_script}
-# issue request to API
-"""
-response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
-                                                                                    'Content-Type': 'application/json; \
-                                                                                    boundary=--------------------------651623359726858260475474'}, \
-                                                                                    json=payload)
-
-print(response)
-"""
 
 
 # code for inserting QC metadata into the database
@@ -44,7 +26,7 @@ print(response)
 # read QC metadata into dataframe
 #df = pd.read_csv("../sample_QA_metadata/QA_metadata_sample_SC_2s.csv")
 #df = pd.read_csv("../sample_QA_metadata/SM_QCMetadata_2s.csv")
-df = pd.read_csv("../sample_QA_metadata/QC_SM_DEV_full.csv")
+df = pd.read_csv("../sample_QA_metadata/QC_Metadata_CCV_UAT_merged.csv")
 
 # convert CSV QC config file to JSON object
 
@@ -90,7 +72,7 @@ pp.pprint(obj)
 jdata = json.dumps(obj)
 
 # need to insert API request here
-response = requests.post('http://ab617-web-dev:8082/api/qa/PutStreamConfigurations', headers = {'Authorization': 'Bearer '+ token[0], 
+response = requests.post('http://' + api_host + '/api/qa/PutStreamConfigurations', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                 'Content-Type': 'application/json; \
                                                                                 boundary=--------------------------651623359726858260475474'}, \
                             
@@ -98,6 +80,19 @@ response = requests.post('http://ab617-web-dev:8082/api/qa/PutStreamConfiguratio
                                                                                 data=jdata)
 
 print(response)
+
+if response.status_code == 200:
+    print("QC Configuration uploaded successfully")
+else:
+    print("QC Configuration upload failed")
+    
+    
+    
+
+    
+    
+    
+
 
 
 
