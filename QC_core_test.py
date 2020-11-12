@@ -259,6 +259,22 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             return 1
         else:
             return 0
+ 
+    # function to determin completeness criteria for quality flags
+    def completeness(row):
+        w = len(row)
+        c = row[row >= 0].count()
+        if c/w >= 0.75:
+            return 1
+        else:
+            return 0
+ 
+    def validOverall(row):
+        if row['valid'] == 1:
+            return row['QA_overall']
+        else:
+            return -2
+        
     
     ##############################################################3 end QA function definitions    
     #statiscal parameter definitions
@@ -419,7 +435,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             """
             frame['IsCalculated'] = True 
             
-            
+            start1 = time.time()
             # compute lists of QC flags for each test
             #df    = list(frame.set_index('StartDateTime').rolling(2)['date2'].apply(timeDiff, args=(freq, tu,)))
             df2   = list(frame.set_index('StartDateTime').rolling(QC1WinSize)['AObs'].apply(spike1, args=(QC1, useQC1), raw=True))
@@ -436,6 +452,8 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             df11  = list(frame.set_index('StartDateTime').rolling(QC4WinSize)[ 'AObs'].apply(spike4, args=(QC4,),raw=True))
             #df12  = list(frame.set_index('StartDateTime').rolling('1H')['AObs'].apply(winCount))
             df13  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['AObs'].apply(modZScore,raw=True))
+            end1 = time.time()
+            print("apply block time = " + str(end1 - start1))
             
             
             
@@ -454,9 +472,12 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             sFrame['dfspike'] = sFrame.loc[(sFrame['df2'].notnull().astype(int) == 1) & (sFrame['df3'].notnull().astype(int) == 1) & (sFrame['df4'].notnull().astype(int) == 1)] = 1
             sFrame['dfspike'] = sFrame.loc[(sFrame['df2'].notnull().astype(int) == 0) | (sFrame['df3'].notnull().astype(int) ==0) | (sFrame['df4'].notnull().astype(int) ==0)] = 0
             """
+            start2 = time.time()
             # best logic so far for handling both pass/fail composite spike logic and status codes.  This still needs so work.
             dspike = list([1 if (int(x) == 1) & (int(y) == 1) & (int(z) == 1) else 0 for x,y,z in zip(df2,df3,df4)])
             dspike2 = list([-3  if (int(x) < 0 ) | (int(y) < 0) | (int(z) < 0) else ds for x,y,z,ds in zip(df2,df3,df4,dspike) ])
+            end2 = time.time()
+            print("spike logic time = " + str(end2 - start2))
             
             #compute composite spike flag (bitwise and of QF01, QF02 and QF03)
             """dfspike = list(np.array([int(x) for x in pd.Series(df2).fillna(-3).tolist()]) & \
@@ -483,7 +504,8 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             # this will allow distinction between a spike anomaly and ramp concentration profile (e.g., [1,1,1,100,1,1,1] vs [100,80,60,40,20,10,0]) 
             #df5   = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
             #df5b  = list(frame.set_index('StartDateTime').rolling(QC3WinSize, min_periods=1)['AObs'].apply(spike3_mod, args=(3.5,)).shift(-15, freq='m'))
-            
+           
+            start3 = time.time()
             # determine validity of window-based QC test.  Window must be of the expected representative time interval to be a valid test.
             df2v  = list(frame.set_index('StartDateTime').rolling(QC2WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC2WinSize,), raw=True))
             df3v  = list(frame.set_index('StartDateTime').rolling(QC3WinSize)['date1'].apply(spikeValid, args=(durationMinutes, QC3WinSize,), raw=True))
@@ -492,6 +514,8 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             df6v  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['date1'].apply(spikeValid, args=(durationMinutes, persistWinSize,), raw=True))
             df7v  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['date1'].apply(spikeValid, args=(durationMinutes, persistWinSize,), raw=True))
             df8v  = list(frame.set_index('StartDateTime').rolling(persistWinSize)['date1'].apply(spikeValid, args=(durationMinutes, persistWinSize,), raw=True))
+            end3 = time.time()
+            print("spikeValid time = " + str(end3 - start3))
             
             # set value of QC flags with window validity check that are based on previous observations (e.g., outlier tests)
             # a flag value of -2 is assigned if the window-based check fails to meet the input completeness criteria
@@ -528,7 +552,28 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
     
             # compute overall QC flag using bitwise logical 'or' combination of level 1 flags
             
+            #start4 = time.time()
+            start5 = time.time()
             
+            flagFrame = df1[['QF07', 'QF04', 'QF05', 'QF06']]
+            flagFrame['QF07'] = flagFrame['QF07']*useQC7
+            flagFrame['QF04'] = flagFrame['QF04']*usePersistCount
+            flagFrame['QF05'] = flagFrame['QF05']*useUDL
+            flagFrame['QF06'] = flagFrame['QF06']*useLDL
+            
+            flagFrame = flagFrame.fillna(-3)
+            flagFrame['valid'] = flagFrame.apply(completeness, axis = 1)
+            flagFrame[flagFrame[['QF07','QF04','QF05', 'QF06']] < 0] = 0
+            flagFrame = flagFrame.astype(int)
+            flagFrame['QA_overall'] = flagFrame[['QF07', 'QF04', 'QF05', 'QF06']].any(axis = 1).astype(int)
+            flagFrame['validOverall'] = flagFrame.apply(validOverall, axis = 1)
+            df1['QA_overall'] = flagFrame['validOverall'].tolist()
+            
+            df1['IsCalculated'] = [True if q >= 0 else False for q in df1['QA_overall']]
+            df1['IsCalculated'].astype(int)
+            
+            
+            """
             if computeQuality < 1:
                 df1['QA_overall'] = -3
             else:
@@ -540,19 +585,27 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
                 # this repairs issue with gap in spike flag status logic.  This needs to be replace with improved flag logic
                 df1['QA_overall'].loc[df1['QF07'] < 0] = -3
                 df1['QF07'].loc[(df1['QF01'] < 0) | (df1['QF02'] < 0) | (df1['QF03'] < 0)] = -3
-                
+            end4 = time.time()
+            """
+            """
+            print("compute overall time = " + str(end4 - start4))
+            
             # QA_overall must meet completeness criteria (proposed 75% of input flags must be valid)
             # 'validOverall' is a list of completeness measures used for computing QA_overall'.
             #### THIS SEGMENT NEEDS REPAIR: THE COMPLETION VALUE IS COMPUTED CORRECTLY BUT THE OVERALL FLAG ALWAYS ASSERTS HIGH. ####
+            start5 = time.time()
             validOverall = [(len(y)-sum(i<0 for i in y))/len(y) for y in [list(a) for a in zip(df2,df3,df4,df5,df6)]] # input flags used for computing QAoverall in zip().
             df1['QA_overall'] = [d if v >= 0.75 else -3 for d,v in zip(df1['QA_overall'], validOverall)]
             df1['IsCalculated'] = [True if q >= 0 else False for q in df1['QA_overall']]
-            
+            """
+            end5 = time.time()
+            print("valid overall time = " + str(end5 - start5))
                              
             df_list.append(df1)  # add resulting QC flags to the temporary list object for each StreamSegmentId group
-    
+            frame['QA_overall'] = df1['QA_overall']
             # Begin sub-hourly to hourly aggregation operations
             # only aggregate sub-hourly streams
+            start6 = time.time()
             if IsSubHourly:
                 adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(validAvg, freq=durationMinutes)).rename({0:'validAvg'}, axis=1)
                 adf1['StreamSegmentId'] = group[0]
@@ -561,6 +614,20 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
                 #adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1H').apply(average, freq=5))[0] 
                 adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(average, freq=durationMinutes))
                 adf_list.append(adf1) # add resulting averages and supporting columns to  result aggregation dataframe
+            end6 = time.time()
+            print("aggregation time = " + str(end6 - start6))
+            """
+            if IsSubHourly:
+                adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(validAvg, freq=durationMinutes)).rename({0:'validAvg'}, axis=1)
+                adf1['StreamSegmentId'] = group[0]
+                print("columns are")
+                print(adf1.columns)
+                adf1['validCount'] = adf1.apply(intervalCount, freq=durationMinutes)
+                adf1['percentCompetion'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(PercentageCompletion, freq=durationMinutes, expectedCount = expectedCount))
+                #adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').resample('1H').apply(average, freq=5))[0] 
+                adf1['average'] = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(average, freq=durationMinutes))
+                adf_list.append(adf1) # add resulting averages and supporting columns to  result aggregation dataframe
+            """
     
             # concatentate QC flag and aggregations list to a dataframe
             if len(df_list) != 0:

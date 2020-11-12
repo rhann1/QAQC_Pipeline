@@ -13,17 +13,18 @@ from subprocess import call
 import base64
 
 
+api_host = 'ab617-web-dev:8082'
 
 
 def ShouldQARun(token):
-    response = requests.get('http://ab617-web-dev:8082/api/qa/GetQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
+    response = requests.get('http://' + api_host + '/api/qa/GetQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'})
     enabled = json.loads(response.text)
     return enabled['QaSettings']['enabled']
 
 def FetchQAScript(token):
-    response = requests.get('http://ab617-web-dev:8082/api/qa/GetQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
+    response = requests.get('http://' + api_host + '/api/qa/GetQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'})
     
@@ -48,4 +49,7 @@ if __name__ == "__main__":
         print('program complete')
         # retrieve active QA script and ScriptId
         
-
+        
+        
+        
+         

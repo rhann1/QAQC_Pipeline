@@ -15,6 +15,9 @@ from flatten_json import flatten
 from token_handler import TokenHandler as th
 from pandas.io.json import json_normalize
 
+
+api_host = 'ab617-web-dev:8082'
+
 class DataHandler:
     
     def getData(self, IsSubHourlyVal, IntervalHoursVal, MaxNumberOfStreamsVal):
@@ -38,7 +41,7 @@ class DataHandler:
         def GetMeasurementandConfig(GetDataSettingsPayload, token): 
                         
              try:
-                 MeasurementDataPayload = requests.post('http://ab617-web-dev:8082/api/qa/GetMeasurementDataForQA', json = GetDataSettingsPayload, headers = {'Authorization': 'Bearer '+ token, 'Content-Type': 'application/json; boundary=--------------------------651623359726858260475474'})
+                 MeasurementDataPayload = requests.post('http://' + api_host + '/api/qa/GetMeasurementDataForQA', json = GetDataSettingsPayload, headers = {'Authorization': 'Bearer '+ token, 'Content-Type': 'application/json; boundary=--------------------------651623359726858260475474'})
 
              except requests.exceptions.RequestException as e:  
                  raise SystemExit(e)
@@ -90,7 +93,7 @@ class DataHandler:
                     
         try:
        
-            response = requests.post('http://ab617-web-dev:8082/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token, 
+            response = requests.post('http://' + api_host + '/api/qa/PutQAProcessingProgress', headers = {'Authorization': 'Bearer '+ token, 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=jobj)
@@ -152,7 +155,7 @@ class DataHandler:
                     
         try:
             start = time.time()
-            response = requests.post('http://ab617-web-dev:8082/api/qa/PutMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token, 
+            response = requests.post('http://' + api_host + '/api/qa/PutMeasurementDataForQA', headers = {'Authorization': 'Bearer '+ token, 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     json=payload)

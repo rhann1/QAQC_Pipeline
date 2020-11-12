@@ -257,7 +257,7 @@ def GetBatchId(QaScriptId, QaProcessingStart, BatchSize):
     
     jobj = {
             'IsSubhourly': True, 
-            'QaScriptIds': [170]
+            'QaScriptIds': [180, 181, 182, 183, 185]
             }
     
     response = requests.post('http://ab617-web-dev:8082/api/qa/ClearIsCalculatedFlag', headers = {'Authorization': 'Bearer '+ token[0], 
