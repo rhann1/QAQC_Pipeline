@@ -17,7 +17,7 @@ from token_handler import TokenHandler
 th = TokenHandler()
 token = th.getToken()
 
-api_host = 'ab617-web-dev:8082'
+api_host = 'caqm-web-uat:8082'
 
 
 

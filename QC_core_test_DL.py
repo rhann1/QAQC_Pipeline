@@ -30,7 +30,7 @@ def main(IsSubHourly, scriptId):
     QaScriptId = scriptId
     intervalHoursForHourly = 1
     intervalHoursForSubHourly = 4
-    maxStreamLimit = 96
+    maxStreamLimit = 44
     
     #set mode of processing (testing using local files: testMode=True, processing from APIs: testMode=False)
     testMode=False
@@ -60,11 +60,28 @@ def main(IsSubHourly, scriptId):
         measurementFrame, configFrame = dh.getData(True, intervalHoursForSubHourly, maxStreamLimit) # getData() returns tuple of dataframes.  Passed argument is 'IsSubHourly'.
         
         endGetData = time.time()
-        #computedQFlagFrame, subHourlyAggregations = QC_Core(False, measurementFrame, configFrame) # QC flags
+        #computedQFlagFrame, subHourlyAggregations = QC_Core(False, measurementFrame, configFrame) # QC flags        
         print("number of total records retrieved = " + str(len(measurementFrame)))
+
+
+        """flagFrameList = np.array_split(processedFrames, 4)
+        QCflags = []
+        aggregations = []
+        for frame in flagFrameList:
+            QFlags, aggs = QC_Core(False, measurementFrame, configFrame) # QC flags
+            QCflags.append(QFlags)
+            aggregations.append(aggs)
+        computedQFlagFrame = pd.concat(QCflags, ignore_index=True)
+        subhourlyAggregations = pd.concat(aggregations)
+        """
+            
+        
         batchId = dh.GetBatchId(QaScriptId, datetime.now(), len(measurementFrame)) # get QaProcessingLogId
         start_processing = time.time()
         processedFrames = QC_Core(testMode, True, measurementFrame, configFrame) # QC flags
+        
+        #experimental fragmenting of input dataframe
+        
         end_processing = time.time()
         processedFrames[0]['QaProcessingLogId'] = batchId
         processedFrames[0]['QaScriptId'] = QaScriptId
@@ -85,7 +102,11 @@ def main(IsSubHourly, scriptId):
         print("frane preparation time = " + str(end - start))
         
         start = time.time()
-        dh.PutComputedFlags(processedFrames)
+        #dh.PutComputedFlags(processedFrames)
+        flagFrameList = np.array_split(processedFrames, 4)
+        for frame in flagFrameList:
+            dh.PutComputedFlags(frame)
+            print("sending QC flag frame with " + str(len(frame)) + " records")
         end = time.time()
         print("data insertion time = " + str(end - start))
         
@@ -383,21 +404,6 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
             return 1
         else:
             return 0
-        
-    def completeness(row):
-        w = len(row)
-        c = row[row >= 0].count()
-        if c/w >= 0.75:
-            return 1
-        else:
-            return 0
- 
-    def validOverall(row):
-        if row['valid'] == 1:
-            return row['QA_overall']
-        else:
-            return -2
-        
     
     ##############################################################3 end QA function definitions    
     #statiscal parameter definitions
@@ -670,25 +676,9 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
     
             # compute overall QC flag using bitwise logical 'or' combination of level 1 flags
             start_overall = time.time()
-                      
-            flagFrame = df1[['QF07', 'QF04', 'QF05', 'QF06']]
-            flagFrame['QF07'] = flagFrame['QF07']*useQC7
-            flagFrame['QF04'] = flagFrame['QF04']*usePersistCount
-            flagFrame['QF05'] = flagFrame['QF05']*useUDL
-            flagFrame['QF06'] = flagFrame['QF06']*useLDL
+            print("computeQuality = " + str(computeQuality))
             
-            flagFrame = flagFrame.fillna(-3)
-            flagFrame['valid'] = flagFrame.apply(completeness, axis = 1)
-            flagFrame[flagFrame[['QF07','QF04','QF05', 'QF06']] < 0] = 0
-            flagFrame = flagFrame.astype(int)
-            flagFrame['QA_overall'] = flagFrame[['QF07', 'QF04', 'QF05', 'QF06']].any(axis = 1).astype(int)
-            flagFrame['validOverall'] = flagFrame.apply(validOverall, axis = 1)
-            df1['QA_overall'] = flagFrame['validOverall'].tolist()
             
-            df1['IsCalculated'] = [True if q >= 0 else False for q in df1['QA_overall']]
-            df1['IsCalculated'].astype(int)
-            
-            """
             if computeQuality < 1:
                 df1['QA_overall'] = -3
             else:
@@ -710,7 +700,7 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
             validOverall = [(len(y)-sum(i<0 for i in y))/len(y) for y in l] # input flags used for computing QAoverall in zip().
             df1['QA_overall'] = [d if v >= 0.75 else -3 for d,v in zip(df1['QA_overall'], validOverall)]
             df1['IsCalculated'] = [True if q >= 0 else False for q in df1['QA_overall']]
-            """
+            
             end_overall = time.time()
             print(str(end_overall - start_overall))
  
@@ -720,7 +710,7 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
     
             # Begin sub-hourly to hourly aggregation operations
             # only aggregate sub-hourly streams
-            frame['QA_overall'] = df1['QA_overall']
+            
             start_agg = time.time()
             if IsSubHourly:
                 adf1 = pd.DataFrame(frame.set_index('StartDateTime').groupby(pd.Grouper(freq = '1H')).apply(validAvg, freq=durationMinutes)).rename({0:'validAvg'}, axis=1)

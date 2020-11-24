@@ -16,7 +16,7 @@ from token_handler import TokenHandler as th
 from pandas.io.json import json_normalize
 
 
-api_host = 'ab617-web-dev:8082'
+api_host = 'caqm-web-uat:8082'
 
 class DataHandler:
     

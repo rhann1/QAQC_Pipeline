@@ -26,7 +26,7 @@ qry1="""
      """
 
 #Connecting to SQL server
-params = urllib.parse.quote_plus(r'DRIVER={SQL Server};Trusted_Connection=yes;Server=AB617-DB-DEV;DATABASE=AQVIEW')
+params = urllib.parse.quote_plus(r'DRIVER={SQL Server};Trusted_Connection=yes;Server=CAQM-DB-UAT;DATABASE=AQVIEW')
 c_str = 'mssql+pyodbc:///?odbc_connect={}'.format(params)
 engine = create_engine(c_str)
 connected =  engine.connect()

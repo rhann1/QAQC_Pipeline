@@ -58,7 +58,7 @@ if __name__ == "__main__":
     
     th = TokenHandler()
     token = th.getToken()
-    api_host = 'ab617-web-dev:8082'    # change is value to point to a different host
+    api_host = 'caqm-web-uat:8082'    # change is value to point to a different host
 
     # inspect token
     print(token[0])

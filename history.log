@@ -1,0 +1,813 @@
+ 2/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/DataHandler.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 2/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/DataHandler.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 3/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/DataHandler.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 3/2: from flatten_json import flatten
+ 4/1: from flatten_json import flatten
+ 4/2: pip install
+ 4/3: from flatten_json import flatten
+ 4/4: from flatten_json import flatten
+ 4/5: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/DataHandler.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 4/6: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 4/7: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 4/8: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 4/9: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/10: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/11: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/12: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/13: df_right.columns
+4/14: df_left.columns
+4/15: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/16: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/17: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/18: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/19: df_right
+4/20: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/21: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/22: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/23: df_right
+4/24: df_right.columns
+4/25: df_left.columns
+4/26: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/27: df_right
+4/28: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/29: df_right.columns
+4/30: df_left.columns
+4/31: df_right['Parameter']
+4/32: df_left['Parameter']
+4/33: df_right['MonitorId']
+4/34: df_left['MonitorId']
+4/35: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/36: df_left['MonitorId']
+4/37: df_right['MonitorId']
+4/38: df_left['MonitorId']
+4/39: df_left.columns
+4/40: df_right.columns
+4/41: df_left
+4/42: df_right
+4/43: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/44: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/45: df_left
+4/46: df_right
+4/47: df_right['Parameter']
+4/48: df_left['Parameter']
+4/49: merged_df
+4/50: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/51: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/52: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/53: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/54: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/55: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/56: df_left.columns
+4/57: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/58: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/59: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/DataHandler.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+4/60: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+4/61: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/DataHandler.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+4/62: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/DataHandler.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+4/63: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 5/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+ 5/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+ 5/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 5/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 5/5: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 5/6: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+ 5/7: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+ 5/8: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 5/9: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/10: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/11: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/12: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/13: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/14: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/15: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/DataHandler.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/16: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/17: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/18: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/19: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/20: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/21: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/22: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/23: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/24: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/25: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/26: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/27: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/28: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/29: processedFrames
+5/30: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/31: df_result
+5/32: processedFrames
+5/33: frame
+5/34: frame.columns
+5/35: computedQFlagFrame
+5/36: computedQFlagFrame.columns
+5/37: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test_DL.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/38: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/39: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/40: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/41: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/42: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/DataHandler.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/43: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/44: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/45: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/46: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/47: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/48: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/49: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/50: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/51: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/52: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/53: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/54: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/55:
+jobj = {
+        'IsSubhourly': True, 
+        'QaScriptIds': [158]
+        }
+
+response = requests.post('http://ab617-web-dev:8082/api/qa/ClearIsCalculatedFlag', headers = {'Authorization': 'Bearer '+ token[0], 
+                                                                                'Content-Type': 'application/json; \
+                                                                                boundary=--------------------------651623359726858260475474'}, \
+                                                                                json=jobj)
+print(response)
+5/56: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/57: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/58: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/59: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/60: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/61: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/62: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/63: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/64: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/65: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/66: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/67: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/68: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/69: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/70: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/71: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/72: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/73: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/74: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/75: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/76: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/77: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/78: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/79: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/80: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/81: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/82: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/83: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/84: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/85: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/86: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/87: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/88: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/89: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/90: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/91: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/92: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/93: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/94: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/95: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/96: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/97: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/98: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/99: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/100: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/101: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/102: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/103: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/104:
+f = computedQFlagFrame[['StartDateTime','StreamSegmentId']]
+f
+f.groupby(["StreamSegmentId", "StartDateTime"])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+f
+f['StartDateTime']
+f['StartDateTime'].hour
+a = f.groupby(["StreamSegmentId", "StartDateTime"].hour)
+a = f.groupby(["StreamSegmentId", "StartDateTime".hour])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+a
+f['StartDateTime'].hour
+
+f['StartDateTime'].dt.hour
+f['StartDateTime'].dt.date
+f['StartDateTime'].dt.date.hour
+f['StartDateTime'].dt.datetime
+f['StartDateTime'].dt.date.hour
+f['StartDateTime'].dt.date
+f['StartDateTime'].dt.strptime("='%Y-%m-%d %H:%M')
+f['StartDateTime'].dt.strptime('%Y-%m-%d %H:%M')
+f['StartDateTime']
+f['StartDateTime'] = pd.to_datetime(f['StartDateTime'])
+f['StartDateTime'].dt.strptime("='%Y-%m-%d %H:%M')
+f['StartDateTime'].dt.strptime('%Y-%m-%d %H:%M')
+f['StartDateTime'].dt.strftime('%Y-%m-%d %H:%M')
+f['StartDateTime'].dt.strftime('%Y-%m-%d %H:00')
+f
+f['StartDateTime'].dt.strftime('%Y-%m-%d %H:00')
+f['StartDateTime'] = f['StartDateTime'].dt.strftime('%Y-%m-%d %H:00')
+f
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+pd.DataFrame(list(a))
+pd.DataFrame(list(a)).columns
+pd.DataFrame(list(a))
+pd.DataFrame(list(a))[0]
+pd.DataFrame(list(a))[1]
+list(a)
+list(a)[0]
+list(a)[1]
+list(a)[0]
+list(a)[0][0]
+list(a)[0][1]
+list(a)[0][1][0]
+
+list(a)[0][1]
+pd.DataFrame(list(a)[0][1])
+pd.DataFrame(list(a)[0][1])[0]
+pd.DataFrame(list(a)[0][1])
+pd.DataFrame(list(a)[0][1])['StartDateTime']
+5/105: f
+5/106:
+f = computedQFlagFrame[['StartDateTime','StreamSegmentId']]
+f
+f.groupby(["StreamSegmentId", "StartDateTime"])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+f
+f['StartDateTime']
+f['StartDateTime'].hour
+a = f.groupby(["StreamSegmentId", "StartDateTime"].hour)
+a = f.groupby(["StreamSegmentId", "StartDateTime".hour])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+a
+f['StartDateTime'].hour
+
+f['StartDateTime'].dt.hour
+f['StartDateTime'].dt.date
+f['StartDateTime'].dt.date.hour
+f['StartDateTime'].dt.datetime
+f['StartDateTime'].dt.date.hour
+f['StartDateTime'].dt.date
+5/107:
+f = computedQFlagFrame[['StartDateTime','StreamSegmentId']]
+f
+f.groupby(["StreamSegmentId", "StartDateTime"])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+f
+f['StartDateTime']
+f['StartDateTime'].hour
+a = f.groupby(["StreamSegmentId", "StartDateTime"].hour)
+a = f.groupby(["StreamSegmentId", "StartDateTime".hour])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+5/108:
+f = computedQFlagFrame[['StartDateTime','StreamSegmentId']]
+f
+f.groupby(["StreamSegmentId", "StartDateTime"])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+f
+5/109: f['StartDateTime'].dt.date.hour
+5/110: f['StartDateTime'].dt.hour
+5/111: f['StartDateTime'] = f['StartDateTime'].dt.strftime('%Y-%m-%d %H:00')
+5/112: f
+5/113:
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+pd.DataFrame(list(a))
+pd.DataFrame(list(a)).columns
+pd.DataFrame(list(a))
+pd.DataFrame(list(a))[0]
+pd.DataFrame(list(a))[1]
+5/114:
+pd.DataFrame(list(a)[0][1])
+pd.DataFrame(list(a)[0][1])[0]
+pd.DataFrame(list(a)[0][1])
+pd.DataFrame(list(a)[0][1])['StartDateTime']
+5/115: pd.DataFrame(list(a)[0][1])
+5/116: pd.DataFrame(list(a)[0][1])['StartDateTime']
+5/117: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/118: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/119: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/120: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/121: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/122: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/123: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/124:
+f = computedQFlagFrame[['StartDateTime','StreamSegmentId']]
+f
+f.groupby(["StreamSegmentId", "StartDateTime"])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+f
+5/125: f['StartDateTime'].dt.hour
+5/126:
+pd.DataFrame(list(a)[0][1])
+pd.DataFrame(list(a)[0][1])[0]
+pd.DataFrame(list(a)[0][1])
+pd.DataFrame(list(a)[0][1])['StartDateTime']
+5/127: pd.DataFrame(list(a)[0][1])['StartDateTime']
+5/128: f['StartDateTime'] = f['StartDateTime'].dt.strftime('%Y-%m-%d %H:00')
+5/129: f['StartDateTime']
+5/130: list(a)[0][1]
+5/131: pd.DataFrame(list(a)[0][1])['StartDateTime']
+5/132: pd.DataFrame(list(a)[0][1])
+5/133:
+f = computedQFlagFrame[['StartDateTime','StreamSegmentId']]
+f
+f.groupby(["StreamSegmentId", "StartDateTime"])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+f
+f['StartDateTime']
+f['StartDateTime'].hour
+a = f.groupby(["StreamSegmentId", "StartDateTime"].hour)
+a = f.groupby(["StreamSegmentId", "StartDateTime".hour])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+5/134:
+f = computedQFlagFrame[['StartDateTime','StreamSegmentId']]
+f
+f.groupby(["StreamSegmentId", "StartDateTime"])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+5/135: list(a)[0][1]
+5/136: list(a)[0]
+5/137: pd.DataFrame(list(a))[0]
+5/138:
+f['StartDateTime'] = f['StartDateTime'].dt.strftime('%Y-%m-%d %H:00')
+f
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+5/139: pd.DataFrame(list(a)[0][1])['StartDateTime']
+5/140: pd.DataFrame(list(a)[0])['StartDateTime']
+5/141: pd.DataFrame(list(a)[0][1])
+5/142: pd.DataFrame(list(a))[1]
+5/143: pd.DataFrame(list(a))[0][1]
+5/144: pd.DataFrame(list(a))[0]
+5/145: pd.DataFrame(list(a)[0][1])
+5/146: list(a[0])
+5/147: list(a)
+5/148: list(a)[0]
+5/149: list(a)[1]
+5/150: len(list(a))
+5/151:
+len(list(a)
+)
+5/152: liost(a)
+5/153: list(a)
+5/154: list(a)[0]
+5/155: list(a)[0][0]
+5/156: pd;list(a)
+5/157: pd.DataFrame(list(a))
+5/158: pd.DataFrame(list(a))[0]
+5/159: f.columns
+5/160: pd.DataFrame(list(a))[0][0]
+5/161: list(a)[0]
+5/162: list(a)[1]
+5/163: list(a)[2]
+5/164: list(a)[2][1]
+5/165: list(a)[1][1]
+5/166: pd.DataFrame(list(a)[1][1])
+5/167: pd.DataFrame(list(a)[1][4])
+5/168: pd.DataFrame(list(a)[4][1])
+5/169: f
+5/170: f.reset_index
+5/171: f
+5/172: f['Id']=f.index
+5/173: f
+5/174:
+f['StartDateTime'] = f['StartDateTime'].dt.strftime('%Y-%m-%d %H:00')
+
+
+f
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+5/175:
+f['StartDateTime'] = f['StartDateTime'].dt.strftime('%Y-%m-%d %H:00')
+f
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+5/176:
+computedQFlagFrame['Id'] = computedQFlagFrame.index
+f = computedQFlagFrame[['Id', 'StartDateTime', 'StreamSegmentId']]
+f
+f.groupby(["StreamSegmentId", "StartDateTime"])
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+5/177: pd.DataFrame(list(a)[4][1])
+5/178: list(a)[2]
+5/179: list(a)
+5/180: f
+5/181:
+f = computedQFlagFrame[['Id', 'StartDateTime', 'StreamSegmentId']]
+f
+f.groupby(["StreamSegmentId", "StartDateTime"])
+5/182: a = f.groupby(["StreamSegmentId", "StartDateTime".hour])
+5/183:
+f['StartDateTime'] = f['StartDateTime'].dt.strftime('%Y-%m-%d %H:00')
+f
+a = f.groupby(["StreamSegmentId", "StartDateTime"])
+list(a)
+5/184: list(a)[4]
+5/185: pd.DataFrame(list(a)[4])
+5/186: pd.DataFrame(list(a))
+5/187: list(a)[4]
+5/188: list(a)[1][4]
+5/189: list(a)[1][1]
+5/190: list(a)[0][1]
+5/191: list(a)[:][1]
+5/192: size(list(a))
+5/193: shape(list(a))
+5/194: len(list(a))
+5/195: list(a)
+5/196: list(a)[1]
+5/197: list(a)[0]
+5/198: list(a[0])[0]
+5/199: list(a)[0][1]
+5/200: b = [ l for i in list(a)[i][1]]
+5/201: b = [ i for i in list(a)[i][1]]
+5/202: b = [ list(a)[i][1] for i in list(a)]
+5/203: b = [ list(a)[i][1] for i in range len(list(a))]
+5/204: b = [ list(a)[i][1] for i in range len(list(a))]
+5/205: len(list(a))
+5/206: b = [ list(a)[i][1] for i in range(len(list(a)))]
+5/207: b = [ list(a)[i][1] for i in range(len(list(a)))]
+5/208: list(a)[0][1]
+5/209: list(a)[0][]
+5/210: list(a)[0][:]
+5/211: list(a)[1][:]
+5/212: list(a[0])[0]
+5/213: list(a)[1]
+5/214: list(a)[0]
+5/215: list(a)[1]
+5/216: history
+5/217: list(a)[1][1]
+5/218: list(a)[1][2]
+5/219: list(a)[4][1]
+5/220: b = [ list(a)[i][1] for i in range(12)]
+5/221: b
+5/222: b = list(a)
+5/223: b
+5/224: b[0][1]
+5/225: l = [ list(a)[i][1] for i in range(len(b))]
+5/226: l = [ b[i][1] for i in range(len(b))]
+5/227: l
+5/228: l[1]
+5/229: l[1][0]
+5/230: l[1]
+5/231: (l[1])[1]
+5/232: l
+5/233: pd.DataFrame(l)
+5/234: l[1]
+5/235: list(l)
+5/236: list(l)[1][1]
+5/237: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/238: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/239: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/240: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/241: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/242: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/243: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/244: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/245: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/246: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/247: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/248: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/249: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/250: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/251: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/252: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/253: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/254: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/255: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/256: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/257: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/258: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/259: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/260: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/261: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/262: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/263: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/264: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/265: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/266: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/267: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/268: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/269: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/270: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/271: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/272: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/273: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/274: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/275: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/276: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/277: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/278: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/279: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/280: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/281: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/282: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/283: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/284: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/DataHandler.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/285: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/286: data = {'a':[1,0,1,-2], 'b':[-2.1,1,0]}
+5/287: f = pd.DataFrame(data, columns = ['x', 'y'])
+5/288: f
+5/289: print(df)
+5/290: print(f)
+5/291: data = {'a':[1,0,1,-2], 'b':[-2.1,1,0]}
+5/292: f = pd.DataFrame(data, columns = ['x', 'y'])
+5/293: f
+5/294: data
+5/295: f = pd.DataFrame(data, columns = ['a', 'b'])
+5/296: data = {'a':[1,0,1,-2], 'b':[-2.1,1,0]}
+5/297: f = pd.DataFrame(data, columns = ['a', 'b'])
+5/298: a
+5/299: data = {'a1':[1,0,1,-2], 'b1':[-2.1,1,0]}
+5/300: f = pd.DataFrame(data, columns = ['a1', 'b1'])
+5/301: a1
+5/302: b1
+5/303: data
+5/304: data = {'a1':[1,0,1,-2], 'b1':[-2, 1,1,0]}
+5/305: f = pd.DataFrame(data, columns = ['a1', 'b1'])
+5/306: f
+5/307: data = {'a1':[1,0,1,-2], 'b1':[-2, 1,1,0], 'c1':[0, -2, 0]}
+5/308: f = pd.DataFrame(data, columns = ['a1', 'b1', 'c1'])
+5/309: data = {'a1':[1,0,1,-2], 'b1':[-2, 1,1,0], 'c1':[0, -2, 0, 0]}
+5/310: f = pd.DataFrame(data, columns = ['a1', 'b1', 'c1'])
+5/311: f
+5/312: f.any()
+5/313: f.all()
+5/314: f.all(axis = 1)
+5/315: f.any(axis = 1)
+5/316: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/317: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/318: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/319: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/320: f
+5/321: a
+5/322: a = f[f < 0] = 0
+5/323: a
+5/324: f[f < 0] = 0
+5/325: f
+5/326: a = (f[f < 0] = 0)
+5/327: f['a1', 'b1']
+5/328: f[{'a1', 'b1'}]
+5/329: f[['a1', 'b1']]
+5/330: f[1]
+5/331: f
+5/332: f.f[1]
+5/333: f[f[1]]
+5/334: f.iloc[[1]]
+5/335: f.iloc[[1]].sum()
+5/336: len(f.iloc[[1]]_)
+5/337: len(f.iloc[[1]])
+5/338: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/339: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/340: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/341: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/342: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/343: f
+5/344: f[f[['a1','b1','c1']] < 0] = 0
+5/345: f
+5/346: f
+5/347: f['overall'] = f[f[['a1','b1','c1']].any(axis=1)]
+5/348: f[f[['a1','b1','c1']]]
+5/349: f[f[['a1','b1','c1']] > 0]
+5/350: f[f[['a1','b1','c1']]].any()
+5/351: f[['a1','b1','c1']]
+5/352: f[['a1','b1','c1']].any(axis = 1)
+5/353: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/354: f[f[['a1','b1','c1']] < 0] = 0
+5/355: f
+5/356: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/357: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/358: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/359: f['overall'] = f[['a1', 'b1', 'c1']].any(axis = 1)
+5/360: f
+5/361: f['overall'] = f[['a1', 'b1', 'c1']].any(axis = 1).astype(int)
+5/362: f
+5/363: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/364: a = np.nan
+5/365: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/366: f
+5/367: f[f == np.nan] = -3
+5/368: f
+5/369: f.fillna(-3)
+5/370: f
+5/371: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/372: f
+5/373: f['a1']
+5/374: f.astype(int)
+5/375: f
+5/376: f['a1']
+5/377: f['a1'] + 1
+5/378: f
+5/379: f4 = f['a1', 'b1']
+5/380: f4 = f[['a1', 'b1']]
+5/381: f4
+5/382: f
+5/383: f
+5/384: f
+5/385: f
+5/386: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/387: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/388: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/validity_logic.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+5/389: f
+5/390: a = f[['a1', 'b1', 'c1']]
+5/391: a
+5/392: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/393: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/394: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/395: df1
+5/396: debugfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/397: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/398: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/399: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/400: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/401: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test_DL.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/402: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test_DL.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/403: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/404: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/405: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/406: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/407: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/408: import dask as dd
+5/409: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+5/410: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 6/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 6/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+ 6/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+ 6/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+ 6/5: response
+ 6/6: response.text
+ 7/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 7/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 7/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 7/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 7/5: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 7/6: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 7/7: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 7/8: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 7/9: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+7/10: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+7/11: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+7/12: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+7/13: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+7/14: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/QC_core_test.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+7/15: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+7/16: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+7/17: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+7/18: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+7/19: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+7/20: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+7/21: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 8/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 9/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/add_streamSegmentIds.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+ 9/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+ 9/3: print(response.text)
+ 9/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 9/5: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities/insertion_script.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/utilities')
+ 9/6: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+ 9/7:
+response = requests.get('http://' + api_host + '/api/qa/GetQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
+                                                                                    'Content-Type': 'application/json; \
+                                                                                    boundary=--------------------------651623359726858260475474'})
+ 9/8: response
+ 9/9: response.text
+9/10:
+response = requests.get('http://ab617-web-dev:8082/api/qa/GetQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
+                                                                                    'Content-Type': 'application/json; \
+                                                                                    boundary=--------------------------651623359726858260475474'})
+9/11: response.text
+9/12: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+9/13:
+jobj = {"QaSettings":{"enabled":"true","intervalminutes":"60"}}
+
+response = requests.post('http://caqm-web-uat:8082/api/qa/PutQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
+                                                                                'Content-Type': 'application/json; \
+                                                                                boundary=--------------------------651623359726858260475474'}, \
+                                                                                json=jobj)
+print(response)
+9/14:
+response = requests.get('http://' + api_host + '/api/qa/GetQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
+                                                                                    'Content-Type': 'application/json; \
+                                                                                    boundary=--------------------------651623359726858260475474'})
+9/15: api_host
+9/16: response
+9/17: response.text
+9/18: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+9/19: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+10/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+10/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+11/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+11/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+12/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+12/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+13/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+13/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+14/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+14/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+14/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+14/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+15/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+15/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+16/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+16/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+17/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+18/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+18/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+18/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+18/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+19/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+19/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+19/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+19/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+19/5: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+19/6: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+19/7: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+19/8: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+19/9: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+19/10: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+20/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+20/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+20/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+21/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+21/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/5: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/6: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/7: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/8: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/9: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/10: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/11: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/12: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/13: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/14: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+22/15: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+23/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+23/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+24/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+25/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+25/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+25/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+25/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+25/5: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+25/6: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+26/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+26/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+27/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+27/2: (a,b)
+27/3: (1,2)
+27/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+27/5: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+28/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+28/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+28/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+29/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+29/2: computedQCFlags
+29/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+29/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+29/5: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+29/6: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+30/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+30/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+30/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+31/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/GetMeasurementDataTest.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+31/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+31/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+31/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+32/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+32/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+33/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+33/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+33/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+33/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+33/5: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+34/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+34/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+35/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+36/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+36/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+37/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+38/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+38/2: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+38/3: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+38/4: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+39/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+40/1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/PutQAScript.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+   1: runfile('C:/Users/rhann/Documents/GitHub/QAQC_Pipeline/FetechAndExecute.py', wdir='C:/Users/rhann/Documents/GitHub/QAQC_Pipeline')
+   2: history
+   3: history -g
+   4: history -g -f history.log

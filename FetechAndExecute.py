@@ -13,7 +13,7 @@ from subprocess import call
 import base64
 
 
-api_host = 'ab617-web-dev:8082'
+api_host = 'caqm-web-uat:8082'
 
 
 def ShouldQARun(token):
@@ -47,7 +47,8 @@ if __name__ == "__main__":
         import QC_core_test_DL
         QC_core_test_DL.main(True, scriptId)
         print('program complete')
-        # retrieve active QA script and ScriptId
+        # retrieve active QA script and ScriptIdi
+    
         
         
         
