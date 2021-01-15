@@ -17,6 +17,7 @@ from token_handler import TokenHandler
 th = TokenHandler()
 token = th.getToken()
 
+api_host = 'caqm-web-uat:8082'
 api_host = 'ab617-web-dev:8082'
 
 
@@ -26,6 +27,8 @@ api_host = 'ab617-web-dev:8082'
 # read QC metadata into dataframe
 #df = pd.read_csv("../sample_QA_metadata/QA_metadata_sample_SC_2s.csv")
 #df = pd.read_csv("../sample_QA_metadata/SM_QCMetadata_2s.csv")
+df = pd.read_csv("../sample_QA_metadata/QC_Metadata_SM_UAT_merged.csv")
+df = pd.read_csv("../sample_QA_metadata/QC_SM_DEV_full_merged.csv")
 df = pd.read_csv("../sample_QA_metadata/QC_Metadata_CCV_UAT_merged.csv")
 
 # convert CSV QC config file to JSON object

@@ -1,4 +1,4 @@
- # -*- coding: utf-8 -*-
+     # -*- coding: utf-8 -*-
 """
 Created 10-22-2020 by Rai Hann
 
@@ -9,10 +9,12 @@ from sqlalchemy import create_engine
 import pandas as pd
 
 #input source QC configuration file
-source_file = "../sample_QA_metadata/QC_Metadata_CCV_UAT.csv"
+#source_file = "../sample_QA_metadata/QC_Metadata_SM_UAT.csv"
+source_file = "../sample_QA_metadata/QC_SM_DEV_full.csv"
 
 #target QC configuration filename
-target_file = "../sample_QA_metadata/QC_Metadata_CCV_UAT_merged.csv"
+#target_file = "../sample_QA_metadata/QC_Metadata_SM_UAT_merged.csv"
+target_file = "../sample_QA_metadata/QC_SM_DEV_full_merged.csv"
 
 df_left = pd.read_csv(source_file)
 df_left['MonitorId'] = df_left['MonitorId'].astype(str)
@@ -22,11 +24,11 @@ df_left['MonitorId'] = df_left['MonitorId'].astype(str)
 qry1="""
      select ss.StreamSegmentId, ss.ParameterId, m.ExternalMonitorId from Site s
      inner join Monitor m on  s.SiteId = m.SiteId
-     inner join StreamSegment ss on m.ExternalMonitorId = ss.ExternalMonitorId where DataProviderId = 13
+     inner join StreamSegment ss on m.ExternalMonitorId = ss.ExternalMonitorId where DataProviderId = 65
      """
 
 #Connecting to SQL server
-params = urllib.parse.quote_plus(r'DRIVER={SQL Server};Trusted_Connection=yes;Server=AB617-DB-DEV;DATABASE=AQVIEW')
+params = urllib.parse.quote_plus(r'DRIVER={SQL Server};Trusted_Connection=yes;Server=CAQM-DB-UAT;DATABASE=AQVIEW2')
 c_str = 'mssql+pyodbc:///?odbc_connect={}'.format(params)
 engine = create_engine(c_str)
 connected =  engine.connect()

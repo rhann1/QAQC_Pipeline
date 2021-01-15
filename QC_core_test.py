@@ -641,7 +641,7 @@ def QC_Core(IsSubHourly, measurementFrame, configFrame):
             # create hourly average dataframe
             if len(adf_list) != 0 and IsSubHourly:
                 adf_result = pd.concat(adf_list)
-                
+                 
       
                 #subHourlyQFlags = df_result[['MeasurementID', 'StreamSegmentId', 'StartDateTime', 'QF01', 'QF02', 'QF03', 'QF04', 'QOverall']]
                 

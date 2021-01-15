@@ -31,9 +31,9 @@ def main(IsSubHourly, scriptId):
     QaScriptId = scriptId
     intervalHoursForHourly = 1
     intervalHoursForSubHourly = 4
-    maxStreamLimit = 2
-    maxCycles = -4
-    MaxRecords = 4000
+    maxStreamLimit = 8
+    maxCycles = -2
+    MaxRecords = 12000
     
     #set mode of processing (testing using local files: testMode=True, processing from APIs: testMode=False)
     testMode=False
@@ -690,19 +690,22 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
             flagFrame[flagFrame[['QF07','QF04','QF05', 'QF06']] < 0] = 0
             flagFrame = flagFrame.astype(int)
             flagFrame['QA_overall'] = flagFrame[['QF07', 'QF04', 'QF05', 'QF06']].any(axis = 1).astype(int)
-            #flagFrame['validOverall'] = flagFrame.apply(validOverall, axis = 1)
-            #df1['QA_overall'] = flagFrame['validOverall'].tolist()            
+            flagFrame['validOverall'] = flagFrame.apply(validOverall, axis = 1)
+            df1['QA_overall'] = flagFrame['validOverall'].tolist()            
            
             # determine the proper value for the 'IsCalculated' flag based on record processing state 
             #df1['IsCalculated'] = df1['IsCalculated'].fillna(0)
             #df1['IsCalculated'] = [1 if (q >= 0) else 0 for i,q in zip(df1['IsCalculated'], df1['QA_overall'])]  
-
+            df1['IsCalculated'] = [1 if (q > 0) else i for i,q in zip(df1['IsCalculated'], df1['QA_overall'])]  
+            df1['IsCalculated'] = [i-1 if q < 0 else i for i,q in zip(df1['IsCalculated'], df1['QA_overall'])]   #this was partially working, revert if needed
+            #df1['IsCalculated'] = [i-1 if (q < 0 and i < 1) else i for i,q in zip(df1['IsCalculated'], df1['QA_overall'])]   #added to explore fix
+            df1['IsCalculated'].astype(int)
             #df1['CurrentIC'] = df1['CurrentIC'].fillna(9999)
             #df1['IsCalculated'] = [i - 1 if (c <= 0 and c != 9999)  else 0 for i,c in zip(df1['IsCalculated'], df1['CurrentIC'])]
             #df1['IsCalculated'] = [cv - 1 if (q < 1 and c < 1 and c == False) else i for i,q,c,cv in zip(df1['IsCalculated'], df1['QA_overall'], df1['CurrentIC'].isnull(),df1['CurrentIC'])]
             #df1['IsCalculated'].astype(int)
             
-            
+            """
             if computeQuality < 1:
                 df1['QA_overall'] = -3
             else:
@@ -712,9 +715,8 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
                                       df1['QF06'].loc[df1['QF06'].notnull()].apply(lambda x: int(x))*useLDL).astype(int)
                 
                 # this repairs issue with gap in spike flag status logic.  This needs to be replace with improved flag logic
-
+                df1['QA_overall'].loc[df1['QF07'] < 0] = -3
                 df1['QF07'].loc[(df1['QF01'] < 0) | (df1['QF02'] < 0) | (df1['QF03'] < 0)] = -3
-                #df1['QA_overall'].loc[df1['QF07'] < 0] = -3
             
                
             # QA_overall must meet completeness criteria (proposed 75% of input flags must be valid)
@@ -724,12 +726,8 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
             l =  [list(a) for a in zip(df2,df3,df4,df5,df6)]
             validOverall = [(len(y)-sum(i<0 for i in y))/len(y) for y in l] # input flags used for computing QAoverall in zip().
             df1['QA_overall'] = [d if v >= 0.75 else -3 for d,v in zip(df1['QA_overall'], validOverall)]
-            #df1['IsCalculated'] = [True if q >= 0 else False for q in df1['QA_overall']]
-            
-            df1['IsCalculated'] = [1 if (q > 0) else i for i,q in zip(df1['IsCalculated'], df1['QA_overall'])]  
-            df1['IsCalculated'] = [i-1 if q < 0 else i for i,q in zip(df1['IsCalculated'], df1['QA_overall'])]   #this was partially working, revert if needed
-            #df1['IsCalculated'] = [i-1 if (q < 0 and i < 1) else i for i,q in zip(df1['IsCalculated'], df1['QA_overall'])]   #added to explore fix
-            df1['IsCalculated'].astype(int)
+            df1['IsCalculated'] = [True if q >= 0 else False for q in df1['QA_overall']]
+            """
             end_overall = time.time()
             print(str(end_overall - start_overall))
  
@@ -775,8 +773,7 @@ def QC_Core(testMode, IsSubHourly, measurementFrame, configFrame):
     
     # state loop issue workaround next two lines    
     #df_result['IsCalculated'] = [-4 if i < 0 else i for i in df_result['IsCalculated']]  # this is a work around for the decredment issue 
-    df_result['IsCalculated'] = [i - 1 if (i <= 0) and (i >= -4) else i for i in df_result['IsCalculated']]
-    df_result['IsCalculated'].fillna(0)
+    df_result['IsCalculated'] = [i - 1 if (i <= 0) and (i >= -2) else i for i in df_result['IsCalculated']]
     df_result['QA_overall'] = [-3 if (q4 < 0) or (q5 < 0) or (q6 < 0) or (q7 < 0) else q for q,q4,q5,q6,q7 in zip(df_result['QA_overall'],df_result['QF04'],df_result['QF05'],df_result['QF06'],df_result['QF07'])]
 
 

@@ -13,7 +13,8 @@ from subprocess import call
 import base64
 
 
-api_host = 'caqm-web-uat:8082'
+api_host = 'ab617-web-dev:8082'
+#api_host = 'caqm-web-uat:8082'
 
 
 def ShouldQARun(token):
@@ -41,18 +42,19 @@ if __name__ == "__main__":
     token = th.getToken()
     
     if ShouldQARun(token) == 'True':
-        print('run')
-        response = json.loads(FetchQAScript(token))['script']['QaScriptId']
-        print("executed FetchQAScript method to obtain QaScriptId = " + str(response))
-        scriptId = json.loads(FetchQAScript(token))['script']['QaScriptId']
-        print(scriptId)
-        #call(['QC_core_test_DL.py', 'scriptId'], shell=True)
-        import QC_core_test_DL
-        QC_core_test_DL.main(True, scriptId)
-        print('program complete')
-        # retrieve active QA script and ScriptId
+        for i in range(10):
+            print('run')
+            response = json.loads(FetchQAScript(token))['script']['QaScriptId']
+            print("executed FetchQAScript method to obtain QaScriptId = " + str(response))
+            scriptId = json.loads(FetchQAScript(token))['script']['QaScriptId']
+            print(scriptId)
+            #call(['QC_core_test_DL.py', 'scriptId'], shell=True)
+            import QC_core_test_DL
+            QC_core_test_DL.main(True, scriptId)
+            print('program complete')
+            # retrieve active QA script and ScriptId
         
-        
-        
+              
+                
         
          

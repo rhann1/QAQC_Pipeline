@@ -17,15 +17,16 @@ from pandas.io.json import json_normalize
 
 
 api_host = 'ab617-web-dev:8082'
+#api_host = 'caqm-web-uat:8082'
 
 class DataHandler:
     
-    def getData(self, IsSubHourlyVal, IntervalHoursVal, MaxNumberOfStreamsVal):
+    def getData(self, IsSubHourlyVal, IntervalHoursVal, MaxNumberOfStreamsVal, MaxCycles, MaxRecords):
         print("maximum number of streams = " + str(MaxNumberOfStreamsVal))
 
-        def PreparePayload(IsSubHourlyVal, IntervalHoursVal, MaxNumberOfStreamsVal):
+        def PreparePayload(IsSubHourlyVal, IntervalHoursVal, MaxNumberOfStreamsVal, MaxCycles, MaxRecords):
             
-            GetDataSettingsPayload = {"IsSubHourly": IsSubHourlyVal, "IntervalHours": IntervalHoursVal, "MaxNumberOfStreams": MaxNumberOfStreamsVal}
+            GetDataSettingsPayload = {"IsSubHourly": IsSubHourlyVal, "IntervalHours": IntervalHoursVal, "MaxNumberOfStreams": MaxNumberOfStreamsVal, "MaxCycles": MaxCycles, "MaxRecords": MaxRecords}
             return(GetDataSettingsPayload)
 
         #call TokenHandler() and get access token
@@ -42,7 +43,7 @@ class DataHandler:
                         
              try:
                  MeasurementDataPayload = requests.post('http://' + api_host + '/api/qa/GetMeasurementDataForQA', json = GetDataSettingsPayload, headers = {'Authorization': 'Bearer '+ token, 'Content-Type': 'application/json; boundary=--------------------------651623359726858260475474'})
-
+                 print(MeasurementDataPayload.text)
              except requests.exceptions.RequestException as e:  
                  raise SystemExit(e)
 
@@ -51,7 +52,7 @@ class DataHandler:
         #inner function to extract measurement and configuration data and convert to dataframe objects (# 18 on QC Pipeline sequence diagram)        
         def ConvertJSONtoDataframe(payload):
                         
-            print(payload.text)
+            #print(payload.text)
             
             jConfigurations = json.loads(payload.text)[0]['Configurations']
             jMeasurementData = json.loads(payload.text)[0]['MeasurementData']
@@ -65,7 +66,7 @@ class DataHandler:
             
             return (measurementFrame, configurationFrame)
 
-        GetDataSettingsPayload = PreparePayload(IsSubHourlyVal, IntervalHoursVal, MaxNumberOfStreamsVal)                                                                            
+        GetDataSettingsPayload = PreparePayload(IsSubHourlyVal, IntervalHoursVal, MaxNumberOfStreamsVal, MaxCycles, MaxRecords)                                                                            
         Token = RequestToken()
         MeasurementPayload = GetMeasurementandConfig(GetDataSettingsPayload, Token)
         DfsForProcessing = ConvertJSONtoDataframe(MeasurementPayload)
@@ -147,7 +148,9 @@ class DataHandler:
         payload = {'DataToPut': None}
         jobj = computedFlags.to_json(orient = 'records')
         jobj = json.loads(jobj)
-        payload.update({'DataToPut': jobj})
+        #payload.update({'DataToPut': jobj})
+        payload.update({'IsSubHourly':True, 'DataToPut': jobj})
+        
         
         token = RequestToken()
         #print(payload)
@@ -163,7 +166,8 @@ class DataHandler:
             print("QC flag insertion time = " + str(end - start))
             print(payload)
             print(response)
-            print(response.text)
+            #print(response.text)
+            print("response = " + str(response))
         except requests.exceptions.RequestException as e: 
             print("error occured sending QC flags")
             raise SystemExit(e)
@@ -195,8 +199,11 @@ if __name__ == "__main__":
     
     from datetime import datetime
     dh = DataHandler()
-    dfs = dh.getData("True", "1", 4)
+    dfs = dh.getData("True", 4, 4, -4, 4000)
     batchId = dh.GetBatchId(1, datetime.now(), 16000 )
+    print(dfs)
+    print("number of records retrieved = " + str(len(dfs[0])))
+    print("BatchId = " + str(batchId))
     #dh.ProcessData(dfs)
     #dh.putData()
     #print(dfs[0])
