@@ -14,17 +14,26 @@ class TokenHandler:
         
     def getToken(self):
         # url of IDM authority
-        url = "https://idm-dev.arb.ca.gov/connect/token"
+        #url = "https://idm-dev.arb.ca.gov/connect/token"    #for DEV and UAT servers
+        url = "https://idm-dev.arb.ca.gov/connect/token"        #for production server
 
         # parameters for token generation
         payload = {
                 "Address":"disco.TokenEndpoint",
                 "client_id":"AQViewDockerClient",
-                "client_secret":"4qv13wd0ckercl13nt!!",
+                "client_secret":"4qv13wd0ckercl13nt!!",         #for DEV and UAT servers
                 "grant_type":"client_credentials", 
                 "Scope":"AQViewQAAPI.full_access"
                 }
-
+        """
+        payload = {
+                "Address":"disco.TokenEndpoint",
+                "client_id":"AQViewDockerClient",
+                "client_secret":"988z8aa+wjquM+30t40DzrhiT42LOd7zvCXsz3G8LTw=",    #for production server
+                "grant_type":"client_credentials", 
+                "Scope":"AQViewQAAPI.full_access"
+                }
+        """
         # POST request headers for IDM endpoint
         headers = {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -51,13 +60,8 @@ if __name__ == "__main__":
     print(token[0])
     
     # obtain script and QA metadata from /getqascript API endpoint
-    response = requests.get('http://caqm-web-uat:8081/api/qa/getqascript', headers = {'Authorization': 'Bearer '+ token[0], 
-                                                                                    'Content-Type': 'multipart/form-data; boundary=--------------------------651623359726858260475474'})
+    #response = requests.get('http://caqm-web-uat:8081/api/qa/getqascript', headers = {'Authorization': 'Bearer '+ token[0], 
+                                                                                   #'Content-Type': 'multipart/form-data; boundary=--------------------------651623359726858260475474'})
     # inspect response
-    print(response.text.encode('utf8'))
-    print(response.headers)
-
-    print(response)
-
-
+    
 

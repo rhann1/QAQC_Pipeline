@@ -10,6 +10,7 @@ import json
 import time
 import requests
 import sys
+import os
 import pprint
 from flatten_json import flatten
 from token_handler import TokenHandler as th
@@ -17,7 +18,9 @@ from pandas.io.json import json_normalize
 
 
 api_host = 'ab617-web-dev:8082'
-#api_host = 'caqm-web-uat:8082'
+api_host = 'caqm-web-uat:8082'
+api_host = 'caqm-web:8082'
+
 
 class DataHandler:
     
@@ -58,6 +61,12 @@ class DataHandler:
             jMeasurementData = json.loads(payload.text)[0]['MeasurementData']
             
             measurementFrame = pd.DataFrame(jMeasurementData)
+            print('the length is ' + str(len(measurementFrame)))
+            if len(measurementFrame) == 0:
+                print('all eligible records retrieved and processed')
+                print('**** processing complete ****')
+                sys.trackbacklimit=0
+                sys.exit(0)
                        
             # prune QAConfig prefix from nested keys and convert object to dataframe
             jConfigurations = json.dumps([flatten(j) for j in jConfigurations])
@@ -149,7 +158,8 @@ class DataHandler:
         jobj = computedFlags.to_json(orient = 'records')
         jobj = json.loads(jobj)
         #payload.update({'DataToPut': jobj})
-        payload.update({'IsSubHourly':True, 'DataToPut': jobj})
+        #change this parameter when switching from hourly to subhourly
+        payload.update({'IsSubHourly':False, 'DataToPut': jobj})
         
         
         token = RequestToken()
@@ -164,9 +174,9 @@ class DataHandler:
                                                                                     json=payload)
             end = time.time()
             print("QC flag insertion time = " + str(end - start))
-            print(payload)
+            #print(payload)
             print(response)
-            #print(response.text)
+            print(response.text)
             print("response = " + str(response))
         except requests.exceptions.RequestException as e: 
             print("error occured sending QC flags")

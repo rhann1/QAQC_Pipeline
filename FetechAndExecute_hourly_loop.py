@@ -1,4 +1,4 @@
- # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 Created on Mon May  4 20:10:22 2020
 @author: thelgestad
@@ -13,8 +13,8 @@ from subprocess import call
 import base64
 
 
-api_host = 'ab617-web-dev:8082'
-api_host = 'caqm-web-uat:8082'
+#api_host = 'ab617-web-dev:8082'
+#api_host = 'caqm-web-uat:8082'
 api_host = 'caqm-web:8082'
 
 
@@ -51,7 +51,7 @@ if __name__ == "__main__":
             print(scriptId)
             #call(['QC_core_test_DL.py', 'scriptId'], shell=True)
             import QC_core_test_DL
-            QC_core_test_DL.main(True, scriptId)
+            QC_core_test_DL.main(False, scriptId)
             print('program complete')
             # retrieve active QA script and ScriptId
         

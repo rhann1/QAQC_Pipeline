@@ -18,7 +18,8 @@ th = TokenHandler()
 token = th.getToken()
 
 api_host = 'caqm-web-uat:8082'
-api_host = 'ab617-web-dev:8082'
+#api_host = 'ab617-web-dev:8082'
+api_host = 'caqm-web:8082'
 
 
 
@@ -27,9 +28,9 @@ api_host = 'ab617-web-dev:8082'
 # read QC metadata into dataframe
 #df = pd.read_csv("../sample_QA_metadata/QA_metadata_sample_SC_2s.csv")
 #df = pd.read_csv("../sample_QA_metadata/SM_QCMetadata_2s.csv")
-df = pd.read_csv("../sample_QA_metadata/QC_Metadata_SM_UAT_merged.csv")
-df = pd.read_csv("../sample_QA_metadata/QC_SM_DEV_full_merged.csv")
-df = pd.read_csv("../sample_QA_metadata/QC_Metadata_CCV_UAT_merged.csv")
+#df = pd.read_csv("../sample_QA_metadata/QC_Metadata_SM_UAT_merged.csv")
+#df = pd.read_csv("../sample_QA_metadata/QC_SM_DEV_full_merged.csv")
+df = pd.read_csv("../sample_QA_metadata/SC_QC_Config_2_20210308.csv")
 
 # convert CSV QC config file to JSON object
 
@@ -72,6 +73,7 @@ for c in obj['configurations']:
     
 pp.pprint(obj)
 # convert JSON object to string  
+#obj =  {"configurations":[{"QaConfigurationId":170,"StreamSegmentId":None,"SamplingFrequencySeconds":None,"SamplingDurationMinutes":None,"UOMId":None,"QaConfigurationSettings":None}]}
 jdata = json.dumps(obj)
 
 # need to insert API request here

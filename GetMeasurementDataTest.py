@@ -12,6 +12,8 @@ import base64
 from datetime import datetime
 import sys
 
+
+
 class TokenHandler:
     
     def __init__(self):
@@ -261,7 +263,8 @@ def GetBatchId(QaScriptId, QaProcessingStart, BatchSize):
     
     jobj = {
             'IsSubhourly': True, 
-            'QaScriptIds': [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+            'QaScriptIds': [],
+            'StreamSegmentIds':[1023]
             }
     
     response = requests.post('http://caqm-web-uat:8082/api/qa/ClearIsCalculatedFlag', headers = {'Authorization': 'Bearer '+ token[0], 
@@ -276,10 +279,13 @@ def GetBatchId(QaScriptId, QaProcessingStart, BatchSize):
     
     payload="{\r\n    \"QaSettings\":{\"enabled\":\"True\",\"intervalminutes\":\"5\",\"MaxCycles\":\"-2\"}\r\n}"
 
-    response = requests.post('http://caqm-web-uat:8082/api/qa/PutQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
+    response = requests.post('http://caqm-web:8082/api/qa/PutQARunSettings', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
                                                                                     data = payload)
+    
+    print(response)
+    print(response.text)
 
         
         

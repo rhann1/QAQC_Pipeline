@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Nov  1 22:34:07 2020
-
-@author: rhann
-"""
-
-
-"""
 Created on Sun Mar 22 20:00:28 2020
 
 @author: rhann
@@ -18,6 +11,9 @@ from pandas.io.json import json_normalize
 import base64
 from datetime import datetime
 import sys
+import numpy as np
+
+
 
 class TokenHandler:
     
@@ -54,31 +50,42 @@ class TokenHandler:
         token = res['access_token']
         return token,status,error_object
     
+
 if __name__ == "__main__":
     
     th = TokenHandler()
     token = th.getToken()
-    api_host = 'ab617-web-dev:8082'    # change is value to point to a different host
-    api_host = 'caqm-web-uat:8082'
-    api_host = 'caqm-web:8082'
 
     # inspect token
     print(token[0])
-        
-    #Base64 encode QA script
-    with open("QC_core_test_DL.py", "rb") as script_file:
-        encoded_script = base64.b64encode(script_file.read()).decode('utf-8')
-        print(encoded_script)
+
     
-    payload = {'script': encoded_script}
-    response = requests.post('http://' + api_host + '/api/qa/PutQAScript', headers = {'Authorization': 'Bearer '+ token[0], 
+    #enter identifiers for QC Flags groups that should be cleared
+    
+    jobj = {
+            'IsSubhourly': False, 
+            'QaScriptIds': [],
+            'StreamSegmentIds':[620]
+            }
+    
+    response = requests.post('http://caqm-web:8082/api/qa/ClearIsCalculatedFlag', headers = {'Authorization': 'Bearer '+ token[0], 
                                                                                     'Content-Type': 'application/json; \
                                                                                     boundary=--------------------------651623359726858260475474'}, \
-                                                                                    json=payload)
+                                                                                    json=jobj)
     print(response)
-    
-    if response.status_code == 200:
-        print("Script uploaded successfully")
+
+
         
-        
+
     
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
