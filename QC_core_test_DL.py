@@ -33,6 +33,7 @@ def main(IsSubHourly, scriptId):
     QaScriptId = scriptId
     intervalHoursForHourly = 1
     intervalHoursForSubHourly = 4
+    
     maxStreamLimit = 1
     maxCycles = 1
     MaxRecords = 24000
@@ -142,7 +143,7 @@ def main(IsSubHourly, scriptId):
         print("frane preparation time = " + str(end - start))
         
         start = time.time()
-        dh.PutComputedFlags(processedFrames)
+        dh.PutComputedFlags(IsSubHourly, processedFrames)
         end = time.time() 
         print("data insertion time = " + str(end - start))
         

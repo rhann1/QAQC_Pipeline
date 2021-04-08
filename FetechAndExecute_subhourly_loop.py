@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 """
 Created on Mon May  4 20:10:22 2020
 @author: thelgestad
@@ -13,8 +13,8 @@ from subprocess import call
 import base64
 
 
-#api_host = 'ab617-web-dev:8082'
-#api_host = 'caqm-web-uat:8082'
+api_host = 'ab617-web-dev:8082'
+api_host = 'caqm-web-uat:8082'
 api_host = 'caqm-web:8082'
 
 
@@ -34,7 +34,7 @@ def FetchQAScript(token):
     decoded_bytes = base64.b64decode(json.loads(response.text)['script']['QaScriptText'])
     with open("QC_core_test_DL.py", "wb") as download_file:
         download_file.write(decoded_bytes)
- 
+
     return response.text        
     
 if __name__ == "__main__":
@@ -51,8 +51,7 @@ if __name__ == "__main__":
             print(scriptId)
             #call(['QC_core_test_DL.py', 'scriptId'], shell=True)
             import QC_core_test_DL
-            
-            QC_core_test_DL.main(False, scriptId)
+            QC_core_test_DL.main(True, scriptId)
             print('program complete')
             # retrieve active QA script and ScriptId
         

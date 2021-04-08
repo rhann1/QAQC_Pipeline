@@ -143,7 +143,7 @@ class DataHandler:
         print("received response " + str(response))
         return(response.text)
         
-    def PutComputedFlags(self, computedFlags):
+    def PutComputedFlags(self, IsSubHourly, computedFlags):
         
         def RequestToken():
     
@@ -159,7 +159,7 @@ class DataHandler:
         jobj = json.loads(jobj)
         #payload.update({'DataToPut': jobj})
         #change this parameter when switching from hourly to subhourly
-        payload.update({'IsSubHourly':False, 'DataToPut': jobj})
+        payload.update({'IsSubHourly':IsSubHourly, 'DataToPut': jobj})
         
         
         token = RequestToken()
